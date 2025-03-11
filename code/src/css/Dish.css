@@ -1,0 +1,67 @@
+.dish {
+    font-size: var(--bs-body-font-size);
+    line-height: var(--bs-body-line-height);
+    text-align: var(--bs-body-text-align);
+    font-weight: 400;
+    color: #181C32;
+    font-family: 'Rubik', 'ploni', sans-serif;
+    box-sizing: border-box;
+    scrollbar-width: thin;
+    scrollbar-color: #EFF2F5 transparent;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    border-radius: 0.475rem;
+    border: 0;
+    box-shadow: 3px 3px 5px 0px rgba(158, 158, 158, 1);
+    margin: 1rem;
+    position: relative;
+    background: white;
+    min-height: 15rem;
+    max-height: 25rem;
+    padding: 1rem;
+    flex: 1 1 25rem 25rem; /* Flex-grow, Flex-shrink, Flex-basis */
+    /* Adjust 'flex-basis' to change the minimum width of the items */
+    /* 'flex-grow' is set to 1 to allow items to grow and fill the space */
+}
+.true{
+background-color: grey;
+}
+.dish:hover {
+    box-shadow: 3px 3px 5px 3px rgba(158, 158, 158, 1);
+}
+
+.dish .title {
+    margin: 0px;
+    color: #232323;
+    font-weight: bold;
+    padding-right: 10px;
+    padding-bottom: 0px;
+}
+
+.dish p {
+    margin: 5px;
+    font-size: var(--bs-body-font-size);
+    line-height: var(--bs-body-line-height);
+    text-align: var(--bs-body-text-align);
+    font-weight: 400;
+    color: #181C32;
+    word-wrap: break-word;
+    box-sizing: border-box;
+    scrollbar-width: thin;
+    scrollbar-color: #EFF2F5 transparent;
+}
+.dish .price {
+font-weight: bold;}
+
+.dish img {
+    max-width: 250px;
+    max-height: 250px;
+    border-radius: 10px;
+}
+
+.dish .dishCTRL {
+    align-items: center;
+    align-self: center;
+}
