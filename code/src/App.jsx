@@ -7,6 +7,8 @@ import AdminDishes from './components/AdminDishes'
 import AdminStudents from './components/AdminStudents'
 import AdminOrders from './components/AdminOrders'
 import TopMenu from './components/TopMenu'
+import UserOrderHistory from './components/UserOrderHistory'
+
 
 export default function App() {
 
@@ -15,7 +17,7 @@ export default function App() {
    NO REAL LOGIC FOR NOW
 
 Wireframes done:
-           <DishMenu />
+        <UserNewOrder />
         <AdminClasses />
       <AdminDishes />
               <AdminStudents />
@@ -30,7 +32,7 @@ Wireframes done:
     <div>
       <TopMenu title="המזנון של אונו - ניהול"/>
       <div >
-        <UserNewOrder />
+        <UserOrderHistory />
       </div>
     </div >
   )
