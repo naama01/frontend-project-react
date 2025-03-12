@@ -8,6 +8,8 @@ import AdminStudents from './components/AdminStudents'
 import AdminOrders from './components/AdminOrders'
 import TopMenu from './components/TopMenu'
 import UserOrderHistory from './components/UserOrderHistory'
+import UserOrderStatus from './components/UserOrderStatus'
+
 
 
 export default function App() {
@@ -22,15 +24,13 @@ Wireframes done:
       <AdminDishes />
               <AdminStudents />
                       <AdminOrders />
-
-
-
-
+                              <UserOrderStatus />
+        <UserOrderHistory />
   */
 
   return (
     <div>
-      <TopMenu title="המזנון של אונו - ניהול"/>
+      <TopMenu title="המזנון של אונו - הזמנה חדשה"/>
       <div >
         <UserOrderHistory />
       </div>

@@ -1,9 +1,11 @@
-
-.dishMenu{
-    padding: 50px 10px; /* Top padding to prevent content from hiding under the fixed title */
-    height: 2000px; /* Just for demonstration to enable scrolling */
-
-        display: flex;
-        flex-wrap: wrap;
-        gap: 16px; /* Space between items */
+.dishMenu {
+    padding: 50px 10px;
+    /* Top padding to prevent content from hiding under the fixed title */
+    height: 2000px;
+    /* Just for demonstration to enable scrolling */
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    /* Space between items */
+    align-content: flex-start;
 }
