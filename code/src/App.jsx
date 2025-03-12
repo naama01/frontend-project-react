@@ -4,6 +4,7 @@ import './css/Global.css'
 import DishMenu from './components/DishMenu'
 import AdminClasses from './components/AdminClasses'
 import AdminDishes from './components/AdminDishes'
+import AdminStudents from './components/AdminStudents'
 import TopMenu from './components/TopMenu'
 
 export default function App() {
@@ -24,6 +25,7 @@ Wireframes done:
     <div>
       <TopMenu title="המזנון של אונו - ניהול"/>
       <div >
+        <AdminStudents />
       </div>
     </div >
   )
