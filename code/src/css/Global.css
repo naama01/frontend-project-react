@@ -69,7 +69,7 @@ h1 {
     background-color: #595959;
 }
 
-table {
+table  {
     text-align: center;
     font-weight: 400;
     font-family: 'Rubik', 'ploni', sans-serif;
@@ -106,7 +106,7 @@ table {
         border-bottom-color: inherit;
     }
 
-    td {
+    td  {
         font-weight: normal;
         font-family: 'Rubik', 'ploni', sans-serif;
         word-wrap: break-word;
@@ -164,4 +164,14 @@ table {
             padding: 0.7rem;
             height: 1rem;
             margin: 1rem;
+        }
+        input[type="textbox"]{
+            font-family: inherit;
+            line-height: inherit;
+            border: 1px solid #bbbbcb;
+            border-radius: 0.5rem;
+            padding: 0.7rem;
+            background-color: white;
+            color: #181C32;
+
         }

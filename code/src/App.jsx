@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import './css/Global.css'
 import DishMenu from './components/DishMenu'
 import AdminClasses from './components/AdminClasses'
+import TopMenu from './components/TopMenu'
 
 export default function App() {
 
@@ -18,12 +19,7 @@ Wireframes done:
 
   return (
     <div>
-      <div className='TopHeader'>
-        <h1 className="title">תפריט המזנון של אונו - ניהול כיתות</h1>
-        <div className="HeaderCTRL">
-          <button>לצ׳ט עם מייקל</button><button>שמור</button><button>יציאה</button>
-        </div>
-      </div>
+      <TopMenu />
       <div >
         <AdminClasses />
       </div>
