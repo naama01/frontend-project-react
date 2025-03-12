@@ -1,7 +1,9 @@
+// eslint-disable-next-line no-unused-vars
 import React, { useState } from 'react'
 import './css/Global.css'
 import DishMenu from './components/DishMenu'
 import AdminClasses from './components/AdminClasses'
+import AdminDishes from './components/AdminDishes'
 import TopMenu from './components/TopMenu'
 
 export default function App() {
@@ -13,15 +15,15 @@ export default function App() {
 Wireframes done:
            <DishMenu />
         <AdminClasses />
+      <AdminDishes />
 
 
   */
 
   return (
     <div>
-      <TopMenu />
+      <TopMenu title="המזנון של אונו - ניהול"/>
       <div >
-        <AdminClasses />
       </div>
     </div >
   )

@@ -1,4 +1,4 @@
-import React from 'react'
+import 'react'
 import Dish from './Dish'
 import '../css/DishMenu.css'
 export default function DishMenu() {
