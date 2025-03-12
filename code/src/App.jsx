@@ -1,10 +1,11 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useState } from 'react'
 import './css/Global.css'
-import DishMenu from './components/DishMenu'
+import UserNewOrder from './components/UserNewOrder'
 import AdminClasses from './components/AdminClasses'
 import AdminDishes from './components/AdminDishes'
 import AdminStudents from './components/AdminStudents'
+import AdminOrders from './components/AdminOrders'
 import TopMenu from './components/TopMenu'
 
 export default function App() {
@@ -17,6 +18,10 @@ Wireframes done:
            <DishMenu />
         <AdminClasses />
       <AdminDishes />
+              <AdminStudents />
+                      <AdminOrders />
+
+
 
 
   */
@@ -25,7 +30,7 @@ Wireframes done:
     <div>
       <TopMenu title="המזנון של אונו - ניהול"/>
       <div >
-        <AdminStudents />
+        <UserNewOrder />
       </div>
     </div >
   )
