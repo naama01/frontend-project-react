@@ -12,6 +12,8 @@ export default function TopMenu({title}) {
                         <li>לצ׳ט עם מייקל</li>
                         <li>שלח פניה</li>
                         <li>אודות שירות המשלוחים</li>
+                        <li>תקנון השירות</li>
+                        <li>עזרה</li>
                     </ul>
                 </li>
                 <li className="menuItem">
@@ -43,42 +45,3 @@ export default function TopMenu({title}) {
         </div>
     )
 }
-/*
-import React from 'react';
-import './TopMenu.css'; // Import the CSS for styling
-
-export default function TopMenu({ title }) {
-    return (
-        <div className="TopHeader">
-            <h1 className="title">{title}</h1>
-            <ul className="menu">
-                <li className="menuItem">
-                    Support
-                    <ul className="subMenu">
-                        <li>FAQ</li>
-                        <li>Contact Us</li>
-                        <li>Online Help</li>
-                    </ul>
-                </li>
-                <li className="menuItem">
-                    Save
-                    <ul className="subMenu">
-                        <li>Save Work</li>
-                        <li>Export Data</li>
-                        <li>Import Data</li>
-                    </ul>
-                </li>
-                <li className="menuItem">
-                    Exit
-                    <ul className="subMenu">
-                        <li>Log Out</li>
-                        <li>Close Application</li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
-    );
-}
-
-
-*/

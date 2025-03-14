@@ -1,4 +1,4 @@
-import React from 'react'
+import 'react'
 import AdminTable from './AdminTable'
 
 export default function AdminStudents() {

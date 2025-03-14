@@ -9,6 +9,8 @@ import AdminOrders from './components/AdminOrders'
 import TopMenu from './components/TopMenu'
 import UserOrderHistory from './components/UserOrderHistory'
 import UserOrderStatus from './components/UserOrderStatus'
+import HelpPage from './components/HelpPage'
+
 
 
 
@@ -26,13 +28,15 @@ Wireframes done:
                       <AdminOrders />
                               <UserOrderStatus />
         <UserOrderHistory />
+                <HelpPage />
+
   */
 
   return (
     <div>
-      <TopMenu title="המזנון של אונו - היסטוריית הזמנות"/>
+      <TopMenu title="המזנון של אונו - הסטוריית הזמנות" />
       <div >
-        <UserOrderHistory />
+        <UserNewOrder />
       </div>
     </div >
   )

@@ -13,7 +13,26 @@ h1.title {
     height: 4rem;
     font-size: xx-large;
 }
+p {
+    color: #595959;
 
+}
+
+h2.title {
+    margin: 0px;
+    color: #595959;
+    font-weight: bold;
+    padding-bottom: 0px;
+    font-size: xx-large;
+}
+h3.title {
+    margin: 0px;
+    color: #595959;
+    font-weight: bold;
+    padding-bottom: 0px;
+    font-size: large;
+
+}
 button {
     word-wrap: break-word;
     scrollbar-color: #EFF2F5 transparent;

@@ -6,15 +6,13 @@ export default function Dish({ dishId, dishName, desc, price }) {
     price = parseInt(price)
 
     const [total, setTotal] = useState(0);
- //   const [inCart, setInCart] = useState(false);
     function changeTotal(change) {
-        if (change == "0") {
+        if (change == "0") { // this was done to overcome react rendering miscalculation when using setTotal(total+1) directly in onClick
             if (total > 0) { setTotal(total - 1) }
 
         } else {
             setTotal(total + 1)
         }
-       // if (total>0) setInCart(true)
     }
     return (
         <div className={`dish`}>
