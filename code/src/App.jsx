@@ -30,7 +30,7 @@ Wireframes done:
 
   return (
     <div>
-      <TopMenu title="המזנון של אונו - הזמנה חדשה"/>
+      <TopMenu title="המזנון של אונו - היסטוריית הזמנות"/>
       <div >
         <UserOrderHistory />
       </div>

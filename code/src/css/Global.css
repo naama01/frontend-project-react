@@ -179,16 +179,40 @@ input[type="textbox"] {
 }
 
 
-.progress-container {
-    width: 100%;
-    background-color: #ddd;
+.menu {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
 }
 
-.progress-bar {
-    width: 1%; /* Adjust based on the current status */
-    height: 30px;
-    background-color: #4CAF50;
-    text-align: center;
-    line-height: 30px;
-    color: white;
+.menuItem {
+    position: relative;
+    padding: 10px 15px;
+    cursor: pointer;
+    
+}
+
+.menuItem:hover .subMenu {
+    display: block;
+    
+}
+
+.subMenu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #B3D236;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    z-index: 1000;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: max-content;
+}
+
+.subMenu li {
+    padding: 10px 20px;
+    white-space: nowrap;
 }
