@@ -29,6 +29,8 @@ Wireframes done:
                               <UserOrderStatus />
         <UserOrderHistory />
                 <HelpPage />
+        <AdminDishes />
+
 
   */
 
@@ -36,7 +38,8 @@ Wireframes done:
     <div>
       <TopMenu title="המזנון של אונו - הסטוריית הזמנות" />
       <div >
-        <UserNewOrder />
+      <UserNewOrder />
+
       </div>
     </div >
   )
