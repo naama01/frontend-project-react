@@ -39,7 +39,16 @@ Wireframes done:
     <div>
       <TopMenu title="המזנון של אונו - הסטוריית הזמנות" />
       <div >
-
+      <Routes>
+      <Route path='/' element={<UserNewOrder />} />
+      <Route path='/help' element={<HelpPage />} />
+      <Route path="/AdminClasses" element={<AdminClasses />} />
+        <Route path="/AdminDishes" element={<AdminDishes />} />
+        <Route path="/AdminOrders" element={<AdminOrders />} />
+        <Route path="/AdminStudents" element={<AdminStudents />} />
+        <Route path="/UserOrderHistory" element={<UserOrderHistory />} />
+        <Route path="/UserOrderStatus" element={<UserOrderStatus />} />
+      </Routes>
 
       </div>
     </div >
