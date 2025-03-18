@@ -3,7 +3,7 @@ import React from 'react'
 export default function TopMenu({title}) {
     return (
         <div className="TopHeader">
-            <h1 className="title">{title}</h1>
+            <h1 className="title"><a href="/">{title}</a></h1>
 
             <ul className="menu">
                 <li className="menuItem">
@@ -13,24 +13,24 @@ export default function TopMenu({title}) {
                         <li>שלח פניה</li>
                         <li>אודות שירות המשלוחים</li>
                         <li>תקנון השירות</li>
-                        <li>עזרה</li>
+                        <li><a href="/Help"> עזרה </a></li>
                     </ul>
                 </li>
                 <li className="menuItem">
                     אזור אישי
                     <ul className="subMenu">
-                    <li>סטטוס הזמנה פתוחה</li>
-                    <li>הסטורית הזמנות</li>
+                    <li><a href="/UserOrderStatus"> סטטוס הזמנה פתוחה</a></li>
+                    <li><a href="/UserOrderHistory"> הסטורית הזמנות</a></li>
                         <li>עדכון פרטים</li>
                     </ul>
                 </li>
                 <li className="menuItem">
                     אזור ניהול
                     <ul className="subMenu">
-                    <li>ניהול כיתות</li>
-                    <li>ניהול הזמנות</li>
-                    <li>ניהול תפריט</li>
-                    <li>ניהול סטודנטים</li>
+                    <li><a href="/AdminClasses"> ניהול כיתות</a></li>
+                    <li><a href="/AdminOrders"> ניהול הזמנות</a></li>
+                    <li><a href="/AdminDishes"> ניהול תפריט</a></li>
+                    <li><a href="/AdminStudents"> ניהול סטודנטים</a></li>
                     </ul>
                 </li>
                 <li className="menuItem">
