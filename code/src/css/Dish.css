@@ -10,7 +10,6 @@
     scrollbar-color: #EFF2F5 transparent;
     display: flex;
     flex-direction: column;
-    min-width: 0;
     word-wrap: break-word;
     border-radius: 0.475rem;
     border: 0;

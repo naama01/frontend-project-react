@@ -1,7 +1,17 @@
 import { useState } from 'react';
 import '../css/Dish.css'
+import ButtonGroup from '@mui/material/ButtonGroup'
+import Button from '@mui/material/Button'
+import TextField from '@mui/material/TextField'
+
+
+
+
 
 export default function Dish({ dishId, dishName, desc, price }) {
+
+
+    
     let imgPath = "../../img/dishes/" + dishId + ".jpg"
     price = parseInt(price)
 
@@ -15,16 +25,30 @@ export default function Dish({ dishId, dishName, desc, price }) {
         }
     }
     return (
+
+
+            
         <div className={`dish`}>
+
             <h2 className="title">{dishName}</h2>
             <p className="description">{desc}</p>
+            
             <img src={imgPath} alt="תמונת המנה"></img>
             <p className="price">{price} ש״ח</p>
             <div className="dishCTRL">
-                <button onClick={() => changeTotal("0")}>-</button>
-                <span className="cbp _must NumbersOnly"> {total} </span>
-                <button onClick={() => changeTotal("1")}>+</button>
+                <ButtonGroup variant="text" color="primary" aria-label="">
+                <Button  variant="text" color="primary" onClick={() => changeTotal("0")}>-</Button>
+                <TextField size='small' sx={{ width: '80px' }} id="outlined-basic"  variant="outlined" 
+                  value={total}
+                  
+                />
+                <Button variant="text" color="primary" onClick={() => changeTotal("1")}>+</Button>
+                <Button variant="text" color="primary" onClick={() => setTotal(0)}>🗑️</Button>
+                  
+                </ButtonGroup>
+
             </div>
         </div>
+
     )
 }
