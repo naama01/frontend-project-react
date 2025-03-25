@@ -1,9 +1,12 @@
 import React from 'react'
+import { Navigate,useNavigate} from 'react-router-dom'
 
 export default function TopMenu({title}) {
+    const navigate = useNavigate(); 
+
     return (
         <div className="TopHeader">
-            <h1 className="title"><a href="/">{title}</a></h1>
+            <h1 className="title" onClick={() => navigate("/")}>{title}</h1>
 
             <ul className="menu">
                 <li className="menuItem">
@@ -13,24 +16,25 @@ export default function TopMenu({title}) {
                         <li>שלח פניה</li>
                         <li>אודות שירות המשלוחים</li>
                         <li>תקנון השירות</li>
-                        <li><a href="/Help"> עזרה </a></li>
+                        <li onClick={() => navigate("/help")}>עזרה</li>
+
                     </ul>
                 </li>
                 <li className="menuItem">
                     אזור אישי
                     <ul className="subMenu">
-                    <li><a href="/UserOrderStatus"> סטטוס הזמנה פתוחה</a></li>
-                    <li><a href="/UserOrderHistory"> הסטורית הזמנות</a></li>
+                    <li onClick={() => navigate("/UserOrderStatus")}> סטטוס הזמנה פתוחה</li>
+                    <li onClick={() => navigate("/UserOrderHistory")}> הסטורית הזמנות</li>
                         <li>עדכון פרטים</li>
                     </ul>
                 </li>
                 <li className="menuItem">
                     אזור ניהול
                     <ul className="subMenu">
-                    <li><a href="/AdminClasses"> ניהול כיתות</a></li>
-                    <li><a href="/AdminOrders"> ניהול הזמנות</a></li>
-                    <li><a href="/AdminDishes"> ניהול תפריט</a></li>
-                    <li><a href="/AdminStudents"> ניהול סטודנטים</a></li>
+                    <li onClick={() => navigate("/AdminClasses")}> ניהול כיתות</li>
+                    <li onClick={() => navigate("/AdminOrders")}> ניהול הזמנות</li>
+                    <li onClick={() => navigate("/AdminDishes")}> ניהול תפריט</li>
+                    <li onClick={() => navigate("/AdminStudents")}> ניהול סטודנטים</li>
                     </ul>
                 </li>
                 <li className="menuItem">
