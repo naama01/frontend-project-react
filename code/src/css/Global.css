@@ -196,7 +196,9 @@ input[type="textbox"] {
     background-color: white;
     color: #181C32;
 }
-
+a {
+    color: inherit;
+}
 
 .menu {
     list-style: none;
