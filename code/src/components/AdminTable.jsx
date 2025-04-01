@@ -92,7 +92,7 @@ export default function AdminTable({ titles, rows, dataname }) {
             rows: rows
         };
         localStorage.setItem(`${dataname}_tableData`, JSON.stringify(tableData));
-        alert('Table data saved successfully!');
+        alert('המידע נשמר בהצלחה!');
     }
 
     return (
