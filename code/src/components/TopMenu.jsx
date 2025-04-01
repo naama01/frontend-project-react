@@ -9,6 +9,7 @@ export default function TopMenu({title}) {
             <h1 className="title" onClick={() => navigate("/")}>{title}</h1>
 
             <ul className="menu">
+            <li className="menuItem" onClick={() => navigate("/")}>מסך ראשי</li>
                 <li className="menuItem">
                     שירות ותמיכה
                     <ul className="subMenu">

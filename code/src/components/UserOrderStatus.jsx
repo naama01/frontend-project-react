@@ -1,8 +1,12 @@
 import React from 'react'
+import OrderProgress from './OrderProgress'
 
 export default function UserOrderStatus() {
   return (
     <div>
+    <h1>סטטוס הזמנה פתוחה</h1>
+    <OrderProgress step="2"/>
+
     <table>
         <tr>
             <th>מספר הזמנה</th>
@@ -45,6 +49,7 @@ export default function UserOrderStatus() {
             <td>מספר טלפון: 123-456-7890</td>
         </tr>
     </table>
+    
     <div class="actions">
         <button>בטל הזמנה</button>
         <button>שנה הזמנה</button>

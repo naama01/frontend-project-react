@@ -11,35 +11,19 @@ import UserOrderHistory from './components/UserOrderHistory'
 import UserOrderStatus from './components/UserOrderStatus'
 import HelpPage from './components/HelpPage'
 import { Routes, Route } from 'react-router-dom'
+import SelectComponent from './components/SelectComponent'
 
 
 
 
 export default function App() {
 
-  /*
-   CURRENTLY CODE IS FOR WIREFRAME AND UI DESIGN
-   NO REAL LOGIC FOR NOW
-
-Wireframes done:
-        <UserNewOrder />
-        <AdminClasses />
-      <AdminDishes />
-              <AdminStudents />
-                      <AdminOrders />
-                              <UserOrderStatus />
-        <UserOrderHistory />
-                <HelpPage />
-        <AdminDishes />
-
-
-  */
-
 
   return (
     <div>
       <TopMenu title="המזנון של אונו - הסטוריית הזמנות" />
       <div >
+        <SelectComponent />
       <Routes>
       <Route path='/' element={<UserNewOrder />} />
       <Route path='/help' element={<HelpPage />} />
