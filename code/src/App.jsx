@@ -23,8 +23,7 @@ export default function App() {
     <div>
       <TopMenu title="המזנון של אונו - הסטוריית הזמנות" />
       <div >
-        <SelectComponent />
-      <Routes>
+      <Routes >
       <Route path='/' element={<UserNewOrder />} />
       <Route path='/help' element={<HelpPage />} />
       <Route path="/AdminClasses" element={<AdminClasses />} />

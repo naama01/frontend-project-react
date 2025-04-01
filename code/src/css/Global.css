@@ -2,6 +2,8 @@ body {
     direction: rtl;
     background-color: #EFF2F5;
     font-family: 'Rubik', 'ploni', sans-serif;
+    padding-top: 50px; /* Matches the height of .TopHeader */
+
 }
 
 h1.title {
@@ -78,12 +80,12 @@ h1  {
     position: fixed;
     top: 0;
     left: 0;
-    padding: 10px, 10px;
+    padding: 10px; /* Fixed padding syntax */
     z-index: 1000;
     align-items: center;
     background-color: #B3D236;
+    height: 30px; /* Define a fixed height */
 }
-
 .HeaderCTRL {
     background-color: #595959;
 }

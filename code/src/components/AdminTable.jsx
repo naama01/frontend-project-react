@@ -6,6 +6,8 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import Button from '@mui/material/Button';
+
 
 /*
 export function AdminTable({ titles, rows }) {
@@ -48,11 +50,11 @@ export function AdminTable({ titles, rows }) {
 */
 
 
-export default function AdminTable({ titles, rows }) {
+export default function AdminTable({ titles, rows, dataname }) {
 
     function createRow(row) {
         let row_html = row.map(function (item, i) {
-            if (item === true || item === false) { return <TableCell key={i}><input type="checkbox" checked={item}></input></TableCell> } 
+            if (item === true || item === false) { return <TableCell key={i}><input type="checkbox" checked={item}></input></TableCell> }
             return <TableCell key={i}><input type="textbox" value={item}></input></TableCell>
         })
         return (row_html)
@@ -65,8 +67,8 @@ export default function AdminTable({ titles, rows }) {
     })
 
     let titles_html = titles.map(function (item, i) {
- //       return <th key={i}>{item}</th>
- return <TableCell key={i}>{item}</TableCell>
+        //       return <th key={i}>{item}</th>
+        return <TableCell key={i}>{item}</TableCell>
 
     })
 
@@ -83,21 +85,38 @@ export default function AdminTable({ titles, rows }) {
             </table>
         </div>
     )*/
-        return (
-            <div>
-                <TableContainer component={Paper}>
-                    <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                        <TableHead>
-                            <TableRow>
-                                {titles_html}
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {rows_html}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
-            </div>
-        )
+
+    function saveToLocalStorage() {
+        const tableData = {
+            titles: titles,
+            rows: rows
+        };
+        localStorage.setItem(`${dataname}_tableData`, JSON.stringify(tableData));
+        alert('Table data saved successfully!');
+    }
+
+    return (
+        <div>
+            <TableContainer component={Paper}>
+                <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                    <TableHead>
+                        <TableRow>
+                            {titles_html}
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {rows_html}
+                    </TableBody>
+                </Table>
+            </TableContainer>
+            <Button
+                variant="contained"
+                onClick={saveToLocalStorage}
+                style={{ marginTop: '10px' , backgroundColor: '#4CAF50', color: 'white' } } // Add custom styles here
+            >
+                שמור את הנתונים
+            </Button>
+        </div>
+    )
 }
 
