@@ -20,7 +20,7 @@ const rows = [
 
   return (
     <div>
-      <AdminTable titles={titles} rows={rows} />
+      <AdminTable titles={titles} rows={rows} dataname="orders"/>
     </div>
   )
 }

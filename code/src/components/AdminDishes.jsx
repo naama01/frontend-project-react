@@ -17,7 +17,7 @@ export default function AdminDishes() {
 
   return (
     <div>
-      <AdminTable titles={titles} rows={rows} />
+      <AdminTable titles={titles} rows={rows} dataname="dishes"/>
     </div>
   )
 }

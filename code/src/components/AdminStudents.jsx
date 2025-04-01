@@ -18,7 +18,7 @@ export default function AdminStudents() {
 
   return (
     <div>
-      <AdminTable titles={titles} rows={rows} />
+      <AdminTable titles={titles} rows={rows} dataname="students"/>
     </div>
   )
 }

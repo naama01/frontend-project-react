@@ -20,7 +20,7 @@ export default function AdminClasses() {
 
   return (
     <div>
-      <AdminTable titles={titles} rows={rows} />
+      <AdminTable titles={titles} rows={rows} dataname="classes"/>
     </div>
   )
 }
