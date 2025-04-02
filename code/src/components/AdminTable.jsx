@@ -1,4 +1,4 @@
-import 'react'
+import React, { useState } from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -7,89 +7,122 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
+import { IconButton } from '@mui/material';
 
+export default function AdminTable({ titles, rows: initialRows, dataname }) {
+    const [rows, setRows] = useState(initialRows);
+    const [editingRowIndex, setEditingRowIndex] = useState(null);
 
-/*
-export function AdminTable({ titles, rows }) {
-
-    function createRow(row) {
-        let row_html = row.map(function (item, i) {
-            if (item === true || item === false) { return <TableCell key={i}><input type="checkbox" checked={item}></input></TableCell> }
-            return <TableCell key={i}><input type="textbox" value={item}></input></TableCell>
-        })
-        return (row_html)
+    function handleInputChange(rowIndex, cellIndex, value) {
+        const updatedRows = [...rows];
+        updatedRows[rowIndex][cellIndex] = value;
+        setRows(updatedRows);
     }
 
-    let rows_html = rows.map(function (item, i) {
-        return <TableRow key={i}>{createRow(item)}</TableRow>
-    })
-
-    let titles_html = titles.map(function (item, i) {
-        return <TableCell key={i}>{item}</TableCell>
-    })
-
-    return (
-        <div>
-            <TableContainer component={Paper}>
-                <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                    <TableHead>
-                        <TableRow>
-                            {titles_html}
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {rows_html}
-                    </TableBody>
-                </Table>
-            </TableContainer>
-        </div>
-    )
-}
-
-
-*/
-
-
-export default function AdminTable({ titles, rows, dataname }) {
-
-    function createRow(row) {
-        let row_html = row.map(function (item, i) {
-            if (item === true || item === false) { return <TableCell key={i}><input type="checkbox" checked={item}></input></TableCell> }
-            return <TableCell key={i}><input type="textbox" value={item}></input></TableCell>
-        })
-        return (row_html)
+    function handleEdit(rowIndex) {
+        setEditingRowIndex(rowIndex);
     }
 
-    let rows_html = rows.map(function (item, i) {
-        //return <tr key={i}>{createRow(item)}</tr>
-        return <TableRow key={i}>{createRow(item)}</TableRow>
+    function handleSave(rowIndex) {
+        setEditingRowIndex(null); // Exit edit mode
+    }
 
-    })
+    function handleDelete(rowIndex) {
+        const updatedRows = rows.filter((_, index) => index !== rowIndex);
+        setRows(updatedRows);
+    }
 
-    let titles_html = titles.map(function (item, i) {
-        //       return <th key={i}>{item}</th>
-        return <TableCell key={i}>{item}</TableCell>
+    function addNewRow() {
+        const emptyRow = titles.map(() => ""); // Create an empty row with the same number of columns as titles
+        setRows([...rows, emptyRow]); // Add the new row to the rows state
+        setEditingRowIndex(rows.length); // Set the new row to edit mode
+    }
 
-    })
+    function createRow(row, rowIndex) {
+        return row.map((item, cellIndex) => {
+            if (editingRowIndex === rowIndex) {
+                // Editable mode
+                if (typeof item === 'boolean') {
+                    return (
+                        <TableCell key={cellIndex}>
+                            <input
+                                type="checkbox"
+                                checked={item}
+                                onChange={(e) => handleInputChange(rowIndex, cellIndex, e.target.checked)}
+                            />
+                        </TableCell>
+                    );
+                }
+                return (
+                    <TableCell key={cellIndex}>
+                        <input
+                            type="text"
+                            value={item}
+                            onChange={(e) => handleInputChange(rowIndex, cellIndex, e.target.value)}
+                        />
+                    </TableCell>
+                );
+            }
+            // View mode
+            if (typeof item === 'boolean') {
+                return (
+                    <TableCell key={cellIndex}>
+                        <input type="checkbox" checked={item} readOnly />
+                    </TableCell>
+                );
+            }
+            return <TableCell key={cellIndex}>{item}</TableCell>;
+        });
+    }
 
-    /*return (
-        
-        <div>
-            <table >
-                <thead>
-                    <tr>{titles_html}</tr>
-                </thead>
-                <tbody>
-                    {rows_html}
-                </tbody>
-            </table>
-        </div>
-    )*/
+    const rows_html = rows.map((row, rowIndex) => (
+        <TableRow key={rowIndex}>
+            {createRow(row, rowIndex)}
+            <TableCell>
+                <div style={{ display: 'flex', gap: '8px', justifyContent: 'center', alignItems: 'center' }}>
+                    {editingRowIndex === rowIndex ? (
+                        <>
+                            <IconButton
+                                aria-label="save"
+                                size="small"
+                                style={{ color: '#4CAF50' }}
+                                onClick={() => handleSave(rowIndex)}
+                            >
+                                💾
+                            </IconButton>
+                        </>
+                    ) : (
+                        <IconButton
+                            aria-label="edit"
+                            size="small"
+                            style={{ color: '#2196F3' }}
+                            onClick={() => handleEdit(rowIndex)}
+                        >
+                            📝
+                        </IconButton>
+                    )
+                    }
+                    <IconButton
+                        aria-label="delete"
+                        size="small"
+                        style={{ color: '#f44336' }}
+                        onClick={() => handleDelete(rowIndex)}
+                    >
+                        🗑️
+                    </IconButton>
+                </div>
+            </TableCell>
+        </TableRow>
+    ));
+
+    const titles_html = titles.map((title, index) => (
+        <TableCell key={index}>{title}</TableCell>
+    ));
 
     function saveToLocalStorage() {
         const tableData = {
             titles: titles,
-            rows: rows
+            rows: rows,
         };
         localStorage.setItem(`${dataname}_tableData`, JSON.stringify(tableData));
         alert('המידע נשמר בהצלחה!');
@@ -100,23 +133,26 @@ export default function AdminTable({ titles, rows, dataname }) {
             <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
                     <TableHead>
-                        <TableRow>
-                            {titles_html}
-                        </TableRow>
+                        <TableRow>{titles_html}</TableRow>
                     </TableHead>
-                    <TableBody>
-                        {rows_html}
-                    </TableBody>
+                    <TableBody>{rows_html}</TableBody>
                 </Table>
             </TableContainer>
             <Button
                 variant="contained"
                 onClick={saveToLocalStorage}
-                style={{ marginTop: '10px' , backgroundColor: '#4CAF50', color: 'white' } } // Add custom styles here
+                style={{ marginTop: '10px', backgroundColor: '#4CAF50', color: 'white' }}
             >
                 שמור את הנתונים
             </Button>
+            <Button
+                variant="contained"
+                onClick={addNewRow}
+                style={{ marginTop: '10px', marginLeft: '10px', backgroundColor: '#2196F3', color: 'white' }}
+            >
+                הוסף רשומה חדשה
+            </Button>
         </div>
-    )
+    );
 }
 
