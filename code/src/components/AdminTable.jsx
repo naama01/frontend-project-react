@@ -19,6 +19,7 @@ export default function AdminTable({ titles, rows: initialRows, dataname }) {
         setRows(updatedRows);
     }
 
+    
     function handleEdit(rowIndex) {
         setEditingRowIndex(rowIndex);
     }
