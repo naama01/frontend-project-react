@@ -119,6 +119,7 @@ export default function AdminTable({ titles, rows: initialRows, dataname }) {
     const titles_html = titles.map((title, index) => (
         <TableCell key={index}>{title}</TableCell>
     ));
+    titles_html.push(<TableCell key={titles.length}></TableCell>); // space for actions column
 
     function saveToLocalStorage() {
         const tableData = {
@@ -133,7 +134,7 @@ export default function AdminTable({ titles, rows: initialRows, dataname }) {
         <div>
             <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                    <TableHead>
+                    <TableHead > 
                         <TableRow>{titles_html}</TableRow>
                     </TableHead>
                     <TableBody>{rows_html}</TableBody>
@@ -145,13 +146,6 @@ export default function AdminTable({ titles, rows: initialRows, dataname }) {
                 style={{ marginTop: '10px', backgroundColor: '#4CAF50', color: 'white' }}
             >
                 שמור את הנתונים
-            </Button>
-            <Button
-                variant="contained"
-                onClick={addNewRow}
-                style={{ marginTop: '10px', marginLeft: '10px', backgroundColor: '#2196F3', color: 'white' }}
-            >
-                הוסף רשומה חדשה
             </Button>
         </div>
     );
