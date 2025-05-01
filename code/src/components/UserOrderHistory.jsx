@@ -1,27 +1,34 @@
-import 'react'
-import UserTable from '././UserTable'
+import React, { useEffect, useState } from 'react';
+import UserTable from './UserTable';
+import { useCart } from './CartContext'; // Import the useCart hook
 
 export default function UserOrderHistory() {
-  const titles = ["מספר הזמנה", "תאריך הזמנה", "פריטים נרכשים", "כמות", "מחיר כולל", "סטטוס הזמנה"]
+  const titles = ["מספר הזמנה", "תאריך הזמנה", "פריטים נרכשים", "כמות", "מחיר כולל", "סטטוס הזמנה"];
+  const [rows, setRows] = useState([]);
+  const { currentStudentId } = useCart(); // Access the current student ID from the context
 
-  const rows = [
-    ["5266", "27/4/2024", "סלט", "3", "20", "נשלחה"],
-    ["6459", "23/4/2024", "סלט", "1", "38", "ממתינה לאיסוף"],
-    ["3458", "5/6/2024", "פיצה", "4", "364", "נשלחה"],
-    ["7976", "7/7/2024", "פסטה", "5", "345", "נשלחה"],
-    ["2518", "7/11/2024", "פסטה", "3", "186", "נשלחה"],
-    ["6223", "6/5/2024", "פיצה", "3", "210", "נשלחה"],
-    ["8546", "10/4/2024", "צהריים של אמא", "5", "345", "נשלחה"],
-    ["2577", "20/6/2024", "לחם המכללה", "1", "96", "הושלמה"],
-    ["9960", "11/7/2024", "פסטה", "5", "410", "נשלחה"],
-    ["9709", "13/7/2024", "פסטה", "1", "98", "נשלחה"]
-  ]
-
-
+  useEffect(() => {
+    const storedOrderHistory = JSON.parse(localStorage.getItem('orderhistory_tableData')) || { rows: [] };
+    const filteredOrders = storedOrderHistory.rows
+      .filter(order => order.shipmentInfo?.student?.id === currentStudentId)
+      .map((order, index) => {
+        const totalQuantity = order.cart.reduce((sum, item) => sum + item.quantity, 0);
+        const purchasedItems = order.cart.map(item => item.dishName).join(", ");
+        return [
+          index + 1,
+          order.date,
+          purchasedItems,
+          totalQuantity,
+          `₪${order.totalAmount.toFixed(2)}`,
+          "הושלמה"
+        ];
+      });
+    setRows(filteredOrders);
+  }, [currentStudentId]);
 
   return (
     <div>
       <UserTable titles={titles} rows={rows} />
     </div>
-  )
+  );
 }

@@ -12,6 +12,8 @@ import UserOrderStatus from './components/UserOrderStatus'
 import HelpPage from './components/HelpPage'
 import { Routes, Route } from 'react-router-dom'
 import SelectComponent from './components/SelectComponent'
+import ConfirmOrder from './components/ConfirmOrder'
+import SupportChat from './components/SupportChat'
 
 
 
@@ -20,6 +22,7 @@ export default function App() {
 
 
   return (
+    
     <div>
       <TopMenu title="המזנון של אונו - הסטוריית הזמנות" />
       <div >
@@ -32,6 +35,8 @@ export default function App() {
         <Route path="/AdminStudents" element={<AdminStudents />} />
         <Route path="/UserOrderHistory" element={<UserOrderHistory />} />
         <Route path="/UserOrderStatus" element={<UserOrderStatus />} />
+        <Route path="/ConfirmOrder" element={<ConfirmOrder />} />
+        <Route path="/SupportChat" element={<SupportChat />} />
       </Routes>
 
       </div>
