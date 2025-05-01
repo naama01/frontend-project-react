@@ -24,7 +24,7 @@ export default function App() {
   return (
     
     <div>
-      <TopMenu title="המזנון של אונו - הסטוריית הזמנות" />
+      <TopMenu title="המזנונו" />
       <div >
       <Routes >
       <Route path='/' element={<UserNewOrder />} />
