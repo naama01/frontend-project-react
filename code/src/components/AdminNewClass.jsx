@@ -1,15 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { TextField, Checkbox, Button, FormControlLabel } from '@mui/material';
 
-export default function AdminNewDish({ onAddRow, onCancel, data }) {
+export default function AdminNewClass({ onAddRow, onCancel, data }) {
   const [formData, setFormData] = useState({
-    dishId: '',
-    dishName: '',
-    dishDescription: '',
-    dishPicPath: '',
-    dishPrice: '',
-    dishTime: '',
-    dishEnabled: false,
+    classId: '',
+    classLocation: '',
+    classEnabled: false,
   });
 
   const [errors, setErrors] = useState({});
@@ -21,13 +17,9 @@ export default function AdminNewDish({ onAddRow, onCancel, data }) {
   useEffect(() => {
     if (data) {
       setFormData({
-        dishId: data[0] || '',
-        dishName: data[1] || '',
-        dishDescription: data[2] || '',
-        dishPicPath: data[3] || '',
-        dishPrice: data[4] || '',
-        dishTime: data[5] || '',
-        dishEnabled: data[6] || false,
+        classId: data[0] || '',
+        classLocation: data[1] || '',
+        classEnabled: data[2] || false,
       });
     }
   }, [data]);
@@ -46,7 +38,7 @@ export default function AdminNewDish({ onAddRow, onCancel, data }) {
     // Validate all fields
     const newErrors = {};
     Object.keys(formData).forEach((key) => {
-      if (!formData[key] && key !== 'dishEnabled') {
+      if (!formData[key] && key !== 'classEnabled') {
         newErrors[key] = `${key} הוא שדה חובה.`;
       }
     });
@@ -56,18 +48,14 @@ export default function AdminNewDish({ onAddRow, onCancel, data }) {
       return;
     }
 
-    // Pass the new or updated dish data to the parent component
+    // Pass the new or updated class data to the parent component
     onAddRow(formData);
 
     // Reset the form
     setFormData({
-      dishId: '',
-      dishName: '',
-      dishDescription: '',
-      dishPicPath: '',
-      dishPrice: '',
-      dishTime: '',
-      dishEnabled: false,
+      classId: '',
+      classLocation: '',
+      classEnabled: false,
     });
     setErrors({});
   }
@@ -75,13 +63,9 @@ export default function AdminNewDish({ onAddRow, onCancel, data }) {
   function handleCancel() {
     // Reset the form
     setFormData({
-      dishId: '',
-      dishName: '',
-      dishDescription: '',
-      dishPicPath: '',
-      dishPrice: '',
-      dishTime: '',
-      dishEnabled: false,
+      classId: '',
+      classLocation: '',
+      classEnabled: false,
     });
     setErrors({});
     onCancel(); // Call the onCancel function to bring back the table
@@ -91,71 +75,71 @@ export default function AdminNewDish({ onAddRow, onCancel, data }) {
     <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', width: '300px', gap: '10px' }}>
       <TextField
         label="מספר מנה"
-        name="dishId"
-        value={formData.dishId}
+        name="classId"
+        value={formData.classId}
         onChange={handleInputChange}
-        error={!!errors.dishId}
-        helperText={errors.dishId}
+        error={!!errors.classId}
+        helperText={errors.classId}
         required
-        inputProps={{ min: 0, max: 100 }} //need to understand what is the correct key
+        inputProps={{ min: 0, max: 100 }}
       />
       <TextField
         label="שם המנה"
-        name="dishName"
-        value={formData.dishName}
+        name="classLocation"
+        value={formData.classLocation}
         onChange={handleInputChange}
-        error={!!errors.dishName}
-        helperText={errors.dishName}
+        error={!!errors.classLocation}
+        helperText={errors.classLocation}
         required
       />
       <TextField
         label="תיאור המנה"
-        name="dishDescription"
-        value={formData.dishDescription}
+        name="classDescription"
+        value={formData.classDescription}
         onChange={handleInputChange}
-        error={!!errors.dishDescription}
-        helperText={errors.dishDescription}
+        error={!!errors.classDescription}
+        helperText={errors.classDescription}
         multiline
         rows={3}
         required
       />
       <TextField
         label="נתיב לתמונה"
-        name="dishPicPath"
-        value={formData.dishPicPath}
+        name="classPicPath"
+        value={formData.classPicPath}
         onChange={handleInputChange}
-        error={!!errors.dishPicPath}
-        helperText={errors.dishPicPath}
+        error={!!errors.classPicPath}
+        helperText={errors.classPicPath}
         required
       />
       <TextField
         label="מחיר"
-        name="dishPrice"
+        name="classPrice"
         type="number"
-        value={formData.dishPrice}
+        value={formData.classPrice}
         onChange={handleInputChange}
-        error={!!errors.dishPrice}
-        helperText={errors.dishPrice}
+        error={!!errors.classPrice}
+        helperText={errors.classPrice}
         required
       />
       <TextField
         label="זמן הכנה"
-        name="dishTime"
-        value={formData.dishTime}
+        name="classTime"
+        value={formData.classTime}
         onChange={handleInputChange}
-        error={!!errors.dishTime}
-        helperText={errors.dishTime}
+        error={!!errors.classTime}
+        helperText={errors.classTime}
         required
       />
       <FormControlLabel
         control={
           <Checkbox
-            name="dishEnabled"
-            checked={formData.dishEnabled}
+            name="classEnabled"
+            checked={formData.classEnabled}
             onChange={handleInputChange}
           />
         }
-        label="dishEnabled"
+        label="classEnabled"
       />
       <Button type="submit" variant="contained" color="primary" style={{ padding: '10px' }}>
         {data ? 'עדכן מנה' : 'הוסף מנה'}
