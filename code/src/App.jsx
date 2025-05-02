@@ -14,6 +14,7 @@ import { Routes, Route } from 'react-router-dom'
 import SelectComponent from './components/SelectComponent'
 import ConfirmOrder from './components/ConfirmOrder'
 import SupportChat from './components/SupportChat'
+import UpdateStudentSelf from './components/UpdateStudentSelf'
 
 
 
@@ -29,6 +30,7 @@ export default function App() {
       <Routes >
       <Route path='/' element={<UserNewOrder />} />
       <Route path='/help' element={<HelpPage />} />
+      <Route path='/UpdateStudentSelf' element={<UpdateStudentSelf />} />
       <Route path="/AdminClasses" element={<AdminClasses />} />
         <Route path="/AdminDishes" element={<AdminDishes />} />
         <Route path="/AdminOrders" element={<AdminOrders />} />

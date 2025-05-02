@@ -27,9 +27,6 @@ export default function TopMenu({ title }) {
           שירות ותמיכה
           <ul className="subMenu">
           <li onClick={() => navigate("/SupportChat")}>לצ׳ט עם מייקל</li>
-          <li>שלח פניה</li>
-            <li>אודות שירות המשלוחים</li>
-            <li>תקנון השירות</li>
             <li onClick={() => navigate("/help")}>עזרה</li>
           </ul>
         </li>
@@ -38,7 +35,7 @@ export default function TopMenu({ title }) {
           <ul className="subMenu">
             <li onClick={() => navigate("/UserOrderStatus")}>סטטוס הזמנה פתוחה</li>
             <li onClick={() => navigate("/UserOrderHistory")}>הסטורית הזמנות</li>
-            <li>עדכון פרטים</li>
+            <li onClick={() => navigate("/UpdateStudentSelf")}>עדכון פרטים</li>
           </ul>
         </li>
         <li className="menuItem">

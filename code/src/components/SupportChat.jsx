@@ -25,7 +25,7 @@ export default function SupportChat() {
   };
 
   return (
-    <div style={{ width: '400px', margin: '20px auto', border: '1px solid #ccc', borderRadius: '10px', padding: '10px', backgroundColor: '#f9f9f9' }}>
+    <div style={{  width: '400px', margin: '20px auto', border: '1px solid #ccc', borderRadius: '10px', padding: '10px', backgroundColor: 'rgba(46, 57, 1, 0.26)' }}>
       <h2 style={{ textAlign: 'center' }}>צ'אט תמיכה</h2>
       <div style={{ height: '300px', overflowY: 'auto', border: '1px solid #ddd', borderRadius: '5px', padding: '10px', marginBottom: '10px', backgroundColor: '#fff' }}>
         {messages.map((message, index) => (

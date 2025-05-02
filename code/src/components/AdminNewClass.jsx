@@ -142,7 +142,7 @@ export default function AdminNewClass({ onAddRow, onCancel, data }) {
         label="classEnabled"
       />
       <Button type="submit" variant="contained" color="primary" style={{ padding: '10px' }}>
-        {data ? 'עדכן מנה' : 'הוסף מנה'}
+        {data ? 'כיתה מנה' : 'הוסף כיתה'}
       </Button>
       <Button
         type="button"
