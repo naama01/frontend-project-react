@@ -16,7 +16,7 @@ export default function TopMenu({ title }) {
 
   // Calculate the total amount
   const totalAmount = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-
+ 
   return (
     <div className="TopHeader">
       <h1 className="title" onClick={() => navigate("/")}>{title}</h1>
@@ -45,13 +45,6 @@ export default function TopMenu({ title }) {
             <li onClick={() => navigate("/AdminOrders")}>ניהול הזמנות</li>
             <li onClick={() => navigate("/AdminDishes")}>ניהול תפריט</li>
             <li onClick={() => navigate("/AdminStudents")}>ניהול סטודנטים</li>
-          </ul>
-        </li>
-        <li className="menuItem">
-          יציאה
-          <ul className="subMenu">
-            <li>צא</li>
-            <li>צא ורוקן את הסל</li>
           </ul>
         </li>
       </ul>
