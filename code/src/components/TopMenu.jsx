@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '../components/CartContext';
-import { TextField, MenuItem } from '@mui/material';
+import { TextField, MenuItem, Typography } from '@mui/material';
 
 export default function TopMenu({ title }) {
   const navigate = useNavigate();
@@ -19,7 +19,14 @@ export default function TopMenu({ title }) {
  
   return (
     <div className="TopHeader">
-      <h1 className="title" onClick={() => navigate("/")}>{title}</h1>
+      <Typography
+        variant="h3" // Adjust the variant to match the heading size
+        component="h1"
+        onClick={() => navigate("/")}
+        style={{ cursor: 'pointer', marginRight: '20px' }} // Add styles for pointer and color
+      >
+        {title}
+      </Typography>
 
       <ul className="menu">
         <li className="menuItem" onClick={() => navigate("/")}>מסך ראשי</li>
@@ -57,13 +64,12 @@ export default function TopMenu({ title }) {
       </ul>
 
       {/* Student Selection */}
-      <div style={{ marginBottom: '20px' }}>
         <TextField
           select
-          label="בחר תלמיד"
+          label="סטודנט נוכחי"
           value={currentStudentId || ''}
           onChange={(e) => setCurrentStudentId(e.target.value)} // Update the context when student changes
-          style={{ width: '300px' }}
+          style={{ minWidth: '200px' }}
         >
           {students.map((student, index) => (
             <MenuItem key={index} value={student[0]}> {}
@@ -71,7 +77,6 @@ export default function TopMenu({ title }) {
             </MenuItem>
           ))}
         </TextField>
-      </div>
 
       <div className="cart">
         <span>סה"כ בעגלה: ₪{totalAmount.toFixed(2)}</span>

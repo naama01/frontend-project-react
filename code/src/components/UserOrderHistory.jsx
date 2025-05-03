@@ -19,7 +19,7 @@ export default function UserOrderHistory() {
           order.date,
           purchasedItems,
           totalQuantity,
-          `₪${order.totalAmount.toFixed(2)}`,
+          `₪${order.totalAmount}`,
           "הושלמה"
         ];
       });

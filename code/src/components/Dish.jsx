@@ -5,7 +5,7 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import { useCart } from '../components/CartContext';
 
-export default function Dish({ dishId, dishName, desc, price }) {
+export default function Dish({ dishId, dishName, desc, price ,perpTime}) {
     const { addToCart } = useCart(); // Access the addToCart function from the context
     const [total, setTotal] = useState(1);
 
@@ -34,19 +34,39 @@ export default function Dish({ dishId, dishName, desc, price }) {
             <p className="price">{price} ש״ח</p>
             <div className="dishCTRL">
                 <ButtonGroup variant="text" color="primary" aria-label="">
-                    <Button  variant="contained" color="primary" onClick={() => changeTotal("0")}>-</Button>
+                    <Button variant="contained" style={{
+                        padding: '5px 10px',
+                        backgroundColor: '#4CAF50',
+                        color: 'white',
+                        border: 'none',
+                        borderRadius: '5px',
+                    }} onClick={() => changeTotal("0")}>-</Button>
                     <TextField
                         size="small"
-                        sx={{ width: '80px' }}
+                        sx={{ width: '60px',
+                        }}
                         id="outlined-basic"
                         variant="outlined"
                         value={total}
                         readOnly
                     />
-                    <Button variant="contained" color="primary" onClick={() => changeTotal("1")}>+</Button>
+                    <Button variant="contained" style={{
+                        marginLeft: '10px',
+                        padding: '5px 10px',
+                        backgroundColor: '#4CAF50',
+                        color: 'white',
+                        border: 'none',
+                        borderRadius: '5px',
+                    }} onClick={() => changeTotal("1")}>+</Button>
                     <Button
                         variant="contained"
-                        color="primary"
+                        style={{
+                            padding: '5px 10px',
+                            backgroundColor: '#4CAF50',
+                            color: 'white',
+                            border: 'none',
+                            borderRadius: '5px',
+                        }}
                         onClick={handleAddToCart}
                     >
                         הוסף לעגלה
