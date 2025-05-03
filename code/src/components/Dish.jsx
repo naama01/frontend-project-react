@@ -5,7 +5,7 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import { useCart } from '../components/CartContext';
 
-export default function Dish({ dishId, dishName, desc, price ,perpTime}) {
+export default function Dish({ dishId, dishName, desc, price, prepTime }) {
     const { addToCart } = useCart(); // Access the addToCart function from the context
     const [total, setTotal] = useState(1);
 
@@ -32,6 +32,7 @@ export default function Dish({ dishId, dishName, desc, price ,perpTime}) {
             <p className="description">{desc}</p>
             <img src={`../../img/dishes/${dishId}.jpg`} alt="תמונת המנה" />
             <p className="price">{price} ש״ח</p>
+            <p className="prepTime">זמן הכנה: {prepTime} דקות</p>
             <div className="dishCTRL">
                 <ButtonGroup variant="text" color="primary" aria-label="">
                     <Button variant="contained" style={{
@@ -43,13 +44,15 @@ export default function Dish({ dishId, dishName, desc, price ,perpTime}) {
                     }} onClick={() => changeTotal("0")}>-</Button>
                     <TextField
                         size="small"
-                        sx={{ width: '60px',
+                        sx={{
+                            width: '60px',
                         }}
                         id="outlined-basic"
                         variant="outlined"
                         value={total}
                         readOnly
                     />
+     
                     <Button variant="contained" style={{
                         marginLeft: '10px',
                         padding: '5px 10px',
