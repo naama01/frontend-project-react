@@ -6,7 +6,6 @@ export default function AdminNewDish({ onAddRow, onCancel, data }) {
     dishId: '',
     dishName: '',
     dishDescription: '',
-    dishPicPath: '',
     dishPrice: '',
     dishTime: '',
     dishEnabled: false,
@@ -24,10 +23,9 @@ export default function AdminNewDish({ onAddRow, onCancel, data }) {
         dishId: data[0] || '',
         dishName: data[1] || '',
         dishDescription: data[2] || '',
-        dishPicPath: data[3] || '',
-        dishPrice: data[4] || '',
-        dishTime: data[5] || '',
-        dishEnabled: data[6] || false,
+        dishPrice: data[3] || '',
+        dishTime: data[4] || '',
+        dishEnabled: data[5] || false,
       });
     }
   }, [data]);
@@ -64,7 +62,6 @@ export default function AdminNewDish({ onAddRow, onCancel, data }) {
       dishId: '',
       dishName: '',
       dishDescription: '',
-      dishPicPath: '',
       dishPrice: '',
       dishTime: '',
       dishEnabled: false,
@@ -78,7 +75,6 @@ export default function AdminNewDish({ onAddRow, onCancel, data }) {
       dishId: '',
       dishName: '',
       dishDescription: '',
-      dishPicPath: '',
       dishPrice: '',
       dishTime: '',
       dishEnabled: false,
@@ -119,15 +115,7 @@ export default function AdminNewDish({ onAddRow, onCancel, data }) {
         rows={3}
         required
       />
-      <TextField
-        label="נתיב לתמונה"
-        name="dishPicPath"
-        value={formData.dishPicPath}
-        onChange={handleInputChange}
-        error={!!errors.dishPicPath}
-        helperText={errors.dishPicPath}
-        required
-      />
+
       <TextField
         label="מחיר"
         name="dishPrice"
