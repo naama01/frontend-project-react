@@ -18,7 +18,7 @@ export default function ConfirmOrder() {
   useEffect(() => {
     const storedStudents = JSON.parse(localStorage.getItem('students_tableData')) || { rows: [] };
     if (currentStudentId) {
-      const student = storedStudents.rows.find((s) => s[0] === currentStudentId); // Assuming student ID is in the first column
+      const student = storedStudents.rows.find((s) => s[0] === currentStudentId); 
       if (student) {
         setStudentDetails({
           id: student[0],

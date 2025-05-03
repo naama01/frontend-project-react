@@ -77,7 +77,7 @@ export default function UpdateStudentSelf() {
     >
       <h2>עדכון מידע אישי</h2>
       <TextField
-        label="Name"
+        label="שם"
         name="name"
         value={formData.name}
         onChange={handleInputChange}
@@ -86,7 +86,7 @@ export default function UpdateStudentSelf() {
         required
       />
       <TextField
-        label="Email"
+        label="מייל"
         name="email"
         type="email"
         value={formData.email}
@@ -96,7 +96,7 @@ export default function UpdateStudentSelf() {
         required
       />
       <TextField
-        label="Phone"
+        label="טלפון"
         name="phone"
         type="tel"
         value={formData.phone}
@@ -106,7 +106,7 @@ export default function UpdateStudentSelf() {
         required
       />
       <Button
-        type="submit"
+        type="שמור"
         variant="contained"
         color="primary"
         style={{ padding: '10px' }}

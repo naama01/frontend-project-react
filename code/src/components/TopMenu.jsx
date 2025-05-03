@@ -46,7 +46,14 @@ export default function TopMenu({ title }) {
             <li onClick={() => navigate("/AdminDishes")}>ניהול תפריט</li>
             <li onClick={() => navigate("/AdminStudents")}>ניהול סטודנטים</li>
           </ul>
-        </li>
+          </li>
+
+          <li className="menuItem">
+           יציאה
+          <ul className="subMenu">
+            <li onClick={() => window.location.reload()}>צא ורוקן את הסל</li>
+ֿ</ul>
+          </li>
       </ul>
 
       {/* Student Selection */}
@@ -59,8 +66,8 @@ export default function TopMenu({ title }) {
           style={{ width: '300px' }}
         >
           {students.map((student, index) => (
-            <MenuItem key={index} value={student[0]}> {/* Assuming student ID is in the first column */}
-              {student[1]} ({student[0]}) {/* Assuming student name is in the second column */}
+            <MenuItem key={index} value={student[0]}> {}
+              {student[1]} ({student[0]}) {}
             </MenuItem>
           ))}
         </TextField>
