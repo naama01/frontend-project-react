@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { TextField, Checkbox, Button, FormControlLabel } from '@mui/material';
+import { addDoc, collection } from 'firebase/firestore';
+import { firestore, FireWriteDoc } from '../firebase.js'; // Adjust the import path as necessary
 
 export default function AdminNewDish({ onAddRow, onCancel, data }) {
   const [formData, setFormData] = useState({
@@ -38,7 +40,7 @@ export default function AdminNewDish({ onAddRow, onCancel, data }) {
     });
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
 
     // Validate all fields
@@ -54,19 +56,37 @@ export default function AdminNewDish({ onAddRow, onCancel, data }) {
       return;
     }
 
-    // Pass the new or updated dish data to the parent component
-    onAddRow(formData);
+    try {
+      // Save the dish to Firestore using FireWriteDoc
+      const docId = await FireWriteDoc('dishes', {
+        dishId: formData.dishId,
+        dishName: formData.dishName,
+        dishDescription: formData.dishDescription,
+        dishPrice: formData.dishPrice,
+        dishTime: formData.dishTime,
+        dishEnabled: formData.dishEnabled,
+      });
 
-    // Reset the form
-    setFormData({
-      dishId: '',
-      dishName: '',
-      dishDescription: '',
-      dishPrice: '',
-      dishTime: '',
-      dishEnabled: false,
-    });
-    setErrors({});
+      console.log('Dish added with ID:', docId);
+
+      // Pass the new or updated dish data to the parent component
+      onAddRow(formData);
+
+      // Reset the form
+      setFormData({
+        dishId: '',
+        dishName: '',
+        dishDescription: '',
+        dishPrice: '',
+        dishTime: '',
+        dishEnabled: false,
+      });
+      setErrors({});
+      alert('העדכון הצליח!');
+    } catch (error) {
+      console.error('Error adding dish to Firestore:', error);
+      alert('שגיאה בשמירת הנתונים.');
+    }
   }
 
   function handleCancel() {

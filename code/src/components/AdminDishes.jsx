@@ -3,10 +3,11 @@ import AdminTable from './AdminTable';
 import AdminNewDish from './AdminNewDish';
 import Button from '@mui/material/Button';
 import { Box } from '@mui/material';
+import { fireWriteCollection, fireReadCollection} from '../firebase'; // Import Firestore functions
 
 export default function AdminDishes() {
-  const dataname = "dishes"; // Define the prefix for local storage
-  const titles = ["מספר מנה", "שם המנה", "תיאור המנה",  "מחיר", "זמן הכנה", "פעילה"];
+  const dataname = "dishes"; // Define the prefix for Firestore collection
+  const titles = ["מספר מנה", "שם המנה", "תיאור המנה", "מחיר", "זמן הכנה", "פעילה"];
   const defaultRows = [
     ["1", "סלט", "סלט טרי קצוץ", "25", "10", true],
     ["2", "לחם המכללה", "מאפה ומתבלים", "13", "10", true],
@@ -19,10 +20,32 @@ export default function AdminDishes() {
     ["9", "אדממה", "150 גרם", "22", "10", true],
   ];
 
-  const [rows, setRows] = useState(() => {
-    const storedRows = localStorage.getItem(`${dataname}_tableData`);
-    return storedRows ? JSON.parse(storedRows).rows : defaultRows;
-  });
+  const [rows, setRows] = useState([]);
+
+  useEffect(() => {
+    // Fetch data from Firestore and set it to rows
+    fireReadCollection(dataname)
+      .then((data) => {
+        if (data.length === 0) {
+          // If Firestore is empty, write defaultRows to Firestore
+          fireWriteCollection(dataname, defaultRows.map((row) => {
+            const doc = {};
+            titles.forEach((title, index) => {
+              doc[title] = row[index];
+            });
+            return doc;
+          })).then(() => {
+            setRows(defaultRows); // Set defaultRows to state
+          });
+        } else {
+          // Set Firestore data to rows
+          setRows(data.map((doc) => titles.map((title) => doc[title])));
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching data from Firestore:", error);
+      });
+  }, []); // Run only once on component mount
 
   const [showNewRowForm, setShowNewRowForm] = useState(false);
 
