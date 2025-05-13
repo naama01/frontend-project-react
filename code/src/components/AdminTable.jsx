@@ -8,7 +8,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
 import { IconButton } from '@mui/material';
-import { collection, getDocs, query, where } from "firebase/firestore";
+import { collection, getDocs } from "firebase/firestore";
 import { firestore, FireWriteDoc } from "../firebase"; // Ensure correct import of Firestore instance
 
 
@@ -144,36 +144,40 @@ export default function AdminTable({ titles, rows: initialRows, dataname }) {
     ));
     titles_html.push(<TableCell key={titles.length}></TableCell>); // space for actions column
 
-    async function saveToLocalStorage() {
+    function saveToLocalStorage() {
         const tableData = {
             titles: titles,
             rows: rows,
         };
-
-        try {
-            for (const row of rows) {
-                const doc = {};
-                titles.forEach((title, index) => {
-                    doc[title] = row[index];
-                });
-
-            
-                const querySnapshot = await getDocs(q);
-
-                if (querySnapshot.empty) {
-                    // If no duplicate is found, save the record
-                    await FireWriteDoc(dataname, doc);
-                } else {
-                    console.log(`Duplicate record found for ID: ${doc.id}. Skipping save.`);
-                }
-            }
-
-            alert("הנתונים נשמרו בהצלחה!");
-        } catch (error) {
-            console.error("Error saving data to Firestore:", error);
-            alert("שגיאה בשמירת הנתונים.");
-        }
+        //localStorage.setItem(`${dataname}_tableData`, JSON.stringify(tableData));
+        rows.map((row) => {
+            const doc = {};
+            titles.forEach((title, index) => {
+                doc[title] = row[index];
+            });
+            FireWriteDoc(dataname, doc);
+        });
+        alert("הנתונים נשמרו בהצלחה!");
     }
 
     return (
         <div>
+            <TableContainer component={Paper}>
+                <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                    <TableHead > 
+                        <TableRow>{titles_html}</TableRow>
+                    </TableHead>
+                    <TableBody>{rows_html}</TableBody>
+                </Table>
+            </TableContainer>
+            <Button
+                variant="contained"
+                onClick={saveToLocalStorage}
+                style={{ marginTop: '10px', backgroundColor: '#4CAF50', color: 'white' }}
+            >
+                שמור את הנתונים
+            </Button>
+        </div>
+    );
+}
+
