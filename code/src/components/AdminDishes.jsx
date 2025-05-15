@@ -3,11 +3,10 @@ import AdminTable from './AdminTable';
 import AdminNewDish from './AdminNewDish';
 import Button from '@mui/material/Button';
 import { Box } from '@mui/material';
-import { fireWriteCollection, fireReadCollection} from '../firebase'; // Import Firestore functions
+import { fireWriteCollection, fireReadCollection, fireReadTitles } from '../firebase'; // Import Firestore functions
 
 export default function AdminDishes() {
   const dataname = "dishes"; // Define the prefix for Firestore collection
-  const titles = ["מספר מנה", "שם המנה", "תיאור המנה", "מחיר", "זמן הכנה", "פעילה"];
   const defaultRows = [
     ["1", "סלט", "סלט טרי קצוץ", "25", "10", true],
     ["2", "לחם המכללה", "מאפה ומתבלים", "13", "10", true],
@@ -21,10 +20,21 @@ export default function AdminDishes() {
   ];
 
   const [rows, setRows] = useState([]);
+  const [titles, setTitles] = useState([]); // Dynamically generated titles
 
   useEffect(() => {
-    // Fetch data from Firestore and set it to rows
-    fireReadCollection(dataname)
+    // Fetch titles first
+    fireReadTitles(dataname)
+      .then((titlesData) => {
+        if (titlesData) {
+          setTitles(Object.values(titlesData)); // Set titles from the "titles" document
+        } else {
+          console.error("No titles document found!");
+        }
+
+        // Fetch dishes after titles are retrieved
+        return fireReadCollection(dataname);
+      })
       .then((data) => {
         if (data.length === 0) {
           // If Firestore is empty, write defaultRows to Firestore
@@ -39,7 +49,7 @@ export default function AdminDishes() {
           });
         } else {
           // Set Firestore data to rows
-          setRows(data.map((doc) => titles.map((title) => doc[title])));
+          setRows(data);
         }
       })
       .catch((error) => {
@@ -52,11 +62,11 @@ export default function AdminDishes() {
   useEffect(() => {
     // Save rows to local storage whenever they change
     const tableData = { titles, rows };
-    localStorage.setItem(`${dataname}_tableData`, JSON.stringify(tableData));
+    //localStorage.setItem(`${dataname}_tableData`, JSON.stringify(tableData));
   }, [rows]);
 
   function handleAddRow(newRow) {
-    setRows([...rows, Object.values(newRow)]); // Add the new row to the rows
+    setRows([...rows, newRow]); // Add the new row to the rows
     setShowNewRowForm(false); // Hide the form after adding
   }
 
@@ -64,7 +74,9 @@ export default function AdminDishes() {
     <div>
       {showNewRowForm || (
         <Box>
-          <AdminTable titles={titles} rows={rows} dataname={dataname} />
+          {titles.length > 0 && (
+            <AdminTable titles={titles} rows={rows} dataname={dataname} />
+          )}
           <Button
             variant="contained"
             color="primary"

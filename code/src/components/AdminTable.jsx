@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -8,48 +8,33 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
 import { IconButton } from '@mui/material';
-import { collection, getDocs } from "firebase/firestore";
-import { firestore, FireWriteDoc } from "../firebase"; // Ensure correct import of Firestore instance
+import { fireReadTitles, fireReadCollection } from '../firebase'; // Import Firestore functions
 
+export default function AdminTable({ dataname }) {
+    const [rows, setRows] = useState([]);
+    const [titles, setTitles] = useState([]); // Dynamically generated titles
 
-export function fireGetColl(dataname) {
-    return getDocs(collection(firestore, dataname))
-      .then((querySnapshot) => {
-        const documents = querySnapshot.docs.map((doc) => ({
-          id: doc.id, // Include the document ID
-          ...doc.data(), // Spread the document data
-        }));
-        console.log(`Documents retrieved from ${dataname}:`, documents);
-        return documents; // Return the array of documents
-      })
-      .catch((error) => {
-        console.error(`Error retrieving documents from ${dataname}:`, error);
-        throw error; // Re-throw the error to handle it in the calling function
-      });
-  }
+    // Fetch titles and rows from Firestore
+    useEffect(() => {
+        // Fetch titles first
+        fireReadTitles(dataname)
+            .then((titlesData) => {
+                if (titlesData) {
+                    setTitles(Object.values(titlesData)); // Set titles from the "titles" document
+                } else {
+                    console.error("No titles document found!");
+                }
 
-export default function AdminTable({ titles, rows: initialRows, dataname }) {
-    const [rows, setRows] = useState(initialRows);
-    const [editingRowIndex, setEditingRowIndex] = useState(null);
-
-
-
-    
-
-    function handleInputChange(rowIndex, cellIndex, value) {
-        const updatedRows = [...rows];
-        updatedRows[rowIndex][cellIndex] = value;
-        setRows(updatedRows);
-    }
-
-    
-    function handleEdit(rowIndex) {
-        setEditingRowIndex(rowIndex);
-    }
-
-    function handleSave(rowIndex) {
-        setEditingRowIndex(null); // Exit edit mode
-    }
+                // Fetch rows after titles are retrieved
+                return fireReadCollection(dataname);
+            })
+            .then((data) => {
+                setRows(data); // Set rows from Firestore
+            })
+            .catch((error) => {
+                console.error("Error fetching data from Firestore:", error);
+            });
+    }, [dataname]);
 
     function handleDelete(rowIndex) {
         const updatedRows = rows.filter((_, index) => index !== rowIndex);
@@ -57,46 +42,17 @@ export default function AdminTable({ titles, rows: initialRows, dataname }) {
     }
 
     function addNewRow() {
-        const emptyRow = titles.map(() => ""); // Create an empty row with the same number of columns as titles
+        const emptyRow = titles.reduce((acc, title) => {
+            acc[title] = ""; // Create an empty object with keys matching the titles
+            return acc;
+        }, {});
         setRows([...rows, emptyRow]); // Add the new row to the rows state
-        setEditingRowIndex(rows.length); // Set the new row to edit mode
     }
 
     function createRow(row, rowIndex) {
-        return row.map((item, cellIndex) => {
-            if (editingRowIndex === rowIndex) {
-                // Editable mode
-                if (typeof item === 'boolean') {
-                    return (
-                        <TableCell key={cellIndex}>
-                            <input
-                                type="checkbox"
-                                checked={item}
-                                onChange={(e) => handleInputChange(rowIndex, cellIndex, e.target.checked)}
-                            />
-                        </TableCell>
-                    );
-                }
-                return (
-                    <TableCell key={cellIndex}>
-                        <input
-                            type="text"
-                            value={item}
-                            onChange={(e) => handleInputChange(rowIndex, cellIndex, e.target.value)}
-                        />
-                    </TableCell>
-                );
-            }
-            // View mode
-            if (typeof item === 'boolean') {
-                return (
-                    <TableCell key={cellIndex}>
-                        <input type="checkbox" checked={item} readOnly />
-                    </TableCell>
-                );
-            }
-            return <TableCell key={cellIndex}>{item}</TableCell>;
-        });
+        return titles.map((title, cellIndex) => (
+            <TableCell key={cellIndex}>{row[title]}</TableCell>
+        ));
     }
 
     const rows_html = rows.map((row, rowIndex) => (
@@ -104,28 +60,6 @@ export default function AdminTable({ titles, rows: initialRows, dataname }) {
             {createRow(row, rowIndex)}
             <TableCell>
                 <div style={{ display: 'flex', gap: '8px', justifyContent: 'center', alignItems: 'center' }}>
-                    {editingRowIndex === rowIndex ? (
-                        <>
-                            <IconButton
-                                aria-label="save"
-                                size="small"
-                                style={{ color: '#4CAF50' }}
-                                onClick={() => handleSave(rowIndex)}
-                            >
-                                💾
-                            </IconButton>
-                        </>
-                    ) : (
-                        <IconButton
-                            aria-label="edit"
-                            size="small"
-                            style={{ color: '#2196F3' }}
-                            onClick={() => handleEdit(rowIndex)}
-                        >
-                            📝
-                        </IconButton>
-                    )
-                    }
                     <IconButton
                         aria-label="delete"
                         size="small"
@@ -150,13 +84,6 @@ export default function AdminTable({ titles, rows: initialRows, dataname }) {
             rows: rows,
         };
         //localStorage.setItem(`${dataname}_tableData`, JSON.stringify(tableData));
-        rows.map((row) => {
-            const doc = {};
-            titles.forEach((title, index) => {
-                doc[title] = row[index];
-            });
-            FireWriteDoc(dataname, doc);
-        });
         alert("הנתונים נשמרו בהצלחה!");
     }
 
@@ -164,12 +91,19 @@ export default function AdminTable({ titles, rows: initialRows, dataname }) {
         <div>
             <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                    <TableHead > 
+                    <TableHead>
                         <TableRow>{titles_html}</TableRow>
                     </TableHead>
                     <TableBody>{rows_html}</TableBody>
                 </Table>
             </TableContainer>
+            <Button
+                variant="contained"
+                onClick={addNewRow}
+                style={{ marginTop: '10px', backgroundColor: '#2196F3', color: 'white' }}
+            >
+                הוסף שורה חדשה
+            </Button>
             <Button
                 variant="contained"
                 onClick={saveToLocalStorage}
