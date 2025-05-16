@@ -10,6 +10,7 @@ import Button from '@mui/material/Button';
 import { IconButton } from '@mui/material';
 import { fireReadTitles, fireWriteCollection, fireReadCollection, fireDeleteDoc } from '../firebase'; // Import Firestore functions
 import AdminNew from './AdminNew'; // Import AdminNew component
+import Checkbox from '@mui/material/Checkbox'; // Import Checkbox component
 
 export default function AdminTable({ dataname }) {
     const [rows, setRows] = useState([]);
@@ -59,10 +60,23 @@ export default function AdminTable({ dataname }) {
     // Create table rows using template
     function createRow(row, rowIndex) {
         return titles.map((title, cellIndex) => (
-            <TableCell key={cellIndex}>{row[title]}</TableCell>
+            <TableCell key={cellIndex}>
+                {(title === "פעיל" || title === "משלוח") ? (
+                    <Checkbox
+                        checked={!!row[title]} // Ensure the value is always a boolean
+                        onChange={(e) => {
+                            const updatedRows = [...rows];
+                            updatedRows[rowIndex][title] = e.target.checked; // Update the value in the rows state
+                            setRows(updatedRows); // Update the state
+                        }}
+                    />
+                ) : (
+                    row[title] // Render the plain text for other fields
+                )}
+            </TableCell>
         ));
     }
-
+    
     const rows_html = rows.map((row, rowIndex) => (
         <TableRow key={rowIndex}>
             {createRow(row, rowIndex)}

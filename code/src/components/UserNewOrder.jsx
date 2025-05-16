@@ -6,12 +6,15 @@ import { fireReadCollection } from '../firebase';
 export default function UserNewOrder() {
   const dataname = "dishes"; // Firestore collection name
   const [rows, setRows] = useState([]);
+  const [dataEnabled, setDataEnabled] = useState([]); // State for filtered items
 
   // Fetch rows from Firestore on component mount
   useEffect(() => {
     fireReadCollection(dataname)
       .then((data) => {
         setRows(data); // Set rows from Firestore
+        const enabledItems = data.filter((item) => item["פעיל"]); // Filter items where "פעיל" is true
+        setDataEnabled(enabledItems); // Set the filtered items
       })
       .catch((error) => {
         console.error("Error fetching dishes:", error);
@@ -20,7 +23,7 @@ export default function UserNewOrder() {
 
   return (
     <div className="dishMenu">
-      {rows.map((item, i) => (
+      {dataEnabled.map((item, i) => ( // Use dataEnabled to render only active items
         <div key={i}>
           <Dish
             dishId={item["מספר מנה"]}
