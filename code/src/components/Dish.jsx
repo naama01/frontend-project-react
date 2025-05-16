@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import '../css/Dish.css';
+import '../css/Dish.css'; // Import the CSS file
 import ButtonGroup from '@mui/material/ButtonGroup';
 import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
+import Typography from '@mui/material/Typography'; // Import Typography for read-only display
 import { useCart } from '../components/CartContext';
 
 export default function Dish({ dishId, dishName, desc, price, prepTime }) {
@@ -29,70 +29,52 @@ export default function Dish({ dishId, dishName, desc, price, prepTime }) {
 
     return (
         <div className="dish">
-            <h2 className="title">{dishName}</h2>
-            <p className="description">{desc}</p>
-            {imgExists && (
-                <img
-                    src={`../../img/dishes/${dishId}.jpg`}
-                    alt="תמונת המנה"
-                    onError={() => setImgExists(false)} // Remove the image if it fails to load
-                />
-            )}
-            <p className="price">{price} ש״ח</p>
-            <p className="prepTime">זמן הכנה: {prepTime} דקות</p>
-            <div className="dishCTRL">
-                <ButtonGroup variant="text" color="primary" aria-label="">
-                    <Button
-                        variant="contained"
-                        style={{
-                            padding: '5px 10px',
-                            backgroundColor: '#4CAF50',
-                            color: 'white',
-                            border: 'none',
-                            borderRadius: '5px',
-                        }}
-                        onClick={() => changeTotal("0")}
-                    >
-                        -
-                    </Button>
-                    <TextField
-                        size="small"
-                        sx={{
-                            width: '60px',
-                        }}
-                        id="outlined-basic"
-                        variant="outlined"
-                        value={total}
-                        readOnly
+            {/* Left third: Image */}
+            <div className="dish-image-container">
+                {imgExists ? (
+                    <img
+                        src={`../../img/dishes/${dishId}.jpg`}
+                        alt="תמונת המנה"
+                        className="dish-image"
+                        onError={() => setImgExists(false)} // Remove the image if it fails to load
                     />
-                    <Button
-                        variant="contained"
-                        style={{
-                            marginLeft: '10px',
-                            padding: '5px 10px',
-                            backgroundColor: '#4CAF50',
-                            color: 'white',
-                            border: 'none',
-                            borderRadius: '5px',
-                        }}
-                        onClick={() => changeTotal("1")}
-                    >
-                        +
-                    </Button>
-                    <Button
-                        variant="contained"
-                        style={{
-                            padding: '5px 10px',
-                            backgroundColor: '#4CAF50',
-                            color: 'white',
-                            border: 'none',
-                            borderRadius: '5px',
-                        }}
-                        onClick={handleAddToCart}
-                    >
-                        הוסף לעגלה
-                    </Button>
-                </ButtonGroup>
+                ) : (
+                    <div className="dish-image-placeholder">
+                        תמונה לא זמינה
+                    </div>
+                )}
+            </div>
+
+            {/* Right two-thirds: Content */}
+            <div className="dish-content">
+                <div>
+                    <h2 className="dish-title">{dishName}</h2>
+                    <p className="dish-description">{desc}</p>
+                </div>
+                <div>
+                    <p className="dish-price">{price} ש״ח</p>
+                    <p className="dish-prep-time">זמן הכנה: {prepTime} דקות</p>
+                </div>
+                <div className="dish-controls">
+                    <ButtonGroup variant="text" color="primary" aria-label="">
+                        <Button className="dish-button" onClick={() => changeTotal("0")}>
+                            -
+                        </Button>
+                        <Typography
+                            className="dish-quantity"
+                            variant="body1"
+                            component="span"
+                        >
+                            {total}
+                        </Typography>
+                        <Button className="dish-button" onClick={() => changeTotal("1")}>
+                            +
+                        </Button>
+                        <Button className="dish-button" onClick={handleAddToCart}>
+                            הוסף לעגלה
+                        </Button>
+                    </ButtonGroup>
+                </div>
             </div>
         </div>
     );

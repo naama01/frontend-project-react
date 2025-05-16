@@ -1,66 +1,149 @@
+/* Dish container */
 .dish {
-    font-size: var(--bs-body-font-size);
-    line-height: var(--bs-body-line-height);
-    text-align: var(--bs-body-text-align);
-    font-weight: 400;
-    color: #181C32;
-    font-family: 'Rubik', 'ploni', sans-serif;
+    display: flex;
+    width: 500px;
+    height: 200px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: #fff;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+    transition: box-shadow 0.2s ease, transform 0.15s ease;
     box-sizing: border-box;
-    scrollbar-width: thin;
-    scrollbar-color: #EFF2F5 transparent;
+    cursor: pointer;
+}
+
+.dish:hover {
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
+    transform: translateY(-2px);
+}
+
+/* Left: Image container */
+.dish-image-container {
+    flex: 1;
+    background-color: #f7f7f7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    height: 100%;
+}
+
+/* Dish image */
+.dish-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Placeholder text when image is missing */
+.dish-image-placeholder {
+    color: #bbb;
+    font-size: 13px;
+    font-weight: 500;
+    text-align: center;
+    padding: 8px;
+}
+
+/* Right: Text & controls */
+.dish-content {
+    flex: 2;
+    padding: 14px;
     display: flex;
     flex-direction: column;
-    word-wrap: break-word;
-    border-radius: 0.475rem;
-    border: 0;
-    box-shadow: 3px 3px 5px 0px rgba(158, 158, 158, 1);
-    margin: 1rem;
-    position: relative;
-    background: white;
-    min-height: 15rem;
-    max-height: 25rem;
-    padding: 1rem;
-    flex: 1 1 25rem 25rem; /* Flex-grow, Flex-shrink, Flex-basis */
-    /* Adjust 'flex-basis' to change the minimum width of the items */
-    /* 'flex-grow' is set to 1 to allow items to grow and fill the space */
-}
-.true{
-background-color: grey;
-}
-.dish:hover {
-    box-shadow: 3px 3px 5px 3px rgba(158, 158, 158, 1);
+    justify-content: space-between;
+    font-family: "Segoe UI", sans-serif;
+    color: #333;
+    overflow: hidden;
 }
 
-.dish .title {
-    margin: 0px;
-    color: #232323;
-    font-weight: bold;
-    padding-right: 10px;
-    padding-bottom: 0px;
+/* Title of the dish */
+.dish-title {
+    font-size: 17px;
+    font-weight: 600;
+    margin: 0;
+    line-height: 1.3;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-.dish p {
-    margin: 5px;
-    font-size: var(--bs-body-font-size);
-    line-height: var(--bs-body-line-height);
-    text-align: var(--bs-body-text-align);
-    font-weight: 400;
-    color: #181C32;
-    word-wrap: break-word;
-    box-sizing: border-box;
-    scrollbar-width: thin;
-    scrollbar-color: #EFF2F5 transparent;
-}
-.dish .price {
-font-weight: bold;}
-
-.dish img {
-    max-width: 250px;
-    max-height: 250px;
-    border-radius: 10px;
+/* Short description */
+.dish-description {
+    font-size: 13.5px;
+    color: #555;
+    margin: 4px 0;
+    line-height: 1.35;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-.dish .dishCTRL {
+/* Price & preparation time */
+.dish-price,
+.dish-prep-time {
+    font-size: 13px;
+    color: #444;
+    margin: 2px 0;
+}
+
+/* Controls section */
+.dish-controls {
+    display: flex;
     align-items: center;
-    align-self: center;
+    gap: 6px;
+    margin-top: 8px;
+    flex-wrap: wrap;
+}
+
+/* Quantity display */
+.dish-quantity {
+    width: 48px;
+    height: 36px; /* Match the height of the buttons */
+    font-size: 13px;
+    background-color: transparent; /* Match the button background */
+    box-shadow: none; /* Remove any shadow */
+    border: none; /* Remove border */
+    border-radius: 0; /* Remove border radius */
+    text-align: center;
+    display: flex; /* Use flexbox for centering */
+    align-items: center; /* Center vertically */
+    justify-content: center; /* Center horizontally */
+}
+
+/* Main dish buttons (inside MUI ButtonGroup) */
+.dish-button {
+    background-color: #4caf50 !important;
+    color: #fff !important;
+    font-weight: 500 !important;
+    font-size: 13px !important;
+    border-radius: 5px !important;
+    padding: 6px 14px !important;
+    text-transform: none !important;
+    min-width: 36px !important;
+    border: none !important;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    margin-inline: 5px !important;
+}
+
+.dish-button:hover {
+    background-color: #45a049 !important;
+}
+
+.dish-button:active {
+    transform: scale(0.96);
+}
+
+.dish-button:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.3);
+}
+
+/* Optional secondary button styling */
+.dish-button.secondary {
+    background-color: #388e3c !important;
+}
+
+.dish-button.secondary:hover {
+    background-color: #2e7d32 !important;
 }

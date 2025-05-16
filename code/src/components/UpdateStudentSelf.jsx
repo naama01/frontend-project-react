@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useCart } from './CartContext'; // Assuming the context is in CartContext.jsx
 import { TextField, Button } from '@mui/material';
+import '../css/UpdateStudentSelf.css'; // Assuming you have a CSS file for styling
 
 export default function UpdateStudentSelf() {
     const { currentStudentId } = useCart(); // Access the current student ID from context
@@ -65,20 +66,9 @@ export default function UpdateStudentSelf() {
     };
 
     return (
-        <div dir="rtl">
-
-            <form
-                onSubmit={handleSubmit}
-                style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    width: '300px',
-                    gap: '10px',
-                    margin: '20px auto',
-
-                }}
-            >
-                <h2>עדכון מידע אישי</h2>
+        <div dir="rtl" className="update-student-container">
+            <form onSubmit={handleSubmit} className="update-student-form">
+                <h2 className="update-student-title">עדכון מידע אישי</h2>
                 <TextField
                     label="שם"
                     name="name"
@@ -108,18 +98,7 @@ export default function UpdateStudentSelf() {
                     helperText={errors.phone}
                     required
                 />
-                <Button
-                    type="שמור"
-                    variant="contained"
-                    style={{
-                        marginLeft: '10px',
-                        padding: '5px 10px',
-                        backgroundColor: '#4CAF50',
-                        color: 'white',
-                        border: 'none',
-                        borderRadius: '5px',
-                    }}
-                >
+                <Button type="submit" variant="contained" className="update-student-button">
                     עדכן
                 </Button>
             </form>
