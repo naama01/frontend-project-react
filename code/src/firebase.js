@@ -2,7 +2,7 @@
 import { initializeApp } from "firebase/app";
 import { deleteDoc, getFirestore } from "firebase/firestore";
 import { setDoc, doc, collection } from "firebase/firestore"; // Updated import
-import { addDoc, getDocs, getDoc } from "firebase/firestore";
+import { addDoc, getDocs, getDoc,updateDoc } from "firebase/firestore";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -110,5 +110,15 @@ export async function fireDeleteDoc(coll, docId) {
     } catch (error) {
         console.error("Error deleting document: ", error);
         throw error; // Re-throw the error to handle it in the calling function
+    }
+}
+
+export async function fireUpdateDocument(coll, id, data) {
+    try {
+        const docRef = doc(firestore, coll, id);
+        await updateDoc(docRef, data);
+    } catch (error) {
+        console.error('Error updating document:', error);
+        throw error;
     }
 }

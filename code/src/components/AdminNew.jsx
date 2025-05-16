@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { fireReadTitles } from '../firebase'; // Import Firestore function
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
-
-export default function AdminNew({ dataname, onSubmit }) {
+export default function AdminNew({ dataname, onSubmit, onCancel }) {
   const [titles, setTitles] = useState([]); // Store the titles
   const [formData, setFormData] = useState({}); // Store form data
 
@@ -59,14 +58,22 @@ export default function AdminNew({ dataname, onSubmit }) {
             />
           </div>
         ))}
-        <Button
-          type="submit"
-          variant="contained"
-          color="primary"
-          style={{ marginTop: '10px' }}
-        >
-          שמור
-        </Button>
+        <div >
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+          >
+            שמור
+          </Button>
+          <Button
+            type="button"
+            variant="outlined"
+            color="secondary"
+          >
+            בטל
+          </Button>
+        </div>
       </form>
     </div>
   );
