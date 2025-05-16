@@ -1,12 +1,15 @@
 import 'react'
 import '../css/HelpPage.css'
+import PopulateData from './PopulateData'
 export default function HelpPage() {
 
 
 
   return (
-    <div className='HelpDiv' style={{margin:'20px'}}>
-            <h1>עמוד עזרה – מזנונו</h1>
+
+    <div className='HelpDiv' style={{ margin: '20px' }}>
+
+      <h1>עמוד עזרה – מזנונו</h1>
       <p>
         ברוכים הבאים לעמוד העזרה של <strong>מזנונו</strong> – שירות ההזמנות הקולינרי לסטודנטים במכללה.
         השירות מאפשר הזמנה של מנות ישירות לכיתות או באיסוף עצמי (טייקאווי) – דרך אתר המכללה בצורה מהירה, נוחה וללא המתנה בתור.
@@ -61,7 +64,7 @@ export default function HelpPage() {
         <br />- שעות פעילות: ימים א'-ה' 08:00–17:00
       </p>
 
-
+      <PopulateData />
     </div>
   )
 }

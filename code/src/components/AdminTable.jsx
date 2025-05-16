@@ -8,11 +8,13 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
 import { IconButton } from '@mui/material';
-import { fireReadTitles, fireReadCollection } from '../firebase'; // Import Firestore functions
+import { fireReadTitles, fireWriteCollection, fireReadCollection, fireDeleteDoc } from '../firebase'; // Import Firestore functions
+import AdminNew from './AdminNew'; // Import AdminNew component
 
 export default function AdminTable({ dataname }) {
     const [rows, setRows] = useState([]);
     const [titles, setTitles] = useState([]); // Dynamically generated titles
+    const [showNewForm, setShowNewForm] = useState(false); // Toggle AdminNew visibility
 
     // Fetch titles and rows from Firestore
     useEffect(() => {
@@ -36,19 +38,25 @@ export default function AdminTable({ dataname }) {
             });
     }, [dataname]);
 
-    function handleDelete(rowIndex) {
+    function handleDelete(rowIndex, row) {
         const updatedRows = rows.filter((_, index) => index !== rowIndex);
         setRows(updatedRows);
+        fireDeleteDoc(dataname, row.id); // Save updated rows to Firestore
+    console.log("row", row);
     }
 
-    function addNewRow() {
-        const emptyRow = titles.reduce((acc, title) => {
-            acc[title] = ""; // Create an empty object with keys matching the titles
-            return acc;
-        }, {});
-        setRows([...rows, emptyRow]); // Add the new row to the rows state
+    function handleNewItemSubmit(newItem) {
+        setRows([...rows, newItem]); // Add the new item to the rows
+        setShowNewForm(false); // Hide the AdminNew form after submission
     }
 
+    // Create table titles
+    const titles_html = titles.map((title, index) => (
+        <TableCell key={index}>{title}</TableCell>
+    ));
+    titles_html.push(<TableCell key={titles.length}></TableCell>); // space for actions column
+
+    // Create table rows using template
     function createRow(row, rowIndex) {
         return titles.map((title, cellIndex) => (
             <TableCell key={cellIndex}>{row[title]}</TableCell>
@@ -64,7 +72,7 @@ export default function AdminTable({ dataname }) {
                         aria-label="delete"
                         size="small"
                         style={{ color: '#f44336' }}
-                        onClick={() => handleDelete(rowIndex)}
+                        onClick={() => handleDelete(rowIndex,row)}
                     >
                         🗑️
                     </IconButton>
@@ -73,45 +81,45 @@ export default function AdminTable({ dataname }) {
         </TableRow>
     ));
 
-    const titles_html = titles.map((title, index) => (
-        <TableCell key={index}>{title}</TableCell>
-    ));
-    titles_html.push(<TableCell key={titles.length}></TableCell>); // space for actions column
-
-    function saveToLocalStorage() {
-        const tableData = {
-            titles: titles,
-            rows: rows,
-        };
-        //localStorage.setItem(`${dataname}_tableData`, JSON.stringify(tableData));
+    function saveTable() {
+        fireWriteCollection(dataname, rows); // Save rows to Firestore
         alert("הנתונים נשמרו בהצלחה!");
     }
 
     return (
         <div>
-            <TableContainer component={Paper}>
-                <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                    <TableHead>
-                        <TableRow>{titles_html}</TableRow>
-                    </TableHead>
-                    <TableBody>{rows_html}</TableBody>
-                </Table>
-            </TableContainer>
-            <Button
-                variant="contained"
-                onClick={addNewRow}
-                style={{ marginTop: '10px', backgroundColor: '#2196F3', color: 'white' }}
-            >
-                הוסף שורה חדשה
-            </Button>
-            <Button
-                variant="contained"
-                onClick={saveToLocalStorage}
-                style={{ marginTop: '10px', backgroundColor: '#4CAF50', color: 'white' }}
-            >
-                שמור את הנתונים
-            </Button>
+            {!showNewForm ? (
+                <>
+                    <TableContainer component={Paper}>
+                        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                            <TableHead>
+                                <TableRow>{titles_html}</TableRow>
+                            </TableHead>
+                            <TableBody>{rows_html}</TableBody>
+                        </Table>
+                    </TableContainer>
+
+                    <Button
+                        variant="contained"
+                        onClick={saveTable}
+                        style={{ marginTop: '10px', backgroundColor: '#4CAF50', color: 'white' }}
+                    >
+                        שמור את הנתונים
+                    </Button>
+                    <Button
+                        variant="contained"
+                        onClick={() => setShowNewForm(true)} // Show the AdminNew form
+                        style={{ marginTop: '10px', backgroundColor: '#4CAF50', color: 'white' }}
+                    >
+                        הוסף רשומה חדשה
+                    </Button>
+                </>
+            ) : (
+                <AdminNew
+                    dataname={dataname}
+                    onSubmit={handleNewItemSubmit} // Handle new item submission
+                />
+            )}
         </div>
     );
 }
-

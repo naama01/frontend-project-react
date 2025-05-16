@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PopulateData from './PopulateData';
 
 export default function SupportChat() {
   const [messages, setMessages] = useState([]); // State to store chat messages
@@ -19,10 +20,10 @@ export default function SupportChat() {
     setTimeout(() => {
       setMessages((prevMessages) => [...prevMessages, repMessage]);
     }, 1000); // Simulate a delay for the representative's response
-
     // Clear the input field
     setInput('');
   };
+
 
   return (
     <div style={{  width: '400px', margin: '20px auto', border: '1px solid #ccc', borderRadius: '10px', padding: '10px', backgroundColor: 'rgba(46, 57, 1, 0.26)' }}>
@@ -73,7 +74,9 @@ export default function SupportChat() {
         >
           שלח
         </button>
+
       </div>
+
     </div>
   );
 }

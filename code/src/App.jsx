@@ -15,31 +15,32 @@ import SelectComponent from './components/SelectComponent'
 import ConfirmOrder from './components/ConfirmOrder'
 import SupportChat from './components/SupportChat'
 import UpdateStudentSelf from './components/UpdateStudentSelf'
-
-
+import AdminNew from './components/AdminNew'
+import AdminPage from './components/AdminPage'
 
 
 export default function App() {
 
 
   return (
-    
+
     <div>
       <TopMenu title="המזנונו" />
       <div >
-      <Routes >
-      <Route path='/' element={<UserNewOrder />} />
-      <Route path='/help' element={<HelpPage />} />
-      <Route path='/UpdateStudentSelf' element={<UpdateStudentSelf />} />
-      <Route path="/AdminClasses" element={<AdminClasses />} />
-        <Route path="/AdminDishes" element={<AdminDishes />} />
-        <Route path="/AdminOrders" element={<AdminOrders />} />
-        <Route path="/AdminStudents" element={<AdminStudents />} />
-        <Route path="/UserOrderHistory" element={<UserOrderHistory />} />
-        <Route path="/UserOrderStatus" element={<UserOrderStatus />} />
-        <Route path="/ConfirmOrder" element={<ConfirmOrder />} />
-        <Route path="/SupportChat" element={<SupportChat />} />
-      </Routes>
+        <Routes >
+          <Route path='/' element={<UserNewOrder />} />
+          <Route path='/help' element={<HelpPage />} />
+          <Route path='/UpdateStudentSelf' element={<UpdateStudentSelf />} />
+          <Route path="/AdminClasses" element={<AdminPage dataname="classes" />} />
+          <Route path="/AdminDishes" element={<AdminPage dataname="dishes" />} />
+          <Route path="/AdminOrders" element={<AdminPage dataname="orders" />} />
+          <Route path="/AdminStudents" element={<AdminPage dataname="students" />} />
+          <Route path="/AdminNew" element={<AdminNew />} />
+          <Route path="/UserOrderHistory" element={<UserOrderHistory />} />
+          <Route path="/UserOrderStatus" element={<UserOrderStatus />} />
+          <Route path="/ConfirmOrder" element={<ConfirmOrder />} />
+          <Route path="/SupportChat" element={<SupportChat />} />
+        </Routes>
 
       </div>
     </div >

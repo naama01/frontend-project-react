@@ -22,7 +22,7 @@ export default function AdminNewDish({ onAddRow, onCancel, data }) {
   useEffect(() => {
     if (data) {
       setFormData({
-        dishId: data[0] || '',
+        dishId: data.dishId || '',
         dishName: data[1] || '',
         dishDescription: data[2] || '',
         dishPrice: data[3] || '',

@@ -5,8 +5,7 @@ import { Box } from '@mui/material';
 import { fireReadCollection, fireReadTitles } from '../firebase'; // Import Firestore functions
 import AdminNew from './AdminNew';
 
-export default function AdminDishes() {
-  const dataname = "dishes"; // Define the prefix for Firestore collection
+export default function AdminPage({dataname}) {
 
   const [rows, setRows] = useState([]);
   const [titles, setTitles] = useState([]); // Dynamically generated titles

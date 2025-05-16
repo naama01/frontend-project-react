@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
+import { deleteDoc, getFirestore } from "firebase/firestore";
 import { setDoc, doc, collection } from "firebase/firestore"; // Updated import
 import { addDoc, getDocs, getDoc } from "firebase/firestore";
 
@@ -98,6 +98,17 @@ export async function fireReadTitles(coll) {
         }
     } catch (error) {
         console.error("Error reading document with ID 'titles':", error);
+        throw error; // Re-throw the error to handle it in the calling function
+    }
+}
+export async function fireDeleteDoc(coll, docId) {
+    try {
+        // Reference the document to delete
+        const docRef = doc(firestore, coll, docId);
+        await deleteDoc(docRef);
+        console.log("Document deleted with ID: ", docId);
+    } catch (error) {
+        console.error("Error deleting document: ", error);
         throw error; // Re-throw the error to handle it in the calling function
     }
 }
