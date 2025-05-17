@@ -54,15 +54,15 @@
 /* Special case for textarea height */
 .update-student-form textarea {
     resize: vertical;
-    min-height: 5rem;
+    min-height: 5rem !important;
 }
 
 /* Focus state */
 .update-student-form input:focus,
 .update-student-form textarea:focus {
-    outline: none;
-    border-color: #B3D236;
-    box-shadow: 0 0 0 3px rgba(179, 210, 54, 0.25);
+    outline: none !important;
+    border-color: #B3D236 !important;
+    box-shadow: 0 0 0 3px rgba(179, 210, 54, 0.25) !important;
 }
 
 /* Button styling */
@@ -73,7 +73,7 @@
     line-height: 1.2;
     padding: 0.6rem 1.1rem;
     height: 2.75rem;
-    background-color: #4caf50;
+    background-color: #4caf50 !important;
     color: #fff;
     border: none;
     border-radius: 0.475rem;
@@ -83,7 +83,7 @@
 }
 
 .update-student-button:hover {
-    background-color: #45a049;
+    background-color: #45a049 !important;
 }
 
 .update-student-button:active {
@@ -92,5 +92,5 @@
 
 .update-student-button:focus {
     outline: none;
-    box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.3);
+    box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.3) !important;
 }

@@ -9,7 +9,7 @@ export default function PopulateData() {
         const end = new Date(); // Current date
         const randomDate = new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
         return randomDate.toLocaleString("en-US"); // Format the date as "5/17/2025, 7:11:08 PM"
-      }
+    }
 
     const students = [
         { id: "314826375", name: "אורי לוי", class: "101", enabled: true, email: "uri.levi@example.com", phone: "0541234567" },
@@ -42,9 +42,9 @@ export default function PopulateData() {
         { id: "317654892", name: "אביתר צרפתי", class: "128", enabled: true, email: "evyatar.tzarfati@example.com", phone: "0526677889" },
         { id: "298745213", name: "אלינור דיין", class: "129", enabled: true, email: "elinor.dayan@example.com", phone: "0504433221" },
         { id: "286198472", name: "גל טביב", class: "130", enabled: false, email: "gal.tabib@example.com", phone: "0543332221" }
-      ];
-      
-      
+    ];
+
+
     // Map the students to match the new schema
     const mappedStudents = students.map((student) => ({
         "מספר סטודנט": student.id,
@@ -122,55 +122,55 @@ export default function PopulateData() {
         { id: '130', Name: 'חדר הקרנה', Description: 'שיתופי', Enabled: false },
     ];
 
-        const orders = [
-            { id: "1800", studentId: "286198472", delivery: true, class: "113", totalPrice: "44", quantity: "3", orderNumber: "1800", date: getRandomDate() },
-            { id: "1801", studentId: "312984657", delivery: true, class: "109", totalPrice: "30", quantity: "4", orderNumber: "1801", date: getRandomDate() },
-            { id: "1802", studentId: "318945672", delivery: false, class: "102", totalPrice: "75", quantity: "3", orderNumber: "1802", date: getRandomDate() },
-            { id: "1803", studentId: "308617492", delivery: false, class: "114", totalPrice: "90", quantity: "1", orderNumber: "1803", date: getRandomDate() },
-            { id: "1804", studentId: "316284795", delivery: false, class: "103", totalPrice: "30", quantity: "3", orderNumber: "1804", date: getRandomDate() },
-            { id: "1805", studentId: "319842657", delivery: true, class: "121", totalPrice: "44", quantity: "3", orderNumber: "1805", date: getRandomDate() },
-            { id: "1806", studentId: "284765193", delivery: true, class: "105", totalPrice: "68", quantity: "1", orderNumber: "1806", date: getRandomDate() },
-            { id: "1807", studentId: "243189756", delivery: false, class: "128", totalPrice: "84", quantity: "2", orderNumber: "1807", date: getRandomDate() },
-            { id: "1808", studentId: "267138942", delivery: true, class: "107", totalPrice: "57", quantity: "5", orderNumber: "1808", date: getRandomDate() },
-            { id: "1809", studentId: "302198435", delivery: false, class: "117", totalPrice: "20", quantity: "4", orderNumber: "1809", date: getRandomDate() },
-            { id: "1810", studentId: "257469831", delivery: false, class: "119", totalPrice: "105", quantity: "4", orderNumber: "1810", date: getRandomDate() },
-            { id: "1811", studentId: "305798421", delivery: false, class: "101", totalPrice: "90", quantity: "2", orderNumber: "1811", date: getRandomDate() },
-            { id: "1812", studentId: "259741683", delivery: true, class: "113", totalPrice: "120", quantity: "3", orderNumber: "1812", date: getRandomDate() },
-            { id: "1813", studentId: "208764932", delivery: true, class: "110", totalPrice: "68", quantity: "2", orderNumber: "1813", date: getRandomDate() },
-            { id: "1814", studentId: "318654729", delivery: true, class: "106", totalPrice: "30", quantity: "5", orderNumber: "1814", date: getRandomDate() },
-            { id: "1815", studentId: "243189756", delivery: true, class: "124", totalPrice: "57", quantity: "2", orderNumber: "1815", date: getRandomDate() },
-            { id: "1816", studentId: "276543198", delivery: false, class: "125", totalPrice: "105", quantity: "4", orderNumber: "1816", date: getRandomDate() },
-            { id: "1817", studentId: "253798426", delivery: false, class: "121", totalPrice: "30", quantity: "3", orderNumber: "1817", date: getRandomDate() },
-            { id: "1818", studentId: "298176453", delivery: false, class: "116", totalPrice: "44", quantity: "2", orderNumber: "1818", date: getRandomDate() },
-            { id: "1819", studentId: "299185476", delivery: false, class: "130", totalPrice: "20", quantity: "1", orderNumber: "1819", date: getRandomDate() },
-            { id: "1820", studentId: "243189756", delivery: true, class: "104", totalPrice: "44", quantity: "2", orderNumber: "1820", date: getRandomDate() },
-            { id: "1821", studentId: "243189756", delivery: false, class: "119", totalPrice: "105", quantity: "1", orderNumber: "1821", date: getRandomDate() },
-            { id: "1822", studentId: "294178365", delivery: false, class: "111", totalPrice: "57", quantity: "3", orderNumber: "1822", date: getRandomDate() },
-            { id: "1823", studentId: "312984657", delivery: false, class: "108", totalPrice: "120", quantity: "5", orderNumber: "1823", date: getRandomDate() },
-            { id: "1824", studentId: "298745213", delivery: false, class: "121", totalPrice: "20", quantity: "2", orderNumber: "1824", date: getRandomDate() },
-            { id: "1825", studentId: "286198472", delivery: false, class: "111", totalPrice: "84", quantity: "3", orderNumber: "1825", date: getRandomDate() },
-            { id: "1826", studentId: "259741683", delivery: false, class: "104", totalPrice: "30", quantity: "1", orderNumber: "1826", date: getRandomDate() },
-            { id: "1827", studentId: "267138942", delivery: true, class: "115", totalPrice: "44", quantity: "4", orderNumber: "1827", date: getRandomDate() },
-            { id: "1828", studentId: "284765193", delivery: false, class: "120", totalPrice: "68", quantity: "4", orderNumber: "1828", date: getRandomDate() },
-            { id: "1829", studentId: "312984657", delivery: false, class: "109", totalPrice: "84", quantity: "1", orderNumber: "1829", date: getRandomDate() },
-            { id: "1830", studentId: "298176453", delivery: true, class: "116", totalPrice: "90", quantity: "5", orderNumber: "1830", date: getRandomDate() },
-          ];
-      
+    const orders = [
+        { id: "1800", studentId: "286198472", delivery: true, class: "113", totalPrice: "44", quantity: "3", orderNumber: "1800", date: getRandomDate() },
+        { id: "1801", studentId: "312984657", delivery: true, class: "109", totalPrice: "30", quantity: "4", orderNumber: "1801", date: getRandomDate() },
+        { id: "1802", studentId: "318945672", delivery: false, class: "102", totalPrice: "75", quantity: "3", orderNumber: "1802", date: getRandomDate() },
+        { id: "1803", studentId: "308617492", delivery: false, class: "114", totalPrice: "90", quantity: "1", orderNumber: "1803", date: getRandomDate() },
+        { id: "1804", studentId: "316284795", delivery: false, class: "103", totalPrice: "30", quantity: "3", orderNumber: "1804", date: getRandomDate() },
+        { id: "1805", studentId: "319842657", delivery: true, class: "121", totalPrice: "44", quantity: "3", orderNumber: "1805", date: getRandomDate() },
+        { id: "1806", studentId: "284765193", delivery: true, class: "105", totalPrice: "68", quantity: "1", orderNumber: "1806", date: getRandomDate() },
+        { id: "1807", studentId: "243189756", delivery: false, class: "128", totalPrice: "84", quantity: "2", orderNumber: "1807", date: getRandomDate() },
+        { id: "1808", studentId: "267138942", delivery: true, class: "107", totalPrice: "57", quantity: "5", orderNumber: "1808", date: getRandomDate() },
+        { id: "1809", studentId: "302198435", delivery: false, class: "117", totalPrice: "20", quantity: "4", orderNumber: "1809", date: getRandomDate() },
+        { id: "1810", studentId: "257469831", delivery: false, class: "119", totalPrice: "105", quantity: "4", orderNumber: "1810", date: getRandomDate() },
+        { id: "1811", studentId: "305798421", delivery: false, class: "101", totalPrice: "90", quantity: "2", orderNumber: "1811", date: getRandomDate() },
+        { id: "1812", studentId: "259741683", delivery: true, class: "113", totalPrice: "120", quantity: "3", orderNumber: "1812", date: getRandomDate() },
+        { id: "1813", studentId: "208764932", delivery: true, class: "110", totalPrice: "68", quantity: "2", orderNumber: "1813", date: getRandomDate() },
+        { id: "1814", studentId: "318654729", delivery: true, class: "106", totalPrice: "30", quantity: "5", orderNumber: "1814", date: getRandomDate() },
+        { id: "1815", studentId: "243189756", delivery: true, class: "124", totalPrice: "57", quantity: "2", orderNumber: "1815", date: getRandomDate() },
+        { id: "1816", studentId: "276543198", delivery: false, class: "125", totalPrice: "105", quantity: "4", orderNumber: "1816", date: getRandomDate() },
+        { id: "1817", studentId: "253798426", delivery: false, class: "121", totalPrice: "30", quantity: "3", orderNumber: "1817", date: getRandomDate() },
+        { id: "1818", studentId: "298176453", delivery: false, class: "116", totalPrice: "44", quantity: "2", orderNumber: "1818", date: getRandomDate() },
+        { id: "1819", studentId: "299185476", delivery: false, class: "130", totalPrice: "20", quantity: "1", orderNumber: "1819", date: getRandomDate() },
+        { id: "1820", studentId: "243189756", delivery: true, class: "104", totalPrice: "44", quantity: "2", orderNumber: "1820", date: getRandomDate() },
+        { id: "1821", studentId: "243189756", delivery: false, class: "119", totalPrice: "105", quantity: "1", orderNumber: "1821", date: getRandomDate() },
+        { id: "1822", studentId: "294178365", delivery: false, class: "111", totalPrice: "57", quantity: "3", orderNumber: "1822", date: getRandomDate() },
+        { id: "1823", studentId: "312984657", delivery: false, class: "108", totalPrice: "120", quantity: "5", orderNumber: "1823", date: getRandomDate() },
+        { id: "1824", studentId: "298745213", delivery: false, class: "121", totalPrice: "20", quantity: "2", orderNumber: "1824", date: getRandomDate() },
+        { id: "1825", studentId: "286198472", delivery: false, class: "111", totalPrice: "84", quantity: "3", orderNumber: "1825", date: getRandomDate() },
+        { id: "1826", studentId: "259741683", delivery: false, class: "104", totalPrice: "30", quantity: "1", orderNumber: "1826", date: getRandomDate() },
+        { id: "1827", studentId: "267138942", delivery: true, class: "115", totalPrice: "44", quantity: "4", orderNumber: "1827", date: getRandomDate() },
+        { id: "1828", studentId: "284765193", delivery: false, class: "120", totalPrice: "68", quantity: "4", orderNumber: "1828", date: getRandomDate() },
+        { id: "1829", studentId: "312984657", delivery: false, class: "109", totalPrice: "84", quantity: "1", orderNumber: "1829", date: getRandomDate() },
+        { id: "1830", studentId: "298176453", delivery: true, class: "116", totalPrice: "90", quantity: "5", orderNumber: "1830", date: getRandomDate() },
+    ];
 
-    
-            
-// Map the orders to match the new schema
-const mappedOrders = orders.map((order) => ({
-    "id": order.id,
-    "תז סטודנט מזמין": order.studentId,
-    "משלוח": order.delivery,
-    "מספר כיתה": order.class,
-    "מחיר כולל": order.totalPrice,
-    "כמות מנות": order.quantity,
-    "מספר הזמנה": order.orderNumber,
-    "תאריך": order.date, // Map the date field
-  }));
-      
+
+
+
+    // Map the orders to match the new schema
+    const mappedOrders = orders.map((order) => ({
+        "id": order.id,
+        "תז סטודנט מזמין": order.studentId,
+        "משלוח": order.delivery,
+        "מספר כיתה": order.class,
+        "מחיר כולל": order.totalPrice,
+        "כמות מנות": order.quantity,
+        "מספר הזמנה": order.orderNumber,
+        "תאריך": order.date, // Map the date field
+    }));
+
     // Map the dishes to match the new schema
     const mappedDishes = dishes.map((dish) => ({
         "מספר מנה": dish.id,

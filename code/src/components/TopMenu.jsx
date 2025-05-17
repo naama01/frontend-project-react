@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '../components/CartContext';
 import { TextField, MenuItem, Typography } from '@mui/material';
-import { fireReadCollection,fireReadEnabledOnly } from '../firebase'; // Import Firestore function
+import { fireReadCollection, fireReadEnabledOnly } from '../firebase'; // Import Firestore function
 
 export default function TopMenu({ title }) {
   const navigate = useNavigate();
@@ -43,7 +43,7 @@ export default function TopMenu({ title }) {
             <li onClick={() => navigate("/help")}>עזרה</li>
           </ul>
         </li>
-       { currentStudentId && <li className="menuItem">
+        {currentStudentId && <li className="menuItem">
           אזור אישי
           <ul className="subMenu">
             <li onClick={() => navigate("/UserOrderStatus")}>סטטוס הזמנה פתוחה</li>
@@ -83,24 +83,24 @@ export default function TopMenu({ title }) {
           </MenuItem>
         ))}
       </TextField>
-{ currentStudentId &&
-      <div className="cart">
-        <span>סה"כ בעגלה: ₪{totalAmount.toFixed(2)}</span>
-        <button
-          style={{
-            marginLeft: '10px',
-            padding: '5px 10px',
-            backgroundColor: '#4CAF50',
-            color: 'white',
-            border: 'none',
-            borderRadius: '5px',
-          }}
-          onClick={() => navigate('/ConfirmOrder')}
-        >
-          סיים הזמנה
-        </button>
-      </div>
-}
+      {currentStudentId &&
+        <div className="cart">
+          <span>סה"כ בעגלה: ₪{totalAmount.toFixed(2)}</span>
+          <button
+            style={{
+              marginLeft: '10px',
+              padding: '5px 10px',
+              backgroundColor: '#4CAF50',
+              color: 'white',
+              border: 'none',
+              borderRadius: '5px',
+            }}
+            onClick={() => navigate('/ConfirmOrder')}
+          >
+            סיים הזמנה
+          </button>
+        </div>
+      }
     </div>
   );
 }

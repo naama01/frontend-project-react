@@ -116,7 +116,7 @@ export default function ConfirmOrder() {
         >
           {classes.map((cls, index) => (
             <MenuItem key={index} value={cls.id}>
-             ({cls.id}) {cls["שם כיתה"]} {/* Display both class name and ID */}
+              ({cls.id}) {cls["שם כיתה"]} {/* Display both class name and ID */}
             </MenuItem>
           ))}
         </TextField>

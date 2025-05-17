@@ -5,14 +5,14 @@ import { Box } from '@mui/material';
 import { fireReadCollection, fireReadTitles } from '../firebase'; // Import Firestore functions
 import AdminNew from './AdminNew';
 
-export default function AdminPage({dataname}) {
+export default function AdminPage({ dataname }) {
 
-  
+
 
   return (
     <div>
 
-            <AdminTable dataname={dataname} />
+      <AdminTable dataname={dataname} />
 
     </div>
   );
