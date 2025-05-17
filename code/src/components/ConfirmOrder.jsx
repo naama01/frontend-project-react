@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useCart } from '../components/CartContext';
 import { Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, TextField, MenuItem } from '@mui/material';
+import { fireReadEnabledOnly, FireWriteDoc } from '../firebase'; // Ensure FireWriteDoc is imported
 
 export default function ConfirmOrder() {
   const { cart, currentStudentId, clearCart } = useCart(); // Access clearCart from context
@@ -8,29 +9,24 @@ export default function ConfirmOrder() {
   const [studentDetails, setStudentDetails] = useState(null);
   const [selectedClass, setSelectedClass] = useState('');
 
-  // Fetch classes from local storage
+  // Fetch students from Firestore
   useEffect(() => {
-    const storedClasses = JSON.parse(localStorage.getItem('classes_tableData')) || { rows: [] };
-    setClasses(storedClasses.rows);
-  }, []);
+    fireReadEnabledOnly("students")
+      .then((data) => {
+        setStudents(data); // Set the students retrieved from Firestore
+      })
+      .catch((error) => {
+        console.error("Error fetching students:", error);
+      });
 
-  // Fetch student details based on the global currentStudentId
-  useEffect(() => {
-    const storedStudents = JSON.parse(localStorage.getItem('students_tableData')) || { rows: [] };
-    if (currentStudentId) {
-      const student = storedStudents.rows.find((s) => s[0] === currentStudentId); 
-      if (student) {
-        setStudentDetails({
-          id: student[0],
-          name: student[1],
-          email: student[2],
-          phone: student[3],
-        });
-      } else {
-        setStudentDetails(null);
-      }
-    }
-  }, [currentStudentId]);
+    fireReadEnabledOnly("classes")
+      .then((data) => {
+        setClasses(data); // Set the students retrieved from Firestore
+      })
+      .catch((error) => {
+        console.error("Error fetching classes:", error);
+      });
+  }, []);
 
   // Calculate total amount
   const totalAmount = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
@@ -42,27 +38,38 @@ export default function ConfirmOrder() {
       return;
     }
 
+    // Generate a unique ID based on the current time in epoch
+    const orderId = `${Date.now()}`;
+
+    // Calculate total quantity of items in the cart
+    const totalQuantity = cart.reduce((sum, item) => sum + item.quantity, 0);
+
+    // Calculate max preparation time
+    const maxPrepTime = cart.reduce((max, item) => Math.max(max, Number(item.prepTime)), 0);
+
+    // Prepare the order details
     const orderDetails = {
-      cart,
-      totalAmount,
-      shipmentInfo: {
-        class: selectedClass,
-        student: studentDetails,
-      },
-      date: new Date().toLocaleString(),
+      id: orderId, // Unique order ID
+      "תז סטודנט מזמין": currentStudentId, // Student ID
+      "משלוח": true, // Assuming delivery is always true; adjust as needed
+      "זמן הכנה מינימלי": `${maxPrepTime} דקות`, // Max prep time
+      "מספר כיתה": selectedClass, // Selected class ID
+      "מחיר כולל": totalAmount, // Total price
+      "כמות מנות": totalQuantity, // Total quantity of items
+      "מספר הזמנה": orderId, // Order number (same as ID)
+      "תאריך": new Date().toLocaleString(), // Human-readable date
     };
 
-    const storedOrderHistory = JSON.parse(localStorage.getItem('orderhistory_tableData')) || { rows: [] };
-    const updatedOrderHistory = {
-      ...storedOrderHistory,
-      rows: [...storedOrderHistory.rows, orderDetails],
-    };
-
-    localStorage.setItem('orderhistory_tableData', JSON.stringify(updatedOrderHistory));
-    alert('ההזמנה הושלמה בהצלחה!');
-
-    // Empty the cart using clearCart
-    clearCart();
+    // Write the order to the Firestore "orders" collection
+    FireWriteDoc("orders", orderDetails)
+      .then(() => {
+        alert('ההזמנה הושלמה בהצלחה!');
+        clearCart(); // Clear the cart after successful order submission
+      })
+      .catch((error) => {
+        console.error("Error writing order to Firestore:", error);
+        alert('אירעה שגיאה בעת השלמת ההזמנה. נסה שוב.');
+      });
   };
 
   return (
@@ -108,8 +115,8 @@ export default function ConfirmOrder() {
           style={{ marginBottom: '20px', width: '300px' }}
         >
           {classes.map((cls, index) => (
-            <MenuItem key={index} value={cls[0]}>
-              {cls[0]}
+            <MenuItem key={index} value={cls.id}>
+             ({cls.id}) {cls["שם כיתה"]} {/* Display both class name and ID */}
             </MenuItem>
           ))}
         </TextField>
