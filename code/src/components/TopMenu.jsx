@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '../components/CartContext';
 import { TextField, MenuItem, Typography } from '@mui/material';
-import { fireReadCollection } from '../firebase'; // Import Firestore function
+import { fireReadCollection,fireReadEnabledOnly } from '../firebase'; // Import Firestore function
 
 export default function TopMenu({ title }) {
   const navigate = useNavigate();
@@ -11,7 +11,7 @@ export default function TopMenu({ title }) {
 
   // Fetch students from Firestore
   useEffect(() => {
-    fireReadCollection("students")
+    fireReadEnabledOnly("students")
       .then((data) => {
         setStudents(data); // Set the students retrieved from Firestore
       })

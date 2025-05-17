@@ -3,6 +3,7 @@ import { initializeApp } from "firebase/app";
 import { deleteDoc, getFirestore } from "firebase/firestore";
 import { setDoc, doc, collection } from "firebase/firestore"; // Updated import
 import { addDoc, getDocs, getDoc,updateDoc } from "firebase/firestore";
+import {  query as firestoreQuery, where } from "firebase/firestore";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -120,5 +121,69 @@ export async function fireUpdateDocument(coll, id, data) {
     } catch (error) {
         console.error('Error updating document:', error);
         throw error;
+    }
+}
+
+export async function fireReadQuery(coll, query) {
+    try {
+        // Initialize Firestore collection reference
+        const collRef = collection(firestore, coll);
+        let firestoreQueryRef = collRef;
+
+        // Apply conditions from the query array
+        if (query && Array.isArray(query)) {
+            query.forEach((condition) => {
+                if (Array.isArray(condition) && condition.length === 3) {
+                    const [field, operator, value] = condition;
+                    const trimmedField = field.trim(); // Prevent issues from trailing spaces/tabs
+                    console.log(`Applying condition: ${trimmedField} ${operator} ${value}`); // Debugging
+                    firestoreQueryRef = firestoreQuery(firestoreQueryRef, where(trimmedField, operator, value));
+                } else {
+                    console.warn("Invalid query condition (ignored):", condition);
+                }
+            });
+        }
+
+        // Execute the query
+        const querySnapshot = await getDocs(firestoreQueryRef);
+
+        // Map documents to a clean array
+        const documents = querySnapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+        }));
+
+        console.log("Documents retrieved based on query:", documents); // Debugging
+        return documents;
+    } catch (error) {
+        console.error("Error reading collection with query:", error);
+        throw error;
+    }
+}
+
+
+
+export async function fireReadEnabledOnly(coll) {
+    try {
+        // Reference the collection
+        const collRef = collection(firestore, coll);
+
+        // Hardcoded query to filter documents where "פעיל" is true
+        const firestoreQueryRef = firestoreQuery(collRef, where('פעיל', "==", true));
+
+        // Execute the query
+        const querySnapshot = await getDocs(firestoreQueryRef);
+
+        // Map the results to an array of documents
+        const documents = querySnapshot.docs.map((doc) => ({
+            id: doc.id, // Include the document ID
+            ...doc.data(), // Spread the document data
+        }));
+
+        console.log("Documents retrieved with פעיל set to true: ", documents);
+        return documents; // Return the array of documents
+    } catch (error) {
+        console.error("Error reading collection with פעיל set to true: ", error);
+        throw error; // Re-throw the error to handle it in the calling function
     }
 }
