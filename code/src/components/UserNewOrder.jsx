@@ -2,11 +2,13 @@ import React, { useState, useEffect } from 'react';
 import Dish from './Dish';
 import '../css/DishMenu.css';
 import { fireReadCollection } from '../firebase';
+import { useCart } from './CartContext'; // Import the useCart hook
 
 export default function UserNewOrder() {
   const dataname = "dishes"; // Firestore collection name
   const [rows, setRows] = useState([]);
   const [dataEnabled, setDataEnabled] = useState([]); // State for filtered items
+  const { cart, currentStudentId, setCurrentStudentId } = useCart(); // Access student ID from context
 
   // Fetch rows from Firestore on component mount
   useEffect(() => {
@@ -31,6 +33,7 @@ export default function UserNewOrder() {
             desc={item["תיאור המנה"]}
             price={item["מחיר"]}
             prepTime={item["זמן הכנה"]}
+            AllowBuy={currentStudentId != null} // Fixed line
           />
         </div>
       ))}

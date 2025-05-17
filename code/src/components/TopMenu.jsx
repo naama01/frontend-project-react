@@ -83,7 +83,7 @@ export default function TopMenu({ title }) {
           </MenuItem>
         ))}
       </TextField>
-
+{ currentStudentId &&
       <div className="cart">
         <span>סה"כ בעגלה: ₪{totalAmount.toFixed(2)}</span>
         <button
@@ -100,6 +100,7 @@ export default function TopMenu({ title }) {
           סיים הזמנה
         </button>
       </div>
+}
     </div>
   );
 }

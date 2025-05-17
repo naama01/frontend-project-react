@@ -8,4 +8,10 @@
     gap: 16px;
     /* Space between items */
     align-content: flex-start;
+    justify-content: center; /* Center items horizontally */
+    background-color: #f0f0f0; /* Light background color */
+    color: #333; /* Text color */
+
+    
+
 }

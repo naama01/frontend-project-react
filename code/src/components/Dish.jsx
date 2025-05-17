@@ -5,10 +5,11 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography'; // Import Typography for read-only display
 import { useCart } from '../components/CartContext';
 
-export default function Dish({ dishId, dishName, desc, price, prepTime }) {
+export default function Dish({ dishId, dishName, desc, price, prepTime , AllowBuy}) {
     const { addToCart } = useCart(); // Access the addToCart function from the context
     const [total, setTotal] = useState(1);
     const [imgExists, setImgExists] = useState(true); // Track if the image exists
+    if (!AllowBuy) { AllowBuy= false}
 
     const handleAddToCart = () => {
         if (total > 0) {
@@ -55,7 +56,7 @@ export default function Dish({ dishId, dishName, desc, price, prepTime }) {
                     <p className="dish-price">{price} ש״ח</p>
                     <p className="dish-prep-time">זמן הכנה: {prepTime} דקות</p>
                 </div>
-                <div className="dish-controls">
+               {AllowBuy && <div className="dish-controls">
                     <ButtonGroup variant="text" color="primary" aria-label="">
                         <Button className="dish-button" onClick={() => changeTotal("0")}>
                             -
@@ -75,6 +76,7 @@ export default function Dish({ dishId, dishName, desc, price, prepTime }) {
                         </Button>
                     </ButtonGroup>
                 </div>
+}
             </div>
         </div>
     );
