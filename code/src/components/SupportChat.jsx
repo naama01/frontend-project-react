@@ -1,82 +1,76 @@
-import React, { useState } from 'react';
-import PopulateData from './PopulateData';
+import React, { useState, useRef, useEffect } from 'react';
+import '../css/SupportChat.css';
 
 export default function SupportChat() {
-  const [messages, setMessages] = useState([]); // State to store chat messages
-  const [input, setInput] = useState(''); // State to store the user's input
+  const [messages, setMessages] = useState([]);
+  const [input, setInput] = useState('');
+  const chatEndRef = useRef(null);
 
-  // Predefined response from the representative
-  const representativeResponse = "המוקד סגור כעת ופועל בימים א'-ה' בין השעות 08:00-16:00. אם יש לך שאלה דחופה, אנא שלח לנו הודעה ואנחנו נחזור אליך בהקדם האפשרי.";
-  // Handle sending a message
+  const representativeResponse =
+    "המוקד סגור כעת ופועל בימים א'-ה' בין השעות 08:00-16:00. אם יש לך שאלה דחופה, אנא שלח לנו הודעה ואנחנו נחזור אליך בהקדם האפשרי.";
+
   const handleSendMessage = () => {
-    if (input.trim() === '') return; // Prevent sending empty messages
+    if (input.trim() === '') return;
 
-    // Add the user's message to the chat
     const userMessage = { sender: 'user', text: input };
-    setMessages((prevMessages) => [...prevMessages, userMessage]);
+    setMessages((prev) => [...prev, userMessage]);
 
-    // Add the representative's response to the chat
-    const repMessage = { sender: 'rep', text: representativeResponse };
     setTimeout(() => {
-      setMessages((prevMessages) => [...prevMessages, repMessage]);
-    }, 1000); // Simulate a delay for the representative's response
-    // Clear the input field
+      const repMessage = { sender: 'rep', text: representativeResponse };
+      setMessages((prev) => [...prev, repMessage]);
+    }, 1000);
+
     setInput('');
   };
 
+  useEffect(() => {
+    chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages]);
 
   return (
-    <div style={{  width: '400px', margin: '20px auto', border: '1px solid #ccc', borderRadius: '10px', padding: '10px', backgroundColor: 'rgba(46, 57, 1, 0.26)' }}>
-      <h2 style={{ textAlign: 'center' }}>צ'אט תמיכה</h2>
-      <div style={{ height: '300px', overflowY: 'auto', border: '1px solid #ddd', borderRadius: '5px', padding: '10px', marginBottom: '10px', backgroundColor: '#fff' }}>
+    <div className="chat-container">
+      <h2 className="chat-title">צ'אט תמיכה</h2>
+
+      <div className="chat-box">
         {messages.map((message, index) => (
           <div
             key={index}
+            className="chat-message-row"
             style={{
-              textAlign: message.sender === 'user' ? 'right' : 'left',
-              margin: '5px 0',
+              justifyContent: message.sender === 'user' ? 'flex-end' : 'flex-start',
             }}
           >
-            <span
+            <div
+              className="chat-bubble"
               style={{
-                display: 'inline-block',
-                padding: '10px',
-                borderRadius: '10px',
-                backgroundColor: message.sender === 'user' ? '#d1e7dd' : '#f8d7da',
-                color: '#000',
-                maxWidth: '80%',
-                wordWrap: 'break-word',
+                backgroundColor: message.sender === 'user' ? '#e0f7fa' : '#fff3cd',
+                alignSelf: message.sender === 'user' ? 'flex-end' : 'flex-start',
               }}
             >
+              {message.sender === 'rep' && (
+                <span className="chat-sender">נציג שירות</span>
+              )}
               {message.text}
-            </span>
+              <div className="chat-time">16:45</div>
+            </div>
           </div>
         ))}
+        <div ref={chatEndRef} />
       </div>
-      <div style={{ display: 'flex', gap: '10px' }}>
+
+      <div className="chat-input-row">
         <input
           type="text"
           value={input}
           onChange={(e) => setInput(e.target.value)}
           placeholder="כתוב הודעה..."
-          style={{ flex: 1, padding: '10px', borderRadius: '5px', border: '1px solid #ccc' }}
+          className="chat-input"
+          onKeyDown={(e) => e.key === 'Enter' && handleSendMessage()}
         />
-        <button
-          onClick={handleSendMessage}
-          style={{
-            padding: '10px 20px',
-            borderRadius: '5px',
-            border: 'none',
-            backgroundColor: '#4CAF50',
-            color: 'white',
-            cursor: 'pointer',
-          }}
-        >
+        <button className="chat-send-button" onClick={handleSendMessage}>
           שלח
         </button>
-
       </div>
-
     </div>
   );
 }

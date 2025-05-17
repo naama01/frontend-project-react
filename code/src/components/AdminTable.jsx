@@ -11,15 +11,18 @@ import { IconButton } from '@mui/material';
 import { fireReadTitles, fireWriteCollection, fireReadCollection, fireDeleteDoc } from '../firebase'; // Import Firestore functions
 import AdminNew from './AdminNew'; // Import AdminNew component
 import Checkbox from '@mui/material/Checkbox'; // Import Checkbox component
+import '../css/AdminTable.css'; // Import CSS for fade-in effect
 
 export default function AdminTable({ dataname }) {
     const [rows, setRows] = useState([]);
     const [titles, setTitles] = useState([]); // Dynamically generated titles
     const [showNewForm, setShowNewForm] = useState(false); // Toggle AdminNew visibility
+    const [loading, setLoading] = useState(true); // Track loading state
+    const [fadeIn, setFadeIn] = useState(false); // Track fade-in effect
 
     // Fetch titles and rows from Firestore
     useEffect(() => {
-        // Fetch titles first
+        setLoading(true); // Set loading to true before fetching data
         fireReadTitles(dataname)
             .then((titlesData) => {
                 if (titlesData) {
@@ -36,6 +39,10 @@ export default function AdminTable({ dataname }) {
             })
             .catch((error) => {
                 console.error("Error fetching data from Firestore:", error);
+            })
+            .finally(() => {
+                setLoading(false); // Set loading to false after data is fetched
+                setTimeout(() => setFadeIn(true), 100); // Add a slight delay before triggering fade-in
             });
     }, [dataname]);
 
@@ -43,7 +50,6 @@ export default function AdminTable({ dataname }) {
         const updatedRows = rows.filter((_, index) => index !== rowIndex);
         setRows(updatedRows);
         fireDeleteDoc(dataname, row.id); // Save updated rows to Firestore
-    console.log("row", row);
     }
 
     function handleNewItemSubmit(newItem) {
@@ -86,7 +92,7 @@ export default function AdminTable({ dataname }) {
                         aria-label="delete"
                         size="small"
                         style={{ color: '#f44336' }}
-                        onClick={() => handleDelete(rowIndex,row)}
+                        onClick={() => handleDelete(rowIndex, row)}
                     >
                         🗑️
                     </IconButton>
@@ -102,38 +108,44 @@ export default function AdminTable({ dataname }) {
 
     return (
         <div>
-            {!showNewForm ? (
-                <>
-                    <TableContainer component={Paper}>
-                        <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                            <TableHead>
-                                <TableRow>{titles_html}</TableRow>
-                            </TableHead>
-                            <TableBody>{rows_html}</TableBody>
-                        </Table>
-                    </TableContainer>
-
-                    <Button
-                        variant="contained"
-                        onClick={saveTable}
-                        style={{ marginTop: '10px', backgroundColor: '#4CAF50', color: 'white' }}
-                    >
-                        שמור את הנתונים
-                    </Button>
-                    <Button
-                        variant="contained"
-                        onClick={() => setShowNewForm(true)} // Show the AdminNew form
-                        style={{ marginTop: '10px', backgroundColor: '#4CAF50', color: 'white' }}
-                    >
-                        הוסף רשומה חדשה
-                    </Button>
-                </>
-            ) : (
-                <AdminNew
-                    dataname={dataname}
-                    onSubmit={handleNewItemSubmit} // Handle new item submission
-                />
-            )}
+          {!showNewForm ? (
+            <>
+              <TableContainer
+                component={Paper}
+                className={`fade-in ${fadeIn ? 'visible' : ''}`}
+              >
+                {!loading && (
+                  <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                    <TableHead>
+                      <TableRow>{titles_html}</TableRow>
+                    </TableHead>
+                    <TableBody>{rows_html}</TableBody>
+                  </Table>
+                )}
+              </TableContainer>
+      
+              <Button
+                variant="contained"
+                onClick={saveTable}
+                style={{ marginTop: '10px', backgroundColor: '#4CAF50', color: 'white' }}
+              >
+                שמור את הנתונים
+              </Button>
+              <Button
+                variant="contained"
+                onClick={() => setShowNewForm(true)}
+                style={{ marginTop: '10px', backgroundColor: '#4CAF50', color: 'white' }}
+              >
+                הוסף רשומה חדשה
+              </Button>
+            </>
+          ) : (
+            <AdminNew
+              dataname={dataname}
+              onSubmit={handleNewItemSubmit}
+            />
+          )}
         </div>
-    );
-}
+      );
+      
+    }
