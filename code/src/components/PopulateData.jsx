@@ -84,7 +84,8 @@ export default function PopulateData() {
         { id: "26", name: "באגט אבוקדו", desc: "באגט עם ממרח", price: "31", time: "7", enabled: true },
         { id: "27", name: "טאקו ירקות", desc: "מנה מקסיקנית", price: "40", time: "10", enabled: true },
         { id: "28", name: "פסטה פסטו", desc: "פסטה עם בזיליקום", price: "44", time: "11", enabled: true },
-        { id: "29", name: "לביבות תפוחי אדמה", desc: "מטוגנות בשמן", price: "36", time: "10", enabled: true }
+        { id: "29", name: "לביבות תפוחי אדמה", desc: "מטוגנות בשמן", price: "36", time: "10", enabled: true },
+        { id: "30", name: "סושי", desc: "2 רולים לבחירתך", price: "46", time: "15", enabled: true }
     ];
 
 
@@ -211,8 +212,7 @@ const mappedOrders = orders.map((order) => ({
 
     return (
         <div>
-            <h4>Populate Data</h4>
-            <p>Data for dishes, classes, and students has been populated in the Firestore database.</p>
+            <p>FOR DEMO: Data for {dataTables.toString()} has been populated in the Firestore database.</p>
         </div>
     );
 }

@@ -50,7 +50,7 @@ export default function UserOrderStatus() {
         </tr>
     </table>
     
-    <div class="actions">
+    <div className="actions">
         <button>בטל הזמנה</button>
         <button>שנה הזמנה</button>
         <button>הזמן שוב</button>

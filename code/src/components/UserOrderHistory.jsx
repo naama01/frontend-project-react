@@ -1,43 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import UserTable from './UserTable';
 import { useCart } from './CartContext'; // Import the useCart hook
-import { fireReadTitles, fireReadQuery } from '../firebase'; // Import Firestore functions
 
 export default function UserOrderHistory() {
   const { currentStudentId } = useCart(); // Access currentStudentId from context
   const dataname = "orders";
-  const [rows, setRows] = useState([]);
-  const [titles, setTitles] = useState([]); // Dynamically generated titles
 
-  useEffect(() => {
-    if (!currentStudentId) {
-      console.error("currentStudentId is not set!");
-      return;
-    }
-
-    // Fetch titles first
-    fireReadTitles(dataname)
-      .then((titlesData) => {
-        if (titlesData) {
-          setTitles(Object.values(titlesData)); // Set titles from the "titles" document
-        } else {
-          console.error("No titles document found!");
-        }
-
-        // Fetch orders after titles are retrieved
-        return fireReadQuery(dataname, [['תז סטודנט מזמין', '==', currentStudentId]]);
-            })
-      .then((data) => {
-        setRows(data); // Set the rows with the fetched data
-      })
-      .catch((error) => {
-        console.error("Error fetching data from Firestore:", error);
-      });
-  }, [currentStudentId]); // Run when currentStudentId changes
+  if (!currentStudentId) {
+    return <div>לא נמצאו נתונים עבור סטודנט זה.</div>; // Display a message if currentStudentId is not set
+  }
 
   return (
     <div>
-      <UserTable dataname="orders" rows={rows} titles={titles} />
+      <UserTable dataname={dataname} query={['תז סטודנט מזמין', "==", currentStudentId]} />
     </div>
   );
 }

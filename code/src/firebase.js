@@ -126,41 +126,25 @@ export async function fireUpdateDocument(coll, id, data) {
 
 export async function fireReadQuery(coll, query) {
     try {
-        // Initialize Firestore collection reference
         const collRef = collection(firestore, coll);
-        let firestoreQueryRef = collRef;
+        const querySnapshot = await getDocs(collRef);
 
-        // Apply conditions from the query array
-        if (query && Array.isArray(query)) {
-            query.forEach((condition) => {
-                if (Array.isArray(condition) && condition.length === 3) {
-                    const [field, operator, value] = condition;
-                    const trimmedField = field.trim(); // Prevent issues from trailing spaces/tabs
-                    console.log(`Applying condition: ${trimmedField} ${operator} ${value}`); // Debugging
-                    firestoreQueryRef = firestoreQuery(firestoreQueryRef, where(trimmedField, operator, value));
-                } else {
-                    console.warn("Invalid query condition (ignored):", condition);
-                }
-            });
-        }
-
-        // Execute the query
-        const querySnapshot = await getDocs(firestoreQueryRef);
-
-        // Map documents to a clean array
-        const documents = querySnapshot.docs.map((doc) => ({
+        // Filter documents where any field matches the query value
+        const documents = querySnapshot.docs.filter((doc) => {
+            const data = doc.data();
+            return Object.values(data).some((value) => value === query[2]); // Check if any field matches the value
+        }).map((doc) => ({
             id: doc.id,
             ...doc.data(),
         }));
 
-        console.log("Documents retrieved based on query:", documents); // Debugging
+        console.log("Documents retrieved based on query:", documents);
         return documents;
     } catch (error) {
         console.error("Error reading collection with query:", error);
         throw error;
     }
 }
-
 
 
 export async function fireReadEnabledOnly(coll) {

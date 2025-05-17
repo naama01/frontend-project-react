@@ -1,0 +1,63 @@
+.admin-new-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  
+    /* Center the container on the screen */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  
+  .admin-new-title {
+    text-align: center;
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  .admin-new-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .admin-new-field {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .admin-new-text-field {
+    width: 100%;
+  }
+  
+  .admin-new-checkbox-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .admin-new-checkbox-label {
+    font-size: 1rem;
+    color: #555;
+  }
+  
+  .admin-new-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  
+  .admin-new-submit-button {
+    background-color: #4caf50;
+    color: white;
+  }
+  
+  .admin-new-cancel-button {
+    color: #f44336;
+    border-color: #f44336;
+  } 
