@@ -43,14 +43,14 @@ export default function TopMenu({ title }) {
             <li onClick={() => navigate("/help")}>עזרה</li>
           </ul>
         </li>
-        <li className="menuItem">
+       { currentStudentId && <li className="menuItem">
           אזור אישי
           <ul className="subMenu">
             <li onClick={() => navigate("/UserOrderStatus")}>סטטוס הזמנה פתוחה</li>
             <li onClick={() => navigate("/UserOrderHistory")}>הסטורית הזמנות</li>
             <li onClick={() => navigate("/UpdateStudentSelf")}>עדכון פרטים</li>
           </ul>
-        </li>
+        </li>}
         <li className="menuItem">
           אזור ניהול
           <ul className="subMenu">
