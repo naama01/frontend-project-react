@@ -31,6 +31,8 @@ export default function App() {
           <Route path="/AdminOrders" element={<AdminPage dataname="orders" />} />
           <Route path="/AdminStudents" element={<AdminPage dataname="students" />} />
           <Route path="/AdminNew" element={<AdminNew />} />
+          <Route path="/AdminNew/:dataname" element={<AdminNew />} />
+          <Route path="/AdminNew/:dataname/:id" element={<AdminNew />} />
           <Route path="/UserOrderHistory" element={<UserOrderHistory />} />
           <Route path="/UserOrderStatus" element={<UserOrderStatus />} />
           <Route path="/ConfirmOrder" element={<ConfirmOrder />} />

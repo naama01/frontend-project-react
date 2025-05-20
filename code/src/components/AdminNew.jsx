@@ -1,19 +1,25 @@
 import React, { useState, useEffect } from 'react';
-import { fireReadTitles } from '../firebase'; // Import Firestore function
+import { fireReadDoc, fireReadTitles, fireWriteDoc } from '../firebase'; // Import Firestore function
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Checkbox from '@mui/material/Checkbox'; // Import Checkbox component
 import '../css/AdminNew.css'; // Import the new CSS file
 import { useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
-
-export default function AdminNew({ dataname, onSubmit, onCancel }) {
+export default function AdminNew({  }) {
     const [titles, setTitles] = useState([]); // Store the titles
     const [formData, setFormData] = useState({}); // Store form data
+    const [updateMode, setUpdateMode] = useState(useParams().id != null); // Track form mode (true for update, false for new)
+    const params = useParams(); // Get URL parameters
     const navigate = useNavigate();
-    
+    const dataname = params.dataname; // Get the dataname from URL parameters
+
+
     // Fetch titles from Firestore
     useEffect(() => {
+
+
         fireReadTitles(dataname)
             .then((titlesData) => {
                 if (titlesData) {
@@ -26,6 +32,7 @@ export default function AdminNew({ dataname, onSubmit, onCancel }) {
                         return acc;
                     }, {});
                     setFormData(initialFormData);
+
                 } else {
                     console.error('No titles document found!');
                 }
@@ -33,10 +40,30 @@ export default function AdminNew({ dataname, onSubmit, onCancel }) {
             .catch((error) => {
                 console.error('Error fetching titles:', error);
             });
+
     }, [dataname]);
+
+    useEffect(() => {
+        if (dataname && params.id) {
+            fireReadDoc(dataname, params.id).then((docData) => {
+                if (docData) {
+                    setFormData(docData); // Populate form fields with retrieved data
+                } else {
+                    console.error('No document found!');
+                }
+            }).catch((error) => {
+                console.error('Error fetching document:', error);
+            });
+        }
+    }, [dataname, params.id]);
 
     // Handle input changes
     const handleInputChange = (title, value) => {
+        if (title === "טלפון") {
+            let a = 0;
+
+        }
+
         setFormData((prevFormData) => ({
             ...prevFormData,
             [title]: value, // Update the value for the specific title
@@ -51,16 +78,38 @@ export default function AdminNew({ dataname, onSubmit, onCancel }) {
         }));
     };
 
-    // Handle form submission
+
+    const saveItem = (docData) => {
+        fireWriteDoc(dataname, docData)
+            .then(() => {
+                console.log('Document successfully written!');
+                alert('הנתונים נשמרו בהצלחה!');
+                navigate(`/Admin${dataname}`); // Redirect to the Admin page after saving
+            })
+            .catch((error) => {
+                console.error('Error writing document:', error);
+                alert('שגיאה בשמירת הנתונים!');
+            });
+    };
+
     const handleSubmit = (e) => {
         e.preventDefault();
-        onSubmit(formData); // Pass the form data to the parent component
+
+        // Validate phone number pattern
+        if (formData["טלפון"] && !/^0[0-9]{8,9}$/.test(formData["טלפון"])) {
+            alert("מספר הטלפון חייב להיות באורך 9-10 ספרות ולהתחיל ב-0.");
+            return;
+        }
+
+        saveItem(formData);
     };
 
     return (
+
         <div className="admin-new-container">
-            <h2 className="admin-new-title">הוסף רשומה חדשה</h2>
-            <form onSubmit={handleSubmit} className="admin-new-form">
+            <h2 className="admin-new-title">{updateMode ? 'עדכון רשומה' : 'הוסף רשומה חדשה'}</h2>
+            {console.log(updateMode)}
+            <form className="admin-new-form" onSubmit={handleSubmit}>
                 {titles.map((title, index) => (
                     <div key={index} className="admin-new-field">
                         {(title === "פעיל" || title === "משלוח") ? (
@@ -76,9 +125,14 @@ export default function AdminNew({ dataname, onSubmit, onCancel }) {
                                 label={title}
                                 variant="outlined"
                                 fullWidth
+                                required
                                 value={formData[title] || ''}
                                 onChange={(e) => handleInputChange(title, e.target.value)}
                                 className="admin-new-text-field"
+                                {...((title.includes("מספר") && updateMode) ? { InputProps: { readOnly: true } } : {})} // Make email field read-only
+                                {...(title == "טלפון" ? { type: "tel", pattern: "^0[0-9]{0,9}$" } : {})} // Enforce 9-10 digits starting with 0
+                                {...(title.includes("תאריך") ? { type: "datetime" } : {})} // Change input type to number for price
+                                {...(title == "מייל" ? { type: "email" } : {})} // Change input type to date for date
                             />
                         )}
                     </div>
@@ -96,7 +150,7 @@ export default function AdminNew({ dataname, onSubmit, onCancel }) {
                         type="button"
                         variant="outlined"
                         color="secondary"
-                        onClick={() => navigate('/')} // Navigate to the root path
+                        onClick={() => navigate(`/Admin${dataname}`)}
                         className="admin-new-cancel-button"
                     >
                         בטל

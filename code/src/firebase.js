@@ -53,6 +53,28 @@ export async function fireReadCollection(coll) {
     }
 }
 
+export async function fireReadDoc(coll,DocId) {
+    try {
+        // Reference the document with ID "titles" in the specified collection
+        const docRef = doc(firestore, coll, DocId);
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+            const document = { ...docSnap.data() }; // Include the document ID and data
+            console.log("Document retrieved: ", document);
+            return document; // Return the document
+        } else {
+            console.log("No such document with ID 'titles'!");
+            return null; // Return null if the document does not exist
+        }
+    } catch (error) {
+        console.error("Error reading document with ID 'titles':", error);
+        throw error; // Re-throw the error to handle it in the calling function
+    }
+    
+}
+
+
 export async function fireWriteCollection(coll, docs) {
     try {
         const writeResults = [];
@@ -171,3 +193,5 @@ export async function fireReadEnabledOnly(coll) {
         throw error; // Re-throw the error to handle it in the calling function
     }
 }
+
+export { FireWriteDoc as fireWriteDoc }; // Ensure proper export

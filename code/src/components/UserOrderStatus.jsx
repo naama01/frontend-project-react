@@ -1,52 +1,87 @@
-import React from 'react'
-import OrderProgress from './OrderProgress'
+import React, { useEffect, useState } from 'react';
+import OrderProgress from './OrderProgress';
+import { fireReadQuery } from '../firebase';
+import { useCart } from './CartContext';
 
 export default function UserOrderStatus() {
+    const [orderData, setOrderData] = useState(null);
+    const { currentStudentId } = useCart();
+
+    useEffect(() => {
+        const fetchOrderData = async () => {
+            if (!currentStudentId) return;
+
+            try {
+                const querySnapshot = await fireReadQuery("students", ["תז סטודנט מזמין", "==", currentStudentId], { orderBy: "תאריך", limit: 1 });
+                if (querySnapshot?.docs?.length) {
+                    const lastOrder = querySnapshot.docs[0].data();
+                    console.log("Retrieved order data:", lastOrder); // Debugging log
+                    setOrderData(lastOrder);
+                } else {
+                    console.warn("No order data found for the current student.");
+                    setOrderData(null);
+                }
+            } catch (error) {
+                console.error("Error fetching order data:", error);
+            }
+        };
+
+        fetchOrderData();
+    }, [currentStudentId]);
+
+    if (!currentStudentId) {
+        return <div>לא נמצאו נתונים עבור סטודנט זה.</div>;
+    }
+
+    if (!orderData) {
+        return <div>Loading...</div>;
+    }
+
     return (
         <div>
             <h1>סטטוס הזמנה פתוחה</h1>
-            <OrderProgress step="2" />
+            <OrderProgress step={orderData.step || "1"} />
 
             <table>
                 <tr>
                     <th>מספר הזמנה</th>
-                    <td>12345</td>
+                    <td>{orderData.orderNumber}</td>
                 </tr>
                 <tr>
                     <th>תאריך הזמנה</th>
-                    <td>12/03/2025</td>
+                    <td>{orderData.orderDate}</td>
                 </tr>
                 <tr>
                     <th>זמן אספקה משוער</th>
-                    <td>15:30, 12/03/2025</td>
+                    <td>{orderData.estimatedDeliveryTime}</td>
                 </tr>
                 <tr>
                     <th>פריטים נרכשים</th>
-                    <td>פיצה (2), סלט (1)</td>
+                    <td>{orderData.items}</td>
                 </tr>
                 <tr>
                     <th>סכום כולל</th>
-                    <td>₪25.00</td>
+                    <td>₪{orderData.totalAmount}</td>
                 </tr>
                 <tr>
                     <th>סטטוס הזמנה</th>
-                    <td>בהכנה</td>
+                    <td>{orderData.orderStatus}</td>
                 </tr>
                 <tr>
                     <th>שיטת משלוח</th>
-                    <td>משלוח</td>
+                    <td>{orderData.deliveryMethod}</td>
                 </tr>
                 <tr>
                     <th>סטטוס תשלום</th>
-                    <td>שולם</td>
+                    <td>{orderData.paymentStatus}</td>
                 </tr>
                 <tr>
                     <th>מידע למעקב</th>
-                    <td><a href="#">לחץ כאן למעקב אחר ההזמנה</a></td>
+                    <td><a href={orderData.trackingLink}>לחץ כאן למעקב אחר ההזמנה</a></td>
                 </tr>
                 <tr>
                     <th>פרטי יצירת קשר</th>
-                    <td>מספר טלפון: 123-456-7890</td>
+                    <td>{orderData.contactInfo}</td>
                 </tr>
             </table>
 
@@ -55,7 +90,6 @@ export default function UserOrderStatus() {
                 <button>שנה הזמנה</button>
                 <button>הזמן שוב</button>
             </div>
-
         </div>
-    )
+    );
 }
