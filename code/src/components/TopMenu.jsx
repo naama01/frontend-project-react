@@ -1,8 +1,25 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '../components/CartContext';
-import { TextField, MenuItem, Typography } from '@mui/material';
+import { TextField, MenuItem, Typography, Button, Box } from '@mui/material';
 import { fireReadCollection, fireReadEnabledOnly } from '../firebase'; // Import Firestore function
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import StorefrontIcon from '@mui/icons-material/Storefront';
+import HomeIcon from '@mui/icons-material/Home';
+import SupportAgentIcon from '@mui/icons-material/SupportAgent';
+import RoomServiceIcon from '@mui/icons-material/RoomService';
+import HelpCenterIcon from '@mui/icons-material/HelpCenter';
+import AccountBoxIcon from '@mui/icons-material/AccountBox';
+import ManageSearchIcon from '@mui/icons-material/ManageSearch';
+import TipsAndUpdatesIcon from '@mui/icons-material/TipsAndUpdates';
+import BorderColorIcon from '@mui/icons-material/BorderColor';
+import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
+import HandshakeIcon from '@mui/icons-material/Handshake';
+import PeopleIcon from '@mui/icons-material/People';
+import MenuBookIcon from '@mui/icons-material/MenuBook';
+import BusinessIcon from '@mui/icons-material/Business';
+import LogoutIcon from '@mui/icons-material/Logout';
+
 
 export default function TopMenu({ title }) {
   const navigate = useNavigate();
@@ -30,39 +47,38 @@ export default function TopMenu({ title }) {
         component="h1"
         onClick={() => navigate("/")}
         style={{ cursor: 'pointer', marginRight: '20px' }} // Add styles for pointer and color
-      >
+      >      <StorefrontIcon />
+
         {title}
       </Typography>
 
       <ul className="menu">
-        <li className="menuItem" onClick={() => navigate("/")}>מסך ראשי</li>
-        <li className="menuItem">
+        <li className="menuItem" onClick={() => navigate("/")}><HomeIcon /> מסך ראשי</li>
+        <li className="menuItem"><RoomServiceIcon />
           שירות ותמיכה
           <ul className="subMenu">
-            <li onClick={() => navigate("/SupportChat")}>לצ׳ט עם מייקל</li>
-            <li onClick={() => navigate("/help")}>עזרה</li>
+            <li onClick={() => navigate("/SupportChat")}><SupportAgentIcon /> לצ׳ט עם מייקל</li>
+            <li onClick={() => navigate("/help")}><HelpCenterIcon /> עזרה</li>
           </ul>
         </li>
-        {currentStudentId && <li className="menuItem">
-          אזור אישי
+        {currentStudentId && <li className="menuItem"><AccountBoxIcon /> אזור אישי
           <ul className="subMenu">
-            <li onClick={() => navigate("/UserOrderStatus")}>סטטוס הזמנה פתוחה</li>
-            <li onClick={() => navigate("/UserOrderHistory")}>הסטורית הזמנות</li>
-            <li onClick={() => navigate("/UpdateStudentSelf")}>עדכון פרטים</li>
+            <li onClick={() => navigate("/UserOrderStatus")}><TipsAndUpdatesIcon /> סטטוס הזמנה פתוחה</li>
+            <li onClick={() => navigate("/UserOrderHistory")}><ManageSearchIcon /> הסטורית הזמנות</li>
+            <li onClick={() => navigate("/UpdateStudentSelf")}><BorderColorIcon />  עדכון פרטים</li>
           </ul>
         </li>}
-        {currentStudentId ? null : <li className="menuItem">
-          אזור ניהול
+        {currentStudentId ? null : <li className="menuItem"><SupervisorAccountIcon /> אזור ניהול
           <ul className="subMenu">
-            <li onClick={() => navigate("/AdminClasses")}>ניהול כיתות</li>
-            <li onClick={() => navigate("/AdminOrders")}>ניהול הזמנות</li>
-            <li onClick={() => navigate("/AdminDishes")}>ניהול תפריט</li>
-            <li onClick={() => navigate("/AdminStudents")}>ניהול סטודנטים</li>
+            <li onClick={() => navigate("/AdminClasses")}><BusinessIcon /> ניהול כיתות</li>
+            <li onClick={() => navigate("/AdminOrders")}><HandshakeIcon />ניהול הזמנות</li>
+            <li onClick={() => navigate("/AdminDishes")}><MenuBookIcon /> ניהול תפריט</li>
+            <li onClick={() => navigate("/AdminStudents")}><PeopleIcon /> ניהול סטודנטים</li>
           </ul>
         </li>}
 
-        <li className="menuItem">
-          יציאה
+        <li className="menuItem"><LogoutIcon /> התנתקות
+
           <ul className="subMenu">
             <li onClick={() => window.location.reload()}>צא ורוקן את הסל</li>
           </ul>
@@ -74,7 +90,7 @@ export default function TopMenu({ title }) {
         select
         label="סטודנט נוכחי"
         value={currentStudentId || ''}
-        onChange={(e) => setCurrentStudentId(e.target.value)  } // Update the context when student changes
+        onChange={(e) => setCurrentStudentId(e.target.value)} // Update the context when student changes
         style={{ minWidth: '200px' }}
       >
         {students.map((student, index) => (
@@ -84,22 +100,22 @@ export default function TopMenu({ title }) {
         ))}
       </TextField>
       {currentStudentId &&
-        <div className="cart">
-          <span>סה"כ בעגלה: ₪{totalAmount.toFixed(2)}</span>
-          <button
-            style={{
-              marginLeft: '10px',
-              padding: '5px 10px',
-              backgroundColor: '#4CAF50',
-              color: 'white',
-              border: 'none',
-              borderRadius: '5px',
-            }}
-            onClick={() => navigate('/ConfirmOrder')}
+        <Box className="cart" display="flex" alignItems="center">
+          <ShoppingCartIcon className="cart-icon" />
+          <Typography variant="body1" style={{ margin: '10px' }}>
+            {cart.length} פריטים בעגלה
+          </Typography>
+          <Typography variant="body1">סה"כ בעגלה: ₪{totalAmount.toFixed(2)}</Typography>
+          <Button
+            variant="contained"
+            color="success"
+            style={{ margin: '10px', height: '30px' }}
+            onClick={() => navigate('/ConfirmOrder')} // Navigate to the order confirmation page
+            disabled={cart.length === 0} // Disable button if cart is empty
           >
             סיים הזמנה
-          </button>
-        </div>
+          </Button>
+        </Box>
       }
     </div>
   );

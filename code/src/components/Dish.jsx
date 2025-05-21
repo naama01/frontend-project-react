@@ -4,6 +4,9 @@ import ButtonGroup from '@mui/material/ButtonGroup';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography'; // Import Typography for read-only display
 import { useCart } from '../components/CartContext';
+import AddIcon from '@mui/icons-material/Add';
+import RemoveIcon from '@mui/icons-material/Remove';
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 
 export default function Dish({ dishId, dishName, desc, price, prepTime, AllowBuy }) {
     const { addToCart } = useCart(); // Access the addToCart function from the context
@@ -54,12 +57,12 @@ export default function Dish({ dishId, dishName, desc, price, prepTime, AllowBuy
                 </div>
                 <div>
                     <p className="dish-price">{price} ש״ח</p>
-                    <p className="dish-prep-time">זמן הכנה: {prepTime} דקות</p>
+                    <p className="dish-prep-time"> זמן הכנה: {prepTime} דקות</p>
                 </div>
                 {AllowBuy && <div className="dish-controls">
                     <ButtonGroup variant="text" color="primary" aria-label="">
                         <Button className="dish-button" onClick={() => changeTotal("0")}>
-                            -
+                            <RemoveIcon />
                         </Button>
                         <Typography
                             className="dish-quantity"
@@ -69,7 +72,7 @@ export default function Dish({ dishId, dishName, desc, price, prepTime, AllowBuy
                             {total}
                         </Typography>
                         <Button className="dish-button" onClick={() => changeTotal("1")}>
-                            +
+                            <AddIcon />
                         </Button>
                         <Button className="dish-button" onClick={handleAddToCart}>
                             הוסף לעגלה

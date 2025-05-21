@@ -15,7 +15,7 @@
     box-sizing: border-box;
 }
 
-/* Enforce consistent box-sizing on all descendants */
+/* Enforce consistent box-sizing on all descendants s*/
 .user-order-status-wrapper *,
 .user-order-status-wrapper *::before,
 .user-order-status-wrapper *::after {

@@ -7,7 +7,7 @@ import '../css/AdminNew.css'; // Import the new CSS file
 import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 
-export default function AdminNew({  }) {
+export default function AdminNew({ }) {
     const [titles, setTitles] = useState([]); // Store the titles
     const [formData, setFormData] = useState({}); // Store form data
     const [updateMode, setUpdateMode] = useState(useParams().id != null); // Track form mode (true for update, false for new)
@@ -55,7 +55,7 @@ export default function AdminNew({  }) {
                 console.error('Error fetching document:', error);
             });
         }
-    }, [dataname, params.id]);
+    }, []);
 
     // Handle input changes
     const handleInputChange = (title, value) => {
@@ -80,7 +80,7 @@ export default function AdminNew({  }) {
 
 
     const saveItem = (docData) => {
-        fireWriteDoc(dataname, docData)
+        fireWriteDoc(dataname, docData, params.id)
             .then(() => {
                 console.log('Document successfully written!');
                 alert('הנתונים נשמרו בהצלחה!');
@@ -108,7 +108,6 @@ export default function AdminNew({  }) {
 
         <div className="admin-new-container">
             <h2 className="admin-new-title">{updateMode ? 'עדכון רשומה' : 'הוסף רשומה חדשה'}</h2>
-            {console.log(updateMode)}
             <form className="admin-new-form" onSubmit={handleSubmit}>
                 {titles.map((title, index) => (
                     <div key={index} className="admin-new-field">
@@ -124,7 +123,6 @@ export default function AdminNew({  }) {
                             <TextField
                                 label={title}
                                 variant="outlined"
-                                fullWidth
                                 required
                                 value={formData[title] || ''}
                                 onChange={(e) => handleInputChange(title, e.target.value)}

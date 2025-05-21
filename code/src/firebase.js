@@ -1,11 +1,9 @@
-// Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { deleteDoc, getFirestore } from "firebase/firestore";
 import { setDoc, doc, collection } from "firebase/firestore"; // Updated import
-import { addDoc, getDocs, getDoc,updateDoc } from "firebase/firestore";
-import {  query as firestoreQuery, where, orderBy, limit } from "firebase/firestore";
+import { addDoc, getDocs, getDoc, updateDoc } from "firebase/firestore";
+import { query as firestoreQuery, where, orderBy, limit } from "firebase/firestore";
 
-// Your web app's Firebase configuration
 const firebaseConfig = {
     apiKey: "AIzaSyBct_RWeiaFjNjJGlrp0mgnwj-cqgLxXnQ",
     authDomain: "miznono-dfdc3.firebaseapp.com",
@@ -20,18 +18,20 @@ const app = initializeApp(firebaseConfig);
 export const firestore = getFirestore(app);
 
 //delay to make the loading message more visible
-export async function sleep(ms) { 
+export async function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-export async function FireWriteDoc(coll, docData) {
+
+export async function FireWriteDoc(coll, docData, docId) {
     try {
-        await sleep(500); // Half-second delay to make the loading message more visible
+        await sleep(500); // Half-second delay to make the loading message more visible for class demo
 
         // Get the first element of the doc object as the document ID
-        const docId = Object.values(docData)[0]; // Assuming the first element is the unique ID
+      //  const docId = Object.values(docData)[0]; // First element is the unique ID
 
         // Use setDoc to explicitly set the document ID
+        if (!docId) {docId = Object.values(docData)[0]}
         const docRef = doc(firestore, coll, docId);
         await setDoc(docRef, docData);
 
@@ -42,20 +42,18 @@ export async function FireWriteDoc(coll, docData) {
         console.error("Error adding document: ", error);
         throw error; // Re-throw the error to handle it in the calling function
     }
-    
+
 }
 
 export async function fireReadCollection(coll) {
     try {
         const querySnapshot = await getDocs(collection(firestore, coll));
         const documents = querySnapshot.docs
-        //////// delete this after cadding titles collection
-            .filter((doc) => doc.id !== "titles") // Skip the document with ID "titles"
             .map((doc) => ({
                 id: doc.id, // Include the document ID
                 ...doc.data(), // Spread the document data
             }));
-        console.log("Documents retrieved (excluding 'titles'): ", documents);
+        console.log("Documents retrieved: ", documents);
         await sleep(500); // Half-second delay to make the loading message more visible
 
         return documents; // Return the array of documents
@@ -65,7 +63,7 @@ export async function fireReadCollection(coll) {
     }
 }
 
-export async function fireReadDoc(coll,DocId) {
+export async function fireReadDoc(coll, DocId) {
     try {
         // Reference the document with ID "titles" in the specified collection
         const docRef = doc(firestore, coll, DocId);
@@ -76,14 +74,14 @@ export async function fireReadDoc(coll,DocId) {
             console.log("Document retrieved: ", document);
             return document; // Return the document
         } else {
-            console.log("No such document with ID 'titles'!");
+            console.log("No such document ID!");
             return null; // Return null if the document does not exist
         }
     } catch (error) {
-        console.error("Error reading document with ID 'titles':", error);
+        console.error("Error:", error);
         throw error; // Re-throw the error to handle it in the calling function
     }
-    
+
 }
 
 
@@ -97,11 +95,6 @@ export async function fireWriteCollection(coll, docs) {
             // Get the first element of the doc object as the document ID
             const docId = Object.values(docData)[0]; // Assuming the first element is the unique ID
 
-            // Skip the document with ID "titles"
-            if (docId === "titles") {
-                console.log("Skipping document with ID 'titles'");
-                continue;
-            }
 
             // Use setDoc to explicitly set the document ID
             const docRef = doc(firestore, coll, docId);
@@ -118,6 +111,35 @@ export async function fireWriteCollection(coll, docs) {
     }
 }
 
+
+export async function fireReadTitles(dataname) {
+    try {
+        // Reference the document with ID "titles" in the specified collection
+        const docRef = doc(firestore, "titles", dataname);
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+            const document = Object.entries(docSnap.data())
+                .sort(([keyA], [keyB]) => keyA - keyB) // Sort by field names (keys)
+                .map(([, value]) => value); // Extract and return the values in order
+
+            console.log("Field values ordered by field names: ", document);
+            return document; // Return the ordered field values
+        } else {
+            console.log("No such document with ID 'titles'!");
+            return null; // Return null if the document does not exist
+        }
+    } catch (error) {
+        console.error("Error reading document with ID 'titles':", error);
+        throw error; // Re-throw the error to handle it in the calling function
+    }
+}
+
+/*
+
+*/
+
+/*
 
 export async function fireReadTitles(coll) {
     try {
@@ -137,7 +159,10 @@ export async function fireReadTitles(coll) {
         console.error("Error reading document with ID 'titles':", error);
         throw error; // Re-throw the error to handle it in the calling function
     }
-}
+}ֿ
+
+*/
+
 export async function fireDeleteDoc(coll, docId) {
     try {
         // Reference the document to delete

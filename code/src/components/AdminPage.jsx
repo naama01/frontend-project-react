@@ -5,13 +5,14 @@ import { Box } from '@mui/material';
 import { fireReadCollection, fireReadTitles } from '../firebase'; // Import Firestore functions
 import AdminNew from './AdminNew';
 import '../css/AdminPage.css'
+import { useNavigate } from 'react-router-dom';
+
 export default function AdminPage({ dataname }) {
+  const navigate = useNavigate(); // Initialize navigate function
+
   return (
     <div className="admin-page-wrapper" >
-
-
-
-        <AdminTable dataname={dataname} />
+      <AdminTable dataname={dataname} />
       <div className="toolbox">
         <Button
           variant="contained"

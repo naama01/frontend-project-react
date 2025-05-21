@@ -14,6 +14,9 @@ import Checkbox from '@mui/material/Checkbox'; // Import Checkbox component
 import '../css/AdminTable.css'; // Import CSS for fade-in effect
 import { Link, useNavigate, useParams } from 'react-router-dom'; // Import Link for navigation
 import { FireWaitContext } from './FireWaitProvider'; // Import FireWait context
+import SettingsIcon from '@mui/icons-material/Settings';
+import DeleteIcon from '@mui/icons-material/Delete';
+
 
 export default function AdminTable({ dataname }) {
   const { setShowFireWait } = useContext(FireWaitContext); // Access setShowFireWait from context
@@ -72,6 +75,8 @@ export default function AdminTable({ dataname }) {
         {(title === "פעיל" || title === "משלוח") ? (
           <Checkbox
             checked={!!row[title]} // Ensure the value is always a boolean
+            disabled={true}
+        
             onChange={(e) => {
               const updatedRows = [...rows];
               updatedRows[rowIndex][title] = e.target.checked; // Update the value in the rows state
@@ -96,14 +101,14 @@ export default function AdminTable({ dataname }) {
             component={Link}
             to={`/adminNew/${dataname}/${row.id}`}
           >
-            📝
+            <SettingsIcon />
           </IconButton>
           <IconButton
             aria-label="מחק"
             size="small"
             onClick={() => handleDelete(rowIndex, row)}
           >
-            🗑️
+            <DeleteIcon />
           </IconButton>
         </div>
       </TableCell>

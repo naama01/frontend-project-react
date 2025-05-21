@@ -1,9 +1,24 @@
-import 'react'
+import React, { useContext } from 'react'; // Ensure React and useContext are imported together
 import '../css/HelpPage.css'
-import PopulateData from './PopulateData'
+import Button from '@mui/material/Button'
+import { FireWaitContext } from './FireWaitProvider'; // Import FireWait context
+import PopulateData from './PopulateData'; // Import the PopulateData function
+
+
 export default function HelpPage() {
+  const { setShowFireWait } = useContext(FireWaitContext); // Access setShowFireWait from context
 
-
+  const handlePopulateData = async () => {
+      try {
+        setShowFireWait(true);
+        await PopulateData(); // Wait for PopulateData to finish
+      } catch (error) {
+        console.error('Error in PopulateData:', error); // Log any errors
+      } finally {
+        setShowFireWait(false); // Ensure this is called after PopulateData
+      }
+    } 
+  
 
   return (
 
@@ -63,8 +78,16 @@ export default function HelpPage() {
         <br />- טלפון המזנון: 03-0000000
         <br />- שעות פעילות: ימים א'-ה' 08:00–17:00
       </p>
+      <div className="toolbox">
+        <Button
+          variant="contained"
+          onClick={handlePopulateData}      
+          style={{ backgroundColor: '#4CAF50', color: 'white' }}
+        >
+          הוסף מידע ראשוני 
+        </Button>
+      </div>
 
-      <PopulateData />
     </div>
   )
 }
