@@ -12,12 +12,15 @@ import SupportChat from './components/SupportChat'
 import UpdateStudentSelf from './components/UpdateStudentSelf'
 import AdminNew from './components/AdminNew'
 import AdminPage from './components/AdminPage'
-
+import { ThemeProvider, CssBaseline } from '@mui/material';
+import theme from './components/Theme'; 
 
 export default function App() {
 
 
   return (
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
 
     <div>
       <TopMenu title="המזנונו" />
@@ -41,5 +44,6 @@ export default function App() {
 
       </div>
     </div >
+    </ThemeProvider>
   )
 }

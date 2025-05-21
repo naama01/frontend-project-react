@@ -1,0 +1,150 @@
+/* Root container: enforces centered layout and RTL */
+.user-order-status-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-color: #f5f5f5;
+    padding: 2rem;
+    direction: rtl;
+    overflow-x: hidden;
+    overflow-y: auto;
+    width: 100vw;
+    max-width: 100vw;
+    box-sizing: border-box;
+}
+
+/* Enforce consistent box-sizing on all descendants */
+.user-order-status-wrapper *,
+.user-order-status-wrapper *::before,
+.user-order-status-wrapper *::after {
+    box-sizing: border-box;
+}
+
+/* Main content container */
+.user-order-status-container {
+    width: 100%;
+    max-width: 750px;
+    background-color: #ffffff;
+    padding: 2.5rem;
+    border-radius: 16px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.07);
+    overflow-x: hidden;
+}
+
+/* Title */
+.user-order-status-title {
+    font-weight: 600;
+    color: #2d2d2d;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+/* Section divider */
+.user-order-status-divider {
+    margin: 1.5rem 0;
+}
+
+/* Grid text styling */
+.user-order-status-details .MuiTypography-root {
+    font-size: 1rem;
+    color: #444;
+    text-align: right;
+    line-height: 1.6;
+}
+
+/* Align icons next to text */
+.icon-align {
+    vertical-align: middle;
+    margin-left: 6px;
+}
+
+/* Stepper styling */
+.user-order-status-stepper {
+    margin-top: 2rem;
+    direction: rtl;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+.stepper .MuiStepConnector-line {
+    margin-inline: auto;
+    width: 80%;
+}
+
+/* Alert styling */
+.user-order-status-alert {
+    margin: 2rem 0;
+    font-weight: 500;
+    font-size: 1rem;
+    direction: rtl;
+}
+
+/* Timeline heading */
+.user-order-status-timeline-title {
+    margin-bottom: 1rem;
+    font-weight: 500;
+    text-align: right;
+    color: #333;
+}
+
+/* Timeline container */
+.user-order-status-timeline {
+    padding: 0;
+    margin-bottom: 2rem;
+    direction: rtl;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+/* Time on the left of timeline */
+.timeline-time {
+    flex: 0.3;
+    text-align: right;
+    font-size: 0.875rem;
+    color: #888;
+    min-width: 48px;
+}
+
+/* Buttons */
+.user-order-status-buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-top: 2rem;
+    direction: rtl;
+}
+
+/* Loading and empty states */
+.user-order-status-loading,
+.user-order-status-empty {
+    text-align: center;
+    padding: 5rem;
+    font-size: 1.25rem;
+    color: #666;
+}
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+    .user-order-status-container {
+        padding: 1.5rem;
+    }
+
+    .user-order-status-buttons {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .timeline-time {
+        flex: 0.4;
+        text-align: right;
+    }
+
+    .user-order-status-title {
+        font-size: 1.5rem;
+    }
+}

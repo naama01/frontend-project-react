@@ -51,7 +51,7 @@ export default function TopMenu({ title }) {
             <li onClick={() => navigate("/UpdateStudentSelf")}>עדכון פרטים</li>
           </ul>
         </li>}
-        <li className="menuItem">
+        {currentStudentId ? null : <li className="menuItem">
           אזור ניהול
           <ul className="subMenu">
             <li onClick={() => navigate("/AdminClasses")}>ניהול כיתות</li>
@@ -59,7 +59,7 @@ export default function TopMenu({ title }) {
             <li onClick={() => navigate("/AdminDishes")}>ניהול תפריט</li>
             <li onClick={() => navigate("/AdminStudents")}>ניהול סטודנטים</li>
           </ul>
-        </li>
+        </li>}
 
         <li className="menuItem">
           יציאה

@@ -3,7 +3,7 @@ import { initializeApp } from "firebase/app";
 import { deleteDoc, getFirestore } from "firebase/firestore";
 import { setDoc, doc, collection } from "firebase/firestore"; // Updated import
 import { addDoc, getDocs, getDoc,updateDoc } from "firebase/firestore";
-import {  query as firestoreQuery, where } from "firebase/firestore";
+import {  query as firestoreQuery, where, orderBy, limit } from "firebase/firestore";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -40,6 +40,7 @@ export async function fireReadCollection(coll) {
     try {
         const querySnapshot = await getDocs(collection(firestore, coll));
         const documents = querySnapshot.docs
+        //////// delete this after cadding titles collection
             .filter((doc) => doc.id !== "titles") // Skip the document with ID "titles"
             .map((doc) => ({
                 id: doc.id, // Include the document ID
@@ -146,26 +147,34 @@ export async function fireUpdateDocument(coll, id, data) {
     }
 }
 
-export async function fireReadQuery(coll, query) {
+export async function fireReadQuery(coll, queryCondition, options = {}) {
     try {
         const collRef = collection(firestore, coll);
-        const querySnapshot = await getDocs(collRef);
 
-        // Filter documents where any field matches the query value
-        const documents = querySnapshot.docs.filter((doc) => {
-            const data = doc.data();
-            return Object.values(data).some((value) => value === query[2]); // Check if any field matches the value
-        }).map((doc) => ({
+        // Basic query
+        let firestoreQueryRef = firestoreQuery(collRef, where(...queryCondition));
+
+        // Apply optional orderBy and limit
+        if (options.orderBy) {
+            const [field, direction] = options.orderBy;
+            firestoreQueryRef = firestoreQuery(firestoreQueryRef, orderBy(field, direction));
+        }
+        if (options.limit) {
+            firestoreQueryRef = firestoreQuery(firestoreQueryRef, limit(options.limit));
+        }
+
+        const querySnapshot = await getDocs(firestoreQueryRef);
+
+        // Return simplified array of documents
+        return querySnapshot.docs.map((doc) => ({
             id: doc.id,
-            ...doc.data(),
+            ...doc.data()
         }));
-
-        console.log("Documents retrieved based on query:", documents);
-        return documents;
     } catch (error) {
         console.error("Error reading collection with query:", error);
         throw error;
     }
+
 }
 
 

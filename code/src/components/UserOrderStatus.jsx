@@ -2,94 +2,173 @@ import React, { useEffect, useState } from 'react';
 import OrderProgress from './OrderProgress';
 import { fireReadQuery } from '../firebase';
 import { useCart } from './CartContext';
+import '../css/UserOrderStatus.css';
+import {
+    Box,
+    Paper,
+    Typography,
+    Divider,
+    Grid,
+    Button,
+    Stepper,
+    Step,
+    StepLabel,
+    Alert,
+    Chip,
+} from '@mui/material';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import LocalShippingIcon from '@mui/icons-material/LocalShipping';
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import RestaurantIcon from '@mui/icons-material/Restaurant';
+import KitchenIcon from '@mui/icons-material/Kitchen';
+import DoneIcon from '@mui/icons-material/Done';
+import {
+    Timeline,
+    TimelineItem,
+    TimelineSeparator,
+    TimelineDot,
+    TimelineConnector,
+    TimelineContent,
+    TimelineOppositeContent
+} from '@mui/lab';
 
 export default function UserOrderStatus() {
-    const [orderData, setOrderData] = useState(null);
+    const [orderData, setOrderData] = useState([]);
+    const [loading, setLoading] = useState(true);
     const { currentStudentId } = useCart();
 
     useEffect(() => {
         const fetchOrderData = async () => {
-            if (!currentStudentId) return;
+            if (!currentStudentId) {
+                setLoading(false);
+                return;
+            }
 
             try {
-                const querySnapshot = await fireReadQuery("students", ["תז סטודנט מזמין", "==", currentStudentId], { orderBy: "תאריך", limit: 1 });
-                if (querySnapshot?.docs?.length) {
-                    const lastOrder = querySnapshot.docs[0].data();
-                    console.log("Retrieved order data:", lastOrder); // Debugging log
-                    setOrderData(lastOrder);
-                } else {
-                    console.warn("No order data found for the current student.");
-                    setOrderData(null);
-                }
+                const results = await fireReadQuery(
+                    "orders",
+                    ["תז סטודנט מזמין", "==", currentStudentId],
+                    { orderBy: ["id", "desc"], limit: 1 }
+                );
+
+                setOrderData(results.length > 0 ? results[0] : null);
             } catch (error) {
                 console.error("Error fetching order data:", error);
+            } finally {
+                setLoading(false);
             }
         };
 
         fetchOrderData();
     }, [currentStudentId]);
 
-    if (!currentStudentId) {
-        return <div>לא נמצאו נתונים עבור סטודנט זה.</div>;
+    if (loading) return <div className="user-order-status-loading">טוען...</div>;
+    if (!orderData?.id) return <div className="user-order-status-empty">אין הזמנות פתוחות.</div>;
+
+    const order = {
+        id: orderData.id,
+        "תז סטודנט מזמין": orderData["תז סטודנט מזמין"],
+        "משלוח": orderData["משלוח"],
+        "מספר כיתה": orderData["מספר כיתה"],
+        "מחיר כולל": orderData["מחיר כולל"],
+        "כמות מנות": orderData["כמות מנות"],
+        "מספר הזמנה": orderData["מספר הזמנה"],
+        "תאריך": orderData["תאריך"],
+    };
+
+    const steps = ['התקבלה', 'בהכנה', 'במשלוח', 'נמסרה'];
+    const activeStep = 2;
+
+    function timeSteps(rawTimeString, minutesToAdd) {
+        const originalDate = new Date(rawTimeString);
+        const newDate = new Date(originalDate.getTime() + minutesToAdd * 60 * 1000);
+        return newDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
     }
 
-    if (!orderData) {
-        return <div>Loading...</div>;
-    }
+    const timelineEvents = [
+        { time: order["תאריך"], label: 'הזמנה התקבלה', icon: <CheckCircleIcon /> },
+        { time: timeSteps(order["תאריך"], 5), label: 'הכנה החלה', icon: <KitchenIcon /> },
+        { time: timeSteps(order["תאריך"], 20), label: 'הזמנה מוכנה', icon: <RestaurantIcon /> },
+        { time: timeSteps(order["תאריך"], 25), label: 'הזמנה נשלחה', icon: <LocalShippingIcon /> },
+    ];
 
     return (
-        <div>
-            <h1>סטטוס הזמנה פתוחה</h1>
-            <OrderProgress step={orderData.step || "1"} />
+        <Box className="user-order-status-wrapper" >
+            <Paper elevation={3} className="user-order-status-container">
+                <Typography variant="h4" align="center" className="user-order-status-title">
+                    סטטוס הזמנה
+                </Typography>
 
-            <table>
-                <tr>
-                    <th>מספר הזמנה</th>
-                    <td>{orderData.orderNumber}</td>
-                </tr>
-                <tr>
-                    <th>תאריך הזמנה</th>
-                    <td>{orderData.orderDate}</td>
-                </tr>
-                <tr>
-                    <th>זמן אספקה משוער</th>
-                    <td>{orderData.estimatedDeliveryTime}</td>
-                </tr>
-                <tr>
-                    <th>פריטים נרכשים</th>
-                    <td>{orderData.items}</td>
-                </tr>
-                <tr>
-                    <th>סכום כולל</th>
-                    <td>₪{orderData.totalAmount}</td>
-                </tr>
-                <tr>
-                    <th>סטטוס הזמנה</th>
-                    <td>{orderData.orderStatus}</td>
-                </tr>
-                <tr>
-                    <th>שיטת משלוח</th>
-                    <td>{orderData.deliveryMethod}</td>
-                </tr>
-                <tr>
-                    <th>סטטוס תשלום</th>
-                    <td>{orderData.paymentStatus}</td>
-                </tr>
-                <tr>
-                    <th>מידע למעקב</th>
-                    <td><a href={orderData.trackingLink}>לחץ כאן למעקב אחר ההזמנה</a></td>
-                </tr>
-                <tr>
-                    <th>פרטי יצירת קשר</th>
-                    <td>{orderData.contactInfo}</td>
-                </tr>
-            </table>
+                <Divider className="user-order-status-divider" />
 
-            <div className="actions">
-                <button>בטל הזמנה</button>
-                <button>שנה הזמנה</button>
-                <button>הזמן שוב</button>
-            </div>
-        </div>
+                <Grid container spacing={2} className="user-order-status-details">
+                    <Grid item xs={12}>
+                        <Typography variant="h6">
+                            <CheckCircleIcon color="success" className="icon-align" />
+                            הזמנה מספר: {order["מספר הזמנה"]}
+                        </Typography>
+                    </Grid>
+
+                    <Grid item xs={6}>
+                        <Typography><strong>כמות מנות:</strong> {order["כמות מנות"]}</Typography>
+                    </Grid>
+                    <Grid item xs={6}>
+                        <Typography><strong>מחיר כולל:</strong> ₪{order["מחיר כולל"]}</Typography>
+                    </Grid>
+                    <Grid item xs={6}>
+                        <Typography><strong>מספר כיתה:</strong> {order["מספר כיתה"]}</Typography>
+                    </Grid>
+                    <Grid item xs={6}>
+                        <Typography><strong>תאריך:</strong> {order["תאריך"]}</Typography>
+                    </Grid>
+
+                    <Grid item xs={12}>
+                        <Chip
+                            label={order["משלוח"] ? 'משלוח' : 'איסוף עצמי'}
+                            color={order["משלוח"] ? 'primary' : 'default'}
+                            variant="outlined"
+                        />
+                    </Grid>
+                </Grid>
+
+                <Divider className="user-order-status-divider" />
+
+                <Stepper activeStep={activeStep} alternativeLabel className="user-order-status-stepper">
+                    {steps.map((label) => (
+                        <Step key={label}>
+                            <StepLabel>{label}</StepLabel>
+                        </Step>
+                    ))}
+                </Stepper>
+
+                <Alert severity="info" className="user-order-status-alert">
+                    ההזמנה שלך בדרכה אליך! זמן משוער להגעה: 15 דקות
+                </Alert>
+
+                <Typography variant="h6" className="user-order-status-timeline-title">
+                    ציר זמן של הזמנה:
+                </Typography>
+
+                <Timeline position="center" className="user-order-status-timeline">
+                    {timelineEvents.map((event, index) => (
+                        <TimelineItem key={index}>
+                            <TimelineOppositeContent color="text.secondary" className="timeline-time">
+                                {event.time}
+                            </TimelineOppositeContent>
+                            <TimelineSeparator>
+                                <TimelineDot color="primary">{event.icon}</TimelineDot>
+                                {index < timelineEvents.length - 1 && <TimelineConnector />}
+                            </TimelineSeparator>
+                            <TimelineContent>{event.label}</TimelineContent>
+                        </TimelineItem>
+                    ))}
+                </Timeline>
+
+                <Box className="user-order-status-buttons">
+
+                </Box>
+            </Paper>
+        </Box>
+
     );
 }

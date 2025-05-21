@@ -89,17 +89,17 @@ export default function AdminTable({ dataname }) {
       {createRow(row, rowIndex)}
       <TableCell>
         <div style={{ display: 'flex', gap: '8px', justifyContent: 'center', alignItems: 'center' }}>
-        <Button
-            aria-label="delete"
+        <IconButton
+            aria-label="ערוך"
+            size="small"
             component={Link}
             to={`/adminNew/${dataname}/${row.id}`}
-            size="small"
             style={{ color: '#f44336' }}
           >
              📝
-          </Button>
+          </IconButton>
           <IconButton
-            aria-label="delete"
+            aria-label="מחק"
             size="small"
             style={{ color: '#f44336' }}
             onClick={() => handleDelete(rowIndex, row)}
