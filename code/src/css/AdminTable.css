@@ -10,6 +10,11 @@
 }
 .table-container {
     background-color: #f9f9f9;
-  
+    margin: 0 auto; /* Center horizontally */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 100px;
 
+  
 }

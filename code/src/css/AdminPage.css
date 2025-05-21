@@ -1,0 +1,42 @@
+.admin-page-container, .admin-page-wrapper {
+    font-family: 'Rubik', 'Alef', sans-serif;
+    direction: rtl;
+    animation: fadeInCenter 0.3s ease-out;
+    box-sizing: border-box;
+    max-width: 1000px;
+    width: 100%;
+    margin: 0 auto; 
+
+
+  }
+  
+  
+  
+  @keyframes fadeInCenter {
+    from {
+      opacity: 0;
+      transform: translate(-50%, -55%);
+    }
+    to {
+      opacity: 1;
+      transform: translate(-50%, -50%);
+    }
+  }
+  
+  .toolbox {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0; /* Ensures full width */
+    background-color: #f8f9fa;
+    padding: 12px 24px;
+    box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.5);
+    text-align: center;
+    z-index: 1500;
+    border-top: 1px solid #ddd;
+    font-family: 'Rubik', 'Alef', sans-serif;
+    direction: rtl;
+    display: flex;
+    justify-content: center;
+  }
+

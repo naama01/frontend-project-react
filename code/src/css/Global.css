@@ -8,6 +8,10 @@ body {
     color: #595959;
     font-size: 16px;
     line-height: 1.6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
   }
   
   /* Typography */
@@ -51,8 +55,9 @@ body {
     height: 64px;
     padding: 0 24px;
     background-color: #B3D236;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-    z-index: 1100;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+    z-index: 1500;
+
   }
   
   .TopHeader * {
@@ -217,4 +222,3 @@ body {
   a:hover {
     color: #4a4a4a;
   }
-  

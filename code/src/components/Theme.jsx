@@ -86,6 +86,17 @@ let theme = createTheme({
         },
       },
     },
+
+    // Box container
+    MuiBox: {
+      styleOverrides: {
+        root: {
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        },
+      },
+    },
   },
 });
 

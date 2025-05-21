@@ -86,23 +86,21 @@ export default function AdminTable({ dataname }) {
   }
 
   const rows_html = rows.map((row, rowIndex) => (
-    <TableRow key={rowIndex}>
+    <TableRow key={rowIndex} >
       {createRow(row, rowIndex)}
-      <TableCell>
-        <div style={{ display: 'flex', gap: '8px', justifyContent: 'center', alignItems: 'center' }}>
-        <IconButton
+      <TableCell  > 
+        <div >
+          <IconButton
             aria-label="ערוך"
             size="small"
             component={Link}
             to={`/adminNew/${dataname}/${row.id}`}
-            style={{ color: '#f44336' }}
           >
-             📝
+            📝
           </IconButton>
           <IconButton
             aria-label="מחק"
             size="small"
-            style={{ color: '#f44336' }}
             onClick={() => handleDelete(rowIndex, row)}
           >
             🗑️
@@ -118,34 +116,27 @@ export default function AdminTable({ dataname }) {
 
   return (
     <div>
-        <>
-          <TableContainer
-          
-            component={Paper}
-            className={`table-container fade-in ${fadeIn ? 'visible' : ''}`}
-          >
-                <Button
-            variant="contained"
-            onClick={() => navigate(`/AdminNew/${dataname}`)}
-            style={{ marginTop: '10px', backgroundColor: '#4CAF50', color: 'white' }}
-          >
-            הוסף רשומה חדשה
-          </Button>
-             
-              <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                <TableHead>
-                  <TableRow>{titles_html}</TableRow>
-                </TableHead>
-                <TableBody>{rows_html}</TableBody>
-              </Table>
-            
-          </TableContainer>
+      <>
+        <TableContainer 
+
+          component={Paper}
+          className={`table-container fade-in ${fadeIn ? 'visible' : ''}`}
+        >
+
+          <Table sx={{ minWidth: 700 }} aria-label="simple table">
+            <TableHead>
+              <TableRow>{titles_html}</TableRow>
+            </TableHead>
+            <TableBody>{rows_html}</TableBody>
+          </Table>
+
+        </TableContainer>
 
 
-      
 
-        </>
-       
+
+      </>
+
     </div>
   );
 

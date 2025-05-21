@@ -4,16 +4,23 @@ import Button from '@mui/material/Button';
 import { Box } from '@mui/material';
 import { fireReadCollection, fireReadTitles } from '../firebase'; // Import Firestore functions
 import AdminNew from './AdminNew';
-
+import '../css/AdminPage.css'
 export default function AdminPage({ dataname }) {
-
-
-
   return (
-    <div>
+    <div className="admin-page-wrapper" >
 
-      <AdminTable dataname={dataname} />
 
+
+        <AdminTable dataname={dataname} />
+      <div className="toolbox">
+        <Button
+          variant="contained"
+          onClick={() => navigate(`/AdminNew/${dataname}`)}
+          style={{ backgroundColor: '#4CAF50', color: 'white' }}
+        >
+          הוסף רשומה חדשה
+        </Button>
+      </div>
     </div>
   );
 }
