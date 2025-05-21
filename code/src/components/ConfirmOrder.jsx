@@ -1,13 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useCart } from '../components/CartContext';
 import { Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, TextField, MenuItem } from '@mui/material';
 import { fireReadEnabledOnly, FireWriteDoc } from '../firebase'; // Ensure FireWriteDoc is imported
+import { FireWaitContext } from './FireWaitProvider'; // Import FireWait context
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
 export default function ConfirmOrder() {
+  const navigate = useNavigate(); // Initialize navigate
   const { cart, currentStudentId, clearCart } = useCart(); // Access clearCart from context
   const [classes, setClasses] = useState([]);
   const [studentDetails, setStudentDetails] = useState(null);
   const [selectedClass, setSelectedClass] = useState('');
+  const { setShowFireWait } = useContext(FireWaitContext); // Access setShowFireWait from context
 
   // Fetch students from Firestore
   useEffect(() => {
@@ -61,10 +65,14 @@ export default function ConfirmOrder() {
     };
 
     // Write the order to the Firestore "orders" collection
+    setShowFireWait(true)
     FireWriteDoc("orders", orderDetails)
       .then(() => {
-        alert('ההזמנה הושלמה בהצלחה!');
-        clearCart(); // Clear the cart after successful order submission
+        setShowFireWait(false)
+                clearCart(); // Clear the cart after successful order submission
+                setShowFireWait(false) 
+                navigate('/UserOrderStatus')
+
       })
       .catch((error) => {
         console.error("Error writing order to Firestore:", error);

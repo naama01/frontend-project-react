@@ -26,24 +26,25 @@ export default function UserTable({ dataname, query }) {
             return;
         }
 
-        // Fetch titles first
-        setShowFireWait(true)
+        setShowFireWait(true);
         fireReadTitles(dataname)
             .then((titlesData) => {
                 if (titlesData) {
-                    setTitles(Object.values(titlesData)); // Set titles from the "titles" document
+                    setTitles(Object.values(titlesData));
                 } else {
                     console.error("No titles document found!");
                 }
 
-                // Fetch rows after titles are retrieved
                 return fireReadQuery(dataname, validQuery);
             })
             .then((data) => {
-                setRows(data); // Set rows from Firestore
+                setRows(data);
             })
             .catch((error) => {
                 console.error("Error fetching data from Firestore:", error);
+            })
+            .finally(() => {
+                setShowFireWait(false);
             });
     }, [dataname, validQuery]);
 
@@ -77,7 +78,6 @@ export default function UserTable({ dataname, query }) {
             </TableCell>
         </TableRow>
     ));
-    setShowFireWait(false)
 
     return (
         <div>

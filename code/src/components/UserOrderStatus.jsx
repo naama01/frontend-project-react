@@ -107,7 +107,7 @@ const orderPrepTime = {s0:0 , s1: 2, s2: 20, s3: 25}; // Define the order prepar
 
 
     return (
-        <Box className="user-order-status-wrapper" >
+        <Box className="user-order-status-wrapper">
             <Paper elevation={3} className="user-order-status-container">
                 <Typography variant="h4" align="center" className="user-order-status-title">
                     סטטוס הזמנה
@@ -183,6 +183,5 @@ const orderPrepTime = {s0:0 , s1: 2, s2: 20, s3: 25}; // Define the order prepar
                 </Box>
             </Paper>
         </Box>
-
     );
 }
