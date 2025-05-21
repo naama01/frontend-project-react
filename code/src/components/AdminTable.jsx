@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -13,17 +13,18 @@ import AdminNew from './AdminNew'; // Import AdminNew component
 import Checkbox from '@mui/material/Checkbox'; // Import Checkbox component
 import '../css/AdminTable.css'; // Import CSS for fade-in effect
 import { Link, useNavigate, useParams } from 'react-router-dom'; // Import Link for navigation
+import { FireWaitContext } from './FireWaitProvider'; // Import FireWait context
 
 export default function AdminTable({ dataname }) {
+  const { setShowFireWait } = useContext(FireWaitContext); // Access setShowFireWait from context
   const [rows, setRows] = useState([]);
   const [titles, setTitles] = useState([]); // Dynamically generated titles
-  const [loading, setLoading] = useState(true); // Track loading state
   const [fadeIn, setFadeIn] = useState(false); // Track fade-in effect
   const navigate = useNavigate(); // Initialize navigate function
 
   // Fetch titles and rows from Firestore
   useEffect(() => {
-    setLoading(true); // Set loading to true before fetching data
+    setShowFireWait(true); // Set loading to true before fetching data
     fireReadTitles(dataname)
       .then((titlesData) => {
         if (titlesData) {
@@ -42,7 +43,7 @@ export default function AdminTable({ dataname }) {
         console.error("Error fetching data from Firestore:", error);
       })
       .finally(() => {
-        setLoading(false); // Set loading to false after data is fetched
+        setShowFireWait(false); // Set loading to false after data is fetched
         setTimeout(() => setFadeIn(true), 100); // Add a slight delay before triggering fade-in
       });
   }, [dataname]);
@@ -113,7 +114,6 @@ export default function AdminTable({ dataname }) {
 
   function saveTable() {
     fireWriteCollection(dataname, rows); // Save rows to Firestore
-    alert("הנתונים נשמרו בהצלחה!");
   }
 
   return (
@@ -131,14 +131,14 @@ export default function AdminTable({ dataname }) {
           >
             הוסף רשומה חדשה
           </Button>
-            {!loading && (
+             
               <Table sx={{ minWidth: 650 }} aria-label="simple table">
                 <TableHead>
                   <TableRow>{titles_html}</TableRow>
                 </TableHead>
                 <TableBody>{rows_html}</TableBody>
               </Table>
-            )}
+            
           </TableContainer>
 
 

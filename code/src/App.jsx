@@ -13,37 +13,39 @@ import UpdateStudentSelf from './components/UpdateStudentSelf'
 import AdminNew from './components/AdminNew'
 import AdminPage from './components/AdminPage'
 import { ThemeProvider, CssBaseline } from '@mui/material';
-import theme from './components/Theme'; 
-
+import theme from './components/Theme';
+import { FireWaitProvider } from './components/FireWaitProvider';
 export default function App() {
 
 
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
+        <div>
+          <TopMenu title="המזנונו" />
+          <FireWaitProvider>
+          <div >
 
-    <div>
-      <TopMenu title="המזנונו" />
-      <div >
-        <Routes >
-          <Route path='/' element={<UserNewOrder />} />
-          <Route path='/help' element={<HelpPage />} />
-          <Route path='/UpdateStudentSelf' element={<UpdateStudentSelf />} />
-          <Route path="/AdminClasses" element={<AdminPage dataname="classes" />} />
-          <Route path="/AdminDishes" element={<AdminPage dataname="dishes" />} />
-          <Route path="/AdminOrders" element={<AdminPage dataname="orders" />} />
-          <Route path="/AdminStudents" element={<AdminPage dataname="students" />} />
-          <Route path="/AdminNew" element={<AdminNew />} />
-          <Route path="/AdminNew/:dataname" element={<AdminNew />} />
-          <Route path="/AdminNew/:dataname/:id" element={<AdminNew />} />
-          <Route path="/UserOrderHistory" element={<UserOrderHistory />} />
-          <Route path="/UserOrderStatus" element={<UserOrderStatus />} />
-          <Route path="/ConfirmOrder" element={<ConfirmOrder />} />
-          <Route path="/SupportChat" element={<SupportChat />} />
-        </Routes>
-
-      </div>
-    </div >
+             <Routes >
+              <Route path='/' element={<UserNewOrder />} />
+              <Route path='/help' element={<HelpPage />} />
+              <Route path='/UpdateStudentSelf' element={<UpdateStudentSelf />} />
+              <Route path="/AdminClasses" element={<AdminPage dataname="classes" />} />
+              <Route path="/AdminDishes" element={<AdminPage dataname="dishes" />} />
+              <Route path="/AdminOrders" element={<AdminPage dataname="orders" />} />
+              <Route path="/AdminStudents" element={<AdminPage dataname="students" />} />
+              <Route path="/AdminNew" element={<AdminNew />} />
+              <Route path="/AdminNew/:dataname" element={<AdminNew />} />
+              <Route path="/AdminNew/:dataname/:id" element={<AdminNew />} />
+              <Route path="/UserOrderHistory" element={<UserOrderHistory />} />
+              <Route path="/UserOrderStatus" element={<UserOrderStatus />} />
+              <Route path="/ConfirmOrder" element={<ConfirmOrder />} />
+              <Route path="/SupportChat" element={<SupportChat />} />
+            </Routes>
+            
+          </div>
+      </FireWaitProvider>
+        </div >
     </ThemeProvider>
   )
 }

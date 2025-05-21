@@ -74,7 +74,7 @@ export default function TopMenu({ title }) {
         select
         label="סטודנט נוכחי"
         value={currentStudentId || ''}
-        onChange={(e) => setCurrentStudentId(e.target.value)} // Update the context when student changes
+        onChange={(e) => setCurrentStudentId(e.target.value)  } // Update the context when student changes
         style={{ minWidth: '200px' }}
       >
         {students.map((student, index) => (

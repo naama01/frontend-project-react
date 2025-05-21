@@ -77,20 +77,34 @@ export default function UserOrderStatus() {
     };
 
     const steps = ['התקבלה', 'בהכנה', 'במשלוח', 'נמסרה'];
-    const activeStep = 2;
 
     function timeSteps(rawTimeString, minutesToAdd) {
         const originalDate = new Date(rawTimeString);
         const newDate = new Date(originalDate.getTime() + minutesToAdd * 60 * 1000);
         return newDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
     }
-
+    
+const orderPrepTime = {s0:0 , s1: 2, s2: 20, s3: 25}; // Define the order preparation time in minutes
     const timelineEvents = [
         { time: order["תאריך"], label: 'הזמנה התקבלה', icon: <CheckCircleIcon /> },
-        { time: timeSteps(order["תאריך"], 5), label: 'הכנה החלה', icon: <KitchenIcon /> },
-        { time: timeSteps(order["תאריך"], 20), label: 'הזמנה מוכנה', icon: <RestaurantIcon /> },
-        { time: timeSteps(order["תאריך"], 25), label: 'הזמנה נשלחה', icon: <LocalShippingIcon /> },
+        { time: timeSteps(order["תאריך"], orderPrepTime.s1), label: 'הכנה החלה', icon: <KitchenIcon /> },
+        { time: timeSteps(order["תאריך"], orderPrepTime.s2), label: 'הזמנה מוכנה', icon: <RestaurantIcon /> },
+        { time: timeSteps(order["תאריך"], orderPrepTime.s3), label: 'הזמנה נשלחה', icon: <LocalShippingIcon /> },
     ];
+
+    const calculateActiveStep = (orderDate) => {
+        const now = new Date();
+        const orderTime = new Date(orderDate);
+        const diffInMinutes = (now - orderTime) / (1000 * 60);
+
+        if (diffInMinutes < orderPrepTime.s1) return 1;
+        if (diffInMinutes < orderPrepTime.s2) return 2;
+        if (diffInMinutes < orderPrepTime.s3) return 3;
+        return 4;
+    };
+
+    const activeStep = calculateActiveStep(order["תאריך"]);
+
 
     return (
         <Box className="user-order-status-wrapper" >
@@ -142,7 +156,7 @@ export default function UserOrderStatus() {
                 </Stepper>
 
                 <Alert severity="info" className="user-order-status-alert">
-                    ההזמנה שלך בדרכה אליך! זמן משוער להגעה: 15 דקות
+                    ההזמנה שלך בדרכה אליך! זמן משוער להגעה: {timeSteps(order["תאריך"], orderPrepTime.s3)}.
                 </Alert>
 
                 <Typography variant="h6" className="user-order-status-timeline-title">

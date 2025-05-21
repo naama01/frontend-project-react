@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -8,10 +8,13 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Checkbox from '@mui/material/Checkbox';
 import { fireReadTitles, fireReadQuery } from '../firebase'; // Import Firestore functions
+import { FireWaitContext } from './FireWaitProvider'; // Import FireWait context
 
 export default function UserTable({ dataname, query }) {
     const [rows, setRows] = useState([]);
     const [titles, setTitles] = useState([]); // Dynamically generated titles
+      const { setShowFireWait } = useContext(FireWaitContext); // Access setShowFireWait from context
+    
 
     // Ensure query is valid
     const validQuery = Array.isArray(query) && query.length === 3 ? query : null;
@@ -24,6 +27,7 @@ export default function UserTable({ dataname, query }) {
         }
 
         // Fetch titles first
+        setShowFireWait(true)
         fireReadTitles(dataname)
             .then((titlesData) => {
                 if (titlesData) {
@@ -73,6 +77,7 @@ export default function UserTable({ dataname, query }) {
             </TableCell>
         </TableRow>
     ));
+    setShowFireWait(false)
 
     return (
         <div>

@@ -19,8 +19,15 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 export const firestore = getFirestore(app);
 
+//delay to make the loading message more visible
+export async function sleep(ms) { 
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 export async function FireWriteDoc(coll, docData) {
     try {
+        await sleep(500); // Half-second delay to make the loading message more visible
+
         // Get the first element of the doc object as the document ID
         const docId = Object.values(docData)[0]; // Assuming the first element is the unique ID
 
@@ -29,11 +36,13 @@ export async function FireWriteDoc(coll, docData) {
         await setDoc(docRef, docData);
 
         console.log("Document written with ID: ", docId);
+
         return docId; // Return the document ID on success
     } catch (error) {
         console.error("Error adding document: ", error);
         throw error; // Re-throw the error to handle it in the calling function
     }
+    
 }
 
 export async function fireReadCollection(coll) {
@@ -47,6 +56,8 @@ export async function fireReadCollection(coll) {
                 ...doc.data(), // Spread the document data
             }));
         console.log("Documents retrieved (excluding 'titles'): ", documents);
+        await sleep(500); // Half-second delay to make the loading message more visible
+
         return documents; // Return the array of documents
     } catch (error) {
         console.error("Error reading collection: ", error);
@@ -78,6 +89,8 @@ export async function fireReadDoc(coll,DocId) {
 
 export async function fireWriteCollection(coll, docs) {
     try {
+        await sleep(500); // Half-second delay to make the loading message more visible
+
         const writeResults = [];
 
         for (const docData of docs) {
@@ -128,6 +141,8 @@ export async function fireReadTitles(coll) {
 export async function fireDeleteDoc(coll, docId) {
     try {
         // Reference the document to delete
+        await sleep(500); // Half-second delay to make the loading message more visible
+
         const docRef = doc(firestore, coll, docId);
         await deleteDoc(docRef);
         console.log("Document deleted with ID: ", docId);
@@ -139,6 +154,8 @@ export async function fireDeleteDoc(coll, docId) {
 
 export async function fireUpdateDocument(coll, id, data) {
     try {
+        await sleep(500); // Half-second delay to make the loading message more visible
+
         const docRef = doc(firestore, coll, id);
         await updateDoc(docRef, data);
     } catch (error) {
@@ -149,6 +166,7 @@ export async function fireUpdateDocument(coll, id, data) {
 
 export async function fireReadQuery(coll, queryCondition, options = {}) {
     try {
+
         const collRef = collection(firestore, coll);
 
         // Basic query
@@ -180,6 +198,7 @@ export async function fireReadQuery(coll, queryCondition, options = {}) {
 
 export async function fireReadEnabledOnly(coll) {
     try {
+
         // Reference the collection
         const collRef = collection(firestore, coll);
 
