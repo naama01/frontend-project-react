@@ -6,7 +6,6 @@ import Typography from '@mui/material/Typography'; // Import Typography for read
 import { useCart } from '../components/CartContext';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
-import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import DishRate from './DishRate';
 
 export default function Dish({ dishId, dishName, desc, price, prepTime, AllowBuy , rate}) {

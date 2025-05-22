@@ -6,13 +6,11 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import Button from '@mui/material/Button';
 import { IconButton } from '@mui/material';
-import { fireReadTitles, fireWriteCollection, fireReadCollection, fireDeleteDoc } from '../firebase'; // Import Firestore functions
-import AdminNew from './AdminNew'; // Import AdminNew component
+import { fireReadTitles, fireReadCollection, fireDeleteDoc } from '../firebase'; // Import Firestore functions
 import Checkbox from '@mui/material/Checkbox'; // Import Checkbox component
 import '../css/AdminTable.css'; // Import CSS for fade-in effect
-import { Link, useNavigate, useParams } from 'react-router-dom'; // Import Link for navigation
+import { Link } from 'react-router-dom'; // Import Link for navigation
 import { FireWaitContext } from './FireWaitProvider'; // Import FireWait context
 import SettingsIcon from '@mui/icons-material/Settings';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -23,7 +21,6 @@ export default function AdminTable({ dataname }) {
   const [rows, setRows] = useState([]);
   const [titles, setTitles] = useState([]); // Dynamically generated titles
   const [fadeIn, setFadeIn] = useState(false); // Track fade-in effect
-  const navigate = useNavigate(); // Initialize navigate function
 
   // Fetch titles and rows from Firestore
   useEffect(() => {

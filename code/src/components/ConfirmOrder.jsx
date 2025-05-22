@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useCart } from '../components/CartContext';
 import { Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, TextField, MenuItem } from '@mui/material';
-import { fireReadEnabledOnly, fireReadDoc, fireReadQuery, FireWriteDoc } from '../firebase'; // Ensure FireWriteDoc is imported
+import { fireReadEnabledOnly, fireReadDoc, FireWriteDoc } from '../firebase'; // Ensure FireWriteDoc is imported
 import { FireWaitContext } from './FireWaitProvider'; // Import FireWait context
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
 

@@ -6,7 +6,6 @@ import Checkbox from '@mui/material/Checkbox'; // Import Checkbox component
 import '../css/AdminNew.css'; // Import the new CSS file
 import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
-import { Alert } from '@mui/material';
 
 export default function AdminNew({ }) {
     const [titles, setTitles] = useState([]); // Store the titles

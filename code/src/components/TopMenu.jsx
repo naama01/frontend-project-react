@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '../components/CartContext';
 import { TextField, MenuItem, Typography, Button, Box } from '@mui/material';
-import { fireReadCollection, fireReadEnabledOnly } from '../firebase'; // Import Firestore function
+import {  fireReadEnabledOnly } from '../firebase'; // Import Firestore function
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import StorefrontIcon from '@mui/icons-material/Storefront';
 import HomeIcon from '@mui/icons-material/Home';

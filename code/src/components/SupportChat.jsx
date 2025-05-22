@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
 import '../css/SupportChat.css';
-import { Avatar } from '@mui/material';
 
 export default function SupportChat() {
   const [messages, setMessages] = useState([]);

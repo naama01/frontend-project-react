@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import OrderProgress from './OrderProgress';
 import { fireReadQuery } from '../firebase';
 import { useCart } from './CartContext';
 import '../css/UserOrderStatus.css';
@@ -9,7 +8,6 @@ import {
     Typography,
     Divider,
     Grid,
-    Button,
     Stepper,
     Step,
     StepLabel,
@@ -18,10 +16,8 @@ import {
 } from '@mui/material';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
-import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import RestaurantIcon from '@mui/icons-material/Restaurant';
 import KitchenIcon from '@mui/icons-material/Kitchen';
-import DoneIcon from '@mui/icons-material/Done';
 import {
     Timeline,
     TimelineItem,
@@ -83,8 +79,8 @@ export default function UserOrderStatus() {
         const newDate = new Date(originalDate.getTime() + minutesToAdd * 60 * 1000);
         return newDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
     }
-    
-const orderPrepTime = {s0:0 , s1: 2, s2: 20, s3: 25}; // Define the order preparation time in minutes
+
+    const orderPrepTime = { s0: 0, s1: 2, s2: 20, s3: 25 }; // Define the order preparation time in minutes
     const timelineEvents = [
         { time: order["תאריך"], label: 'הזמנה התקבלה', icon: <CheckCircleIcon /> },
         { time: timeSteps(order["תאריך"], orderPrepTime.s1), label: 'הכנה החלה', icon: <KitchenIcon /> },
