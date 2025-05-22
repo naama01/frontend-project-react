@@ -44,12 +44,11 @@ export default function TopMenu({ title }) {
     <div className="TopHeader">
       <Typography
         variant="h3" // Adjust the variant to match the heading size
-        component="h1"
         onClick={() => navigate("/")}
         style={{ cursor: 'pointer', marginRight: '20px' }} // Add styles for pointer and color
-      >      <StorefrontIcon />
+      >      <StorefrontIcon />  
 
-        {title}
+        {`  `+title}
       </Typography>
 
       <ul className="menu">

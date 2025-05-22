@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useCart } from '../components/CartContext';
 import { Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, TextField, MenuItem } from '@mui/material';
-import { fireReadEnabledOnly, FireWriteDoc } from '../firebase'; // Ensure FireWriteDoc is imported
+import { fireReadEnabledOnly, fireReadDoc, fireReadQuery, FireWriteDoc } from '../firebase'; // Ensure FireWriteDoc is imported
 import { FireWaitContext } from './FireWaitProvider'; // Import FireWait context
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
@@ -15,9 +15,10 @@ export default function ConfirmOrder() {
 
   // Fetch students from Firestore
   useEffect(() => {
-    fireReadEnabledOnly("students")
+ //   fireReadEnabledOnly("students")
+ fireReadDoc("students", currentStudentId)
       .then((data) => {
-        setStudents(data); // Set the students retrieved from Firestore
+        setStudentDetails(data); // Set the students retrieved from Firestore
       })
       .catch((error) => {
         console.error("Error fetching students:", error);
@@ -132,9 +133,9 @@ export default function ConfirmOrder() {
         {/* Display Selected Student Details */}
         {studentDetails && (
           <div style={{ marginTop: '10px' }}>
-            <p><strong>שם:</strong> {studentDetails.name}</p>
-            <p><strong>אימייל:</strong> {studentDetails.email}</p>
-            <p><strong>טלפון:</strong> {studentDetails.phone}</p>
+            <p><strong>שם:</strong> {studentDetails["שם סטודנט"]}</p>
+            <p><strong>אימייל:</strong> {studentDetails["מייל"]}</p>
+            <p><strong>טלפון:</strong> {studentDetails["טלפון"]}</p>
           </div>
         )}
       </div>
