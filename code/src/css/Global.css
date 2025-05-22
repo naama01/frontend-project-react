@@ -177,10 +177,12 @@ body {
     cursor: pointer;
     transition: background-color 0.2s ease;
     border-radius: 8px;
+    display: flex;
+    align-items: center; /* Align sub-elements by the center of their height */
   }
   
   .menuItem:hover {
-    background-color: rgba(179, 210, 54, 0.15);
+    background-color: rgba(40, 41, 34, 0.15);
   }
   
   .subMenu {

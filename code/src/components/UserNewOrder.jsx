@@ -33,6 +33,7 @@ export default function UserNewOrder() {
             desc={item["תיאור המנה"]}
             price={item["מחיר"]}
             prepTime={item["זמן הכנה"]}
+            rate={item["דירוג"]}
             AllowBuy={currentStudentId != null} // Fixed line
           />
         </div>

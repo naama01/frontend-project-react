@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import '../css/SupportChat.css';
+import { Avatar } from '@mui/material';
 
 export default function SupportChat() {
   const [messages, setMessages] = useState([]);
@@ -40,6 +41,7 @@ export default function SupportChat() {
               justifyContent: message.sender === 'user' ? 'flex-end' : 'flex-start',
             }}
           >
+
             <div
               className="chat-bubble"
               style={{

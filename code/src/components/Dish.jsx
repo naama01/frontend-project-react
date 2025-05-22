@@ -7,8 +7,9 @@ import { useCart } from '../components/CartContext';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import DishRate from './DishRate';
 
-export default function Dish({ dishId, dishName, desc, price, prepTime, AllowBuy }) {
+export default function Dish({ dishId, dishName, desc, price, prepTime, AllowBuy , rate}) {
     const { addToCart } = useCart(); // Access the addToCart function from the context
     const [total, setTotal] = useState(1);
     const [imgExists, setImgExists] = useState(true); // Track if the image exists
@@ -52,12 +53,13 @@ export default function Dish({ dishId, dishName, desc, price, prepTime, AllowBuy
             {/* Right two-thirds: Content */}
             <div className="dish-content">
                 <div>
-                    <h2 className="dish-title">{dishName}</h2>
+                    <h2 className="dish-title">{dishName}</h2> <DishRate rate={rate} />
                     <p className="dish-description">{desc}</p>
                 </div>
                 <div>
                     <p className="dish-price">{price} ש״ח</p>
                     <p className="dish-prep-time"> זמן הכנה: {prepTime} דקות</p>
+                    
                 </div>
                 {AllowBuy && <div className="dish-controls">
                     <ButtonGroup variant="text" color="primary" aria-label="">

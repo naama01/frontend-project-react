@@ -22,7 +22,7 @@ export default function HelpPage() {
 
   return (
 
-    <div className='HelpDiv' style={{ margin: '20px' }}>
+    <div className='HelpDiv' style={{ margin: '0px 0px 100px 0px' }}>
 
       <h1>עמוד עזרה – מזנונו</h1>
       <p>

@@ -6,6 +6,7 @@ import Checkbox from '@mui/material/Checkbox'; // Import Checkbox component
 import '../css/AdminNew.css'; // Import the new CSS file
 import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
+import { Alert } from '@mui/material';
 
 export default function AdminNew({ }) {
     const [titles, setTitles] = useState([]); // Store the titles
@@ -82,13 +83,16 @@ export default function AdminNew({ }) {
     const saveItem = (docData) => {
         fireWriteDoc(dataname, docData, params.id)
             .then(() => {
+
                 console.log('Document successfully written!');
-                alert('הנתונים נשמרו בהצלחה!');
+
                 navigate(`/Admin${dataname}`); // Redirect to the Admin page after saving
             })
             .catch((error) => {
                 console.error('Error writing document:', error);
-                alert('שגיאה בשמירת הנתונים!');
+                //  alert('שגיאה בשמירת הנתונים!');
+
+
             });
     };
 

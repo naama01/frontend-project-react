@@ -76,7 +76,7 @@ export default function AdminTable({ dataname }) {
           <Checkbox
             checked={!!row[title]} // Ensure the value is always a boolean
             disabled={true}
-        
+
             onChange={(e) => {
               const updatedRows = [...rows];
               updatedRows[rowIndex][title] = e.target.checked; // Update the value in the rows state
@@ -93,7 +93,7 @@ export default function AdminTable({ dataname }) {
   const rows_html = rows.map((row, rowIndex) => (
     <TableRow key={rowIndex} >
       {createRow(row, rowIndex)}
-      <TableCell  > 
+      <TableCell  >
         <div >
           <IconButton
             aria-label="ערוך"
@@ -115,14 +115,10 @@ export default function AdminTable({ dataname }) {
     </TableRow>
   ));
 
-  function saveTable() {
-    fireWriteCollection(dataname, rows); // Save rows to Firestore
-  }
-
   return (
     <div>
       <>
-        <TableContainer 
+        <TableContainer
 
           component={Paper}
           className={`table-container fade-in ${fadeIn ? 'visible' : ''}`}
