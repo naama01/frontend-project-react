@@ -86,3 +86,5 @@ export default function Dish({ dishId, dishName, desc, price, prepTime, AllowBuy
         </div>
     );
 }
+
+

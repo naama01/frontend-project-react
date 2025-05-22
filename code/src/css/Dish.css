@@ -2,7 +2,7 @@
 .dish {
     display: flex;
     width: 500px;
-    height: 22x0px;
+    height: 220px;
     border: 1px solid #ddd;
     border-radius: 10px;
     overflow: hidden;
@@ -31,9 +31,9 @@
 
 /* Dish image */
 .dish-image {
-    width: 100%;
+    width: auto;
     height: 100%;
-    object-fit: cover;
+    object-fit: cover; /* Ensures the image is cropped while maintaining its aspect ratio */
 }
 
 /* Placeholder text when image is missing */
