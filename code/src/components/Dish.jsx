@@ -37,7 +37,7 @@ export default function Dish({ dishId, dishName, desc, price, prepTime, AllowBuy
             <div className="dish-image-container">
                 {imgExists ? (
                     <img
-                        src={`../../img/dishes/${dishId}.jpg`}
+                        src={`https://miznono-dfdc3.firebaseapp.com/img/dishes/${dishId}.jpg`}
                         alt="תמונת המנה"
                         className="dish-image"
                         onError={() => setImgExists(false)} // Remove the image if it fails to load

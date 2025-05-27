@@ -76,12 +76,14 @@ export default function TopMenu({ title }) {
           </ul>
         </li>}
 
-        <li className="menuItem"><LogoutIcon /> התנתקות
+        {currentStudentId ?  <li className="menuItem"><LogoutIcon /> התנתקות
 
           <ul className="subMenu">
             <li onClick={() => window.location.reload()}>צא ורוקן את הסל</li>
           </ul>
         </li>
+      : null
+        }
       </ul>
 
       {/* Student Selection */}
