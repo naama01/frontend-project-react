@@ -4,10 +4,11 @@ import { Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRo
 import { fireReadEnabledOnly, fireReadDoc, FireWriteDoc } from '../firebase'; // Ensure FireWriteDoc is imported
 import { FireWaitContext } from './FireWaitProvider'; // Import FireWait context
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
-
+import IconButton from '@mui/material/IconButton';
+import DeleteIcon from '@mui/icons-material/Delete'; // Import Delete icon
 export default function ConfirmOrder() {
   const navigate = useNavigate(); // Initialize navigate
-  const { cart, currentStudentId, clearCart } = useCart(); // Access clearCart from context
+  const { cart, currentStudentId, clearCart, removeFromCart } = useCart(); // Destructure removeFromCart directly
   const [classes, setClasses] = useState([]);
   const [studentDetails, setStudentDetails] = useState(null);
   const [selectedClass, setSelectedClass] = useState('');
@@ -94,6 +95,7 @@ export default function ConfirmOrder() {
               <TableCell>כמות</TableCell>
               <TableCell>מחיר ליחידה</TableCell>
               <TableCell>סה"כ</TableCell>
+              <TableCell></TableCell> {/*for buttons*/}
             </TableRow>
           </TableHead>
           <TableBody>
@@ -103,6 +105,14 @@ export default function ConfirmOrder() {
                 <TableCell>{item.quantity}</TableCell>
                 <TableCell>₪{item.price}</TableCell>
                 <TableCell>₪{(item.price * item.quantity)}</TableCell>
+                <TableCell>          <IconButton
+            aria-label="מחק"
+            size="small"
+            onClick={() => removeFromCart(item.dishId)} // Use removeFromCart directly
+          >
+            <DeleteIcon />
+          </IconButton></TableCell>
+
               </TableRow>
             ))}
             <TableRow>

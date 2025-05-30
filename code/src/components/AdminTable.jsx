@@ -46,7 +46,7 @@ export default function AdminTable({ dataname }) {
         setShowFireWait(false); // Set loading to false after data is fetched
         setTimeout(() => setFadeIn(true), 100); // Add a slight delay before triggering fade-in
       });
-  }, [dataname]);
+  }, [dataname, setShowFireWait]);
 
   function handleDelete(rowIndex, row) {
     const updatedRows = rows.filter((_, index) => index !== rowIndex);
@@ -54,10 +54,10 @@ export default function AdminTable({ dataname }) {
     fireDeleteDoc(dataname, row.id); // Save updated rows to Firestore
   }
 
-  function handleNewItemSubmit(newItem) {
-    setRows([...rows, newItem]); // Add the new item to the rows
-    setShowNewForm(false); // Hide the AdminNew form after submission
-  }
+  // function handleNewItemSubmit(newItem) {
+  //   setRows([...rows, newItem]); // Add the new item to the rows
+  //   setShowNewForm(false); // Hide the AdminNew form after submission
+  // }
 
   // Create table titles
   const titles_html = titles.map((title, index) => (
@@ -139,14 +139,3 @@ export default function AdminTable({ dataname }) {
   );
 
 }
-
-
-/*
-          <Button
-            variant="contained"
-            onClick={saveTable}
-            style={{ marginTop: '10px', backgroundColor: '#4CAF50', color: 'white' }}
-          >
-            שמור את הנתונים
-          </Button>
-*/

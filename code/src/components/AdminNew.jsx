@@ -10,7 +10,7 @@ import { useParams } from 'react-router-dom';
 export default function AdminNew({ }) {
     const [titles, setTitles] = useState([]); // Store the titles
     const [formData, setFormData] = useState({}); // Store form data
-    const [updateMode, setUpdateMode] = useState(useParams().id != null); // Track form mode (true for update, false for new)
+   // const [updateMode, setUpdateMode] = useState(useParams().id != null); // Track form mode (true for update, false for new)
     const params = useParams(); // Get URL parameters
     const navigate = useNavigate();
     const dataname = params.dataname; // Get the dataname from URL parameters
@@ -18,7 +18,6 @@ export default function AdminNew({ }) {
 
     // Fetch titles from Firestore
     useEffect(() => {
-
 
         fireReadTitles(dataname)
             .then((titlesData) => {

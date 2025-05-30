@@ -26,6 +26,7 @@ export const CartProvider = ({ children }) => {
   };
 
   const removeFromCart = (dishId) => {
+    console.log("Removing dish with ID:", dishId);
     setCart((prevCart) => prevCart.filter((item) => item.dishId !== dishId));
   };
 
