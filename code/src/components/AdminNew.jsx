@@ -14,6 +14,7 @@ export default function AdminNew({ }) {
     const params = useParams(); // Get URL parameters
     const navigate = useNavigate();
     const dataname = params.dataname; // Get the dataname from URL parameters
+    const updateMode = !!params.id; // Determine if in update mode based on presence of id
 
 
     // Fetch titles from Firestore
