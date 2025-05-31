@@ -4,7 +4,8 @@
     height: 2000px;
     /* Just for demonstration to enable scrolling */
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: row; /* Arrange children horizontally */
+    flex-wrap: wrap; /* Allow wrapping if items overflow */
     gap: 16px;
     /* Space between items */
     align-content: flex-start;
@@ -14,4 +15,19 @@
 
     
 
+}
+
+.filterContainer {
+  display: flex;
+  flex-direction: row; /* Arrange elements horizontally */
+  align-items: center; /* Align items vertically */
+  gap: 16px; /* Add spacing between elements */
+  margin-bottom: 12px; /* Add spacing below the filter container */
+  margin-top: 20px; /* Add spacing above the filter container */
+}
+
+.filterItem {
+  display: flex;
+  flex-direction: column; /* Stack label and input vertically */
+  align-items: center; /* Center align label and input */
 }
