@@ -12,9 +12,10 @@ import Checkbox from '@mui/material/Checkbox'; // Import Checkbox component
 import '../css/AdminTable.css'; // Import CSS for fade-in effect
 import { Link } from 'react-router-dom'; // Import Link for navigation
 import { FireWaitContext } from './FireWaitProvider'; // Import FireWait context
-import SettingsIcon from '@mui/icons-material/Settings';
 import DeleteIcon from '@mui/icons-material/Delete';
-
+import BorderColorIcon from '@mui/icons-material/BorderColor';
+import Tooltip from '@mui/material/Tooltip';
+import Stack from '@mui/material/Stack'; // Import Stack for layout
 
 export default function AdminTable({ dataname }) {
   const { setShowFireWait } = useContext(FireWaitContext); // Access setShowFireWait from context
@@ -88,28 +89,34 @@ export default function AdminTable({ dataname }) {
   }
 
   const rows_html = rows.map((row, rowIndex) => (
-    <TableRow key={rowIndex} >
-      {createRow(row, rowIndex)}
-      <TableCell  >
-        <div >
-          <IconButton
-            aria-label="ערוך"
-            size="small"
-            component={Link}
-            to={`/adminNew/${dataname}/${row.id}`}
-          >
-            <SettingsIcon />
-          </IconButton>
-          <IconButton
-            aria-label="מחק"
-            size="small"
-            onClick={() => handleDelete(rowIndex, row)}
-          >
-            <DeleteIcon />
-          </IconButton>
-        </div>
-      </TableCell>
-    </TableRow>
+<TableRow key={rowIndex}>
+  {createRow(row, rowIndex)}
+
+  <TableCell align="center">
+    <Stack direction="row" spacing={1} justifyContent="center">
+      <Tooltip title="עריכה">
+        <IconButton
+          color="primary"
+          component={Link}
+          to={`/adminNew/${dataname}/${row.id}`}
+          size="small"
+        >
+          <BorderColorIcon fontSize="small" />
+        </IconButton>
+      </Tooltip>
+
+      <Tooltip title="מחיקה">
+        <IconButton
+          color="error"
+          onClick={() => handleDelete(rowIndex, row)}
+          size="small"
+        >
+          <DeleteIcon fontSize="small" />
+        </IconButton>
+      </Tooltip>
+    </Stack>
+  </TableCell>
+</TableRow>
   ));
 
   return (
@@ -125,6 +132,7 @@ export default function AdminTable({ dataname }) {
             <TableHead>
               <TableRow>{titles_html}</TableRow>
             </TableHead>
+
             <TableBody>{rows_html}</TableBody>
           </Table>
 

@@ -7,7 +7,7 @@ import { useCart } from '../components/CartContext';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import DishRate from './DishRate';
-
+import Fade from '@mui/material/Fade'; // Import Fade for animation
 export default function Dish({ dishId, dishName, desc, price, prepTime, AllowBuy , rate}) {
     const { addToCart } = useCart(); // Access the addToCart function from the context
     const [total, setTotal] = useState(1);
@@ -32,6 +32,8 @@ export default function Dish({ dishId, dishName, desc, price, prepTime, AllowBuy
     }
 
     return (
+        <Fade in timeout={1300}>
+
         <div className="dish">
             {/* Left third: Image */}
             <div className="dish-image-container">
@@ -83,6 +85,7 @@ export default function Dish({ dishId, dishName, desc, price, prepTime, AllowBuy
                 }
             </div>
         </div>
+        </Fade>
     );
 }
 

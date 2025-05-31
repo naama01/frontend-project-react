@@ -92,7 +92,7 @@ export default function TopMenu({ title }) {
         label="סטודנט נוכחי"
         value={currentStudentId || ''}
         onChange={(e) => setCurrentStudentId(e.target.value)} // Update the context when student changes
-        style={{ minWidth: '200px' }}
+        style={{ maxWidth: '200px' }}
       >
         {students.map((student, index) => (
           <MenuItem key={index} value={student.id}> {/* Use the correct key for the student's ID */}
