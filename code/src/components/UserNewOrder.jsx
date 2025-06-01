@@ -78,91 +78,98 @@ export default function UserNewOrder() {
 
   return (
     <div>
-<Container maxWidth="lg">
-  <Box
-    sx={{
-      p: 3,
-      bgcolor: 'background.paper',
-      borderRadius: 2,
-      boxShadow: 1,
-      display: 'flex',
-      flexDirection: 'column',
-      gap: 3,
-    }}
-  >
-    <Stack direction={{  xs: 'column', md: 'row' }} spacing={3} flexWrap="wrap">
-      <Box >
-        <Typography variant="subtitle2" gutterBottom>
-          שם מנה
-        </Typography>
-        <TextField
-          fullWidth
-          onChange={handleSearchChange}
-          variant="outlined"
-        />
-      </Box>
+      <Container sx={{ mt: -2, mb: 1 }}>
+        <Box
+          sx={{
+            p: 3,
+            bgcolor: 'background.paper',
+            borderRadius: 2,
+            boxShadow: 1,
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 3,
+          }}
+        >
+          <Stack
+            direction={{ xs: 'column', md: 'row' }}
+            spacing={3}
+            useFlexGap
+            flexWrap="wrap"
+          >
+            <Box sx={{ flex: 1, minWidth: 200 }}>
+              <Typography variant="subtitle2" gutterBottom>
+                שם מנה
+              </Typography>
+              <TextField
+                fullWidth
+                value={filterName}
+                onChange={handleSearchChange}
+                variant="outlined"
+              />
+            </Box>
 
-      <Box sx={{ flex: 1, minWidth: 200 }}>
-        <Typography variant="subtitle2" gutterBottom>
-          מחיר מקסימלי: {filterPrice} ₪
-        </Typography>
-        <Slider
-          value={filterPrice}
-          onChange={(e, val) => setFilterPrice(val)}
-          valueLabelDisplay="auto"
-          min={0}
-          max={100}
-        />
-      </Box>
+            <Box sx={{ flex: 1, minWidth: 200 }}>
+              <Typography variant="subtitle2" gutterBottom>
+                מחיר מקסימלי: {filterPrice} ₪
+              </Typography>
+              <Slider
+                value={filterPrice}
+                onChange={(e, val) => setFilterPrice(val)}
+                valueLabelDisplay="auto"
+                min={0}
+                max={100}
+              />
+            </Box>
 
-      <Box sx={{ flex: 1, minWidth: 200 }}>
-        <Typography variant="subtitle2" gutterBottom>
-          זמן הכנה מקסימלי: {filterPrepTime} דקות
-        </Typography>
-        <Slider
-          value={filterPrepTime}
-          onChange={(e, val) => setFilterPrepTime(val)}
-          valueLabelDisplay="auto"
-          min={0}
-          max={120}
-        />
-      </Box>
+            <Box sx={{ flex: 1, minWidth: 200 }}>
+              <Typography variant="subtitle2" gutterBottom>
+                זמן הכנה מקסימלי: {filterPrepTime} דקות
+              </Typography>
+              <Slider
+                value={filterPrepTime}
+                onChange={(e, val) => setFilterPrepTime(val)}
+                valueLabelDisplay="auto"
+                min={0}
+                max={120}
+              />
+            </Box>
 
-      <Box sx={{ flex: 1, minWidth: 200 }}>
-        <Typography variant="subtitle2" gutterBottom>
-          דירוג מינימלי: {filterRate} כוכבים
-        </Typography>
-        <Slider
-          value={filterRate}
-          onChange={(e, val) => setFilterRate(val)}
-          valueLabelDisplay="auto"
-          min={0}
-          max={5}
-          step={0.5}
-        />
-      </Box>
-    </Stack>
+            <Box sx={{ flex: 1, minWidth: 200 }}>
+              <Typography variant="subtitle2" gutterBottom>
+                דירוג מינימלי: {filterRate} כוכבים
+              </Typography>
+              <Slider
+                value={filterRate}
+                onChange={(e, val) => setFilterRate(val)}
+                valueLabelDisplay="auto"
+                min={0}
+                max={5}
+                step={0.5}
+              />
+            </Box>
+          </Stack>
 
-    <Stack direction="row" spacing={2} justifyContent="flex-start">
-      <Button
-        variant="contained"
-        color="primary"
-        startIcon={<FilterAltIcon />}
-        onClick={applyFilters}
-      >
-        החל סינון
-      </Button>
-      <Button
-        variant="outlined"
-        color="primary"
-        startIcon={<RestartAltIcon />}
-        onClick={resetFilters}
-      >
-        אפס סינון
-      </Button>
-    </Stack>
-  </Box>
-</Container>
+          <Stack direction="row" spacing={2} justifyContent="flex-start">
+            <Button
+              variant="contained"
+              color="primary"
+              startIcon={<FilterAltIcon />}
+              onClick={applyFilters}
+            >
+              החל סינון
+            </Button>
+            <Button
+              variant="outlined"
+              color="primary"
+              startIcon={<RestartAltIcon />}
+              onClick={resetFilters}
+            >
+              אפס סינון
+            </Button>
+          </Stack>
+        </Box>
+      </Container>
+
 
       <div className="dishMenu">
         {dataEnabled.map((item, i) => (

@@ -6,6 +6,11 @@ import { FireWaitContext } from './FireWaitProvider'; // Import FireWait context
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete'; // Import Delete icon
+import Checkbox from '@mui/material/Checkbox'; // Import Checkbox component
+import {  FormControlLabel, Typography, Box } from '@mui/material';
+import TwoWheelerIcon from '@mui/icons-material/TwoWheeler';
+
+
 export default function ConfirmOrder() {
   const navigate = useNavigate(); // Initialize navigate
   const { cart, currentStudentId, clearCart, removeFromCart } = useCart(); // Destructure removeFromCart directly
@@ -13,11 +18,12 @@ export default function ConfirmOrder() {
   const [studentDetails, setStudentDetails] = useState(null);
   const [selectedClass, setSelectedClass] = useState('');
   const { setShowFireWait } = useContext(FireWaitContext); // Access setShowFireWait from context
+  const [shipment, setShipment] = useState(true); // Assuming shipment is always true; adjust as needed
 
   // Fetch students from Firestore
   useEffect(() => {
- //   fireReadEnabledOnly("students")
- fireReadDoc("students", currentStudentId)
+    //   fireReadEnabledOnly("students")
+    fireReadDoc("students", currentStudentId)
       .then((data) => {
         setStudentDetails(data); // Set the students retrieved from Firestore
       })
@@ -39,8 +45,17 @@ export default function ConfirmOrder() {
 
   // Handle order submission
   const handleSubmitOrder = () => {
-    if (!selectedClass || !currentStudentId) {
-      alert('אנא בחר כיתה ותלמיד להשלמת ההזמנה.');
+    if (!currentStudentId) {
+      alert('אנא בחר תלמיד להשלמת ההזמנה.');
+      return;
+    }
+
+    if (!selectedClass && shipment) {
+      alert('אנא בחר כיתה ותלמיד להשלמת או בטל סימון לטייקאווי.');
+      return;
+    }
+    if (cart.length === 0) {
+      alert('העגלה ריקה, אנא הוסף מנות לפני השלמת ההזמנה.');
       return;
     }
 
@@ -57,7 +72,7 @@ export default function ConfirmOrder() {
     const orderDetails = {
       id: orderId, // Unique order ID
       "תז סטודנט מזמין": currentStudentId, // Student ID
-      "משלוח": true, // Assuming delivery is always true; adjust as needed
+      "משלוח": shipment, // Assuming delivery is always true; adjust as needed
       "זמן הכנה מינימלי": `${maxPrepTime} דקות`, // Max prep time
       "מספר כיתה": selectedClass, // Selected class ID
       "מחיר כולל": totalAmount, // Total price
@@ -65,15 +80,17 @@ export default function ConfirmOrder() {
       "מספר הזמנה": orderId, // Order number (same as ID)
       "תאריך": new Date().toLocaleString(), // Human-readable date
     };
+    setShipment(orderDetails["משלוח"]); // Set shipment status
+    if (!shipment) {setSelectedClass('');} // If shipment is false, clear selected class
 
     // Write the order to the Firestore "orders" collection
     setShowFireWait(true)
     FireWriteDoc("orders", orderDetails)
       .then(() => {
         setShowFireWait(false)
-                clearCart(); // Clear the cart after successful order submission
-                setShowFireWait(false) 
-                navigate('/UserOrderStatus')
+        clearCart(); // Clear the cart after successful order submission
+        setShowFireWait(false)
+        navigate('/UserOrderStatus')
 
       })
       .catch((error) => {
@@ -81,6 +98,7 @@ export default function ConfirmOrder() {
         alert('אירעה שגיאה בעת השלמת ההזמנה. נסה שוב.');
       });
   };
+
 
   return (
     <div style={{ padding: '20px' }}>
@@ -106,12 +124,12 @@ export default function ConfirmOrder() {
                 <TableCell>₪{item.price}</TableCell>
                 <TableCell>₪{(item.price * item.quantity)}</TableCell>
                 <TableCell>          <IconButton
-            aria-label="מחק"
-            size="small"
-            onClick={() => removeFromCart(item.dishId)} // Use removeFromCart directly
-          >
-            <DeleteIcon />
-          </IconButton></TableCell>
+                  aria-label="מחק"
+                  size="small"
+                  onClick={() => removeFromCart(item.dishId)} // Use removeFromCart directly
+                >
+                  <DeleteIcon />
+                </IconButton></TableCell>
 
               </TableRow>
             ))}
@@ -124,8 +142,28 @@ export default function ConfirmOrder() {
       </TableContainer>
 
       {/* Shipment Information */}
-      <div style={{ marginTop: '20px' }}>
-        <h2>פרטי משלוח</h2>
+      <Box sx={{ mt: 3 }}>
+        <Typography variant="h6" gutterBottom>
+          פרטי משלוח
+        </Typography>
+
+        <Typography variant="body2" mb={1}>
+          למשלוח לחץ על הקטנוע
+        </Typography>
+
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={shipment}
+              onChange={() => setShipment(!shipment)}
+              icon={<TwoWheelerIcon />}
+              checkedIcon={<TwoWheelerIcon />}
+            />
+          }
+          label="שלח באמצעות שליח"
+        />
+      </Box>
+      {shipment && (
         <TextField
           select
           label="בחר כיתה"
@@ -138,27 +176,26 @@ export default function ConfirmOrder() {
               ({cls.id}) {cls["שם כיתה"]} {/* Display both class name and ID */}
             </MenuItem>
           ))}
-        </TextField>
+        </TextField>)}
 
-        {/* Display Selected Student Details */}
-        {studentDetails && (
-          <div style={{ marginTop: '10px' }}>
-            <p><strong>שם:</strong> {studentDetails["שם סטודנט"]}</p>
-            <p><strong>אימייל:</strong> {studentDetails["מייל"]}</p>
-            <p><strong>טלפון:</strong> {studentDetails["טלפון"]}</p>
-          </div>
-        )}
-      </div>
+      {/* Display Selected Student Details */}
+      {studentDetails && (
+        <div style={{ marginTop: '10px' }}>
+          <p><strong>שם:</strong> {studentDetails["שם סטודנט"]}</p>
+          <p><strong>אימייל:</strong> {studentDetails["מייל"]}</p>
+          <p><strong>טלפון:</strong> {studentDetails["טלפון"]}</p>
+        </div>
+      )}
 
-      {/* Submit Order Button */}
-      <Button
-        variant="contained"
-        color="primary"
-        onClick={handleSubmitOrder}
-        style={{ marginTop: '20px' }}
-      >
-        סיים הזמנה
-      </Button>
-    </div>
+      {/* Submit Order Button */ }
+  <Button
+    variant="contained"
+    color="primary"
+    onClick={handleSubmitOrder}
+    style={{ marginTop: '20px' }}
+  >
+    סיים הזמנה
+  </Button>
+    </div >
   );
 }

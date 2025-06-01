@@ -68,7 +68,7 @@ let theme = createTheme({
     MuiOutlinedInput: {
       styleOverrides: {
         root: {
-          borderRadius: 10,
+          borderRadius: 20,
         },
         input: {
           padding: '10.5px 14px',

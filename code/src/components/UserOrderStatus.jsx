@@ -72,8 +72,11 @@ export default function UserOrderStatus() {
         "תאריך": orderData["תאריך"],
     };
 
-    const steps = ['התקבלה', 'בהכנה', 'במשלוח', 'נמסרה'];
+    let steps = ['התקבלה', 'בהכנה', 'מוכנה בדלפק', 'נמסרה'];
+    if (order["משלוח"]) {
+         steps = ['התקבלה', 'בהכנה', 'במשלוח', 'נמסרה'];
 
+    }
     function timeSteps(rawTimeString, minutesToAdd) {
         const originalDate = new Date(rawTimeString);
         const newDate = new Date(originalDate.getTime() + minutesToAdd * 60 * 1000);

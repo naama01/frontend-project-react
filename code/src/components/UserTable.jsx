@@ -13,8 +13,8 @@ import { FireWaitContext } from './FireWaitProvider'; // Import FireWait context
 export default function UserTable({ dataname, query }) {
     const [rows, setRows] = useState([]);
     const [titles, setTitles] = useState([]); // Dynamically generated titles
-      const { setShowFireWait } = useContext(FireWaitContext); // Access setShowFireWait from context
-    
+    const { setShowFireWait } = useContext(FireWaitContext); // Access setShowFireWait from context
+
 
     // Ensure query is valid
     const validQuery = Array.isArray(query) && query.length === 3 ? query : null;
@@ -80,15 +80,21 @@ export default function UserTable({ dataname, query }) {
     ));
 
     return (
-        <div>
-            <TableContainer component={Paper}>
-                <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                    <TableHead>
-                        <TableRow>{titles_html}</TableRow>
-                    </TableHead>
-                    <TableBody>{rows_html}</TableBody>
-                </Table>
-            </TableContainer>
-        </div>
+        <TableContainer component={Paper} sx={{ borderRadius: 2, boxShadow: 1 }}>
+            <Table
+                sx={{
+                    minWidth: 650,
+                    '& th': { fontWeight: 600 },
+                    '& td, & th': { textAlign: 'right' }, // RTL alignment
+                }}
+                aria-label="טבלת משתמש"
+            >
+                <TableHead>
+                    <TableRow>{titles_html}</TableRow>
+                </TableHead>
+                <TableBody>{rows_html}</TableBody>
+            </Table>
+        </TableContainer>
+
     );
 }
