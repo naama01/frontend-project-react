@@ -1,4 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
+import { fireReadTitles, fireReadCollection, fireDeleteDoc } from '../firebase';
+import { Link } from 'react-router-dom';
+import { FireWaitContext } from './FireWaitProvider';
+
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -7,26 +11,24 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { IconButton } from '@mui/material';
-import { fireReadTitles, fireReadCollection, fireDeleteDoc } from '../firebase'; // Import Firestore functions
-import Checkbox from '@mui/material/Checkbox'; // Import Checkbox component
-import '../css/AdminTable.css'; // Import CSS for fade-in effect
-import { Link } from 'react-router-dom'; // Import Link for navigation
-import { FireWaitContext } from './FireWaitProvider'; // Import FireWait context
+import Checkbox from '@mui/material/Checkbox';
 import DeleteIcon from '@mui/icons-material/Delete';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
 import Tooltip from '@mui/material/Tooltip';
-import Stack from '@mui/material/Stack'; // Import Stack for layout
+import Stack from '@mui/material/Stack';
 
-export default function AdminTable({ dataname }) {
-  const { setShowFireWait } = useContext(FireWaitContext); // Access setShowFireWait from context
+import '../css/AdminTable.css';
+
+export default function AdminTable({ dataName }) {
+  const { setShowFireWait } = useContext(FireWaitContext);
   const [rows, setRows] = useState([]);
-  const [titles, setTitles] = useState([]); // Dynamically generated titles
-  const [fadeIn, setFadeIn] = useState(false); // Track fade-in effect
+  const [titles, setTitles] = useState([]);
+  const [fadeIn, setFadeIn] = useState(false);
 
   // Fetch titles and rows from Firestore
   useEffect(() => {
     setShowFireWait(true); // Set loading to true before fetching data
-    fireReadTitles(dataname)
+    fireReadTitles(dataName)
       .then((titlesData) => {
         if (titlesData) {
           setTitles(Object.values(titlesData)); // Set titles from the "titles" document
@@ -35,7 +37,7 @@ export default function AdminTable({ dataname }) {
         }
 
         // Fetch rows after titles are retrieved
-        return fireReadCollection(dataname);
+        return fireReadCollection(dataName);
       })
       .then((data) => {
         setRows(data); // Set rows from Firestore
@@ -47,18 +49,16 @@ export default function AdminTable({ dataname }) {
         setShowFireWait(false); // Set loading to false after data is fetched
         setTimeout(() => setFadeIn(true), 100); // Add a slight delay before triggering fade-in
       });
-  }, [dataname, setShowFireWait]);
+  }, [dataName, setShowFireWait]);
 
   function handleDelete(rowIndex, row) {
-    const updatedRows = rows.filter((_, index) => index !== rowIndex);
-    setRows(updatedRows);
-    fireDeleteDoc(dataname, row.id); // Save updated rows to Firestore
-  }
+    const confirmed = window.confirm(`האם למחוק את רשומה ${row.id}?`);
+    if (!confirmed) return;
 
-  // function handleNewItemSubmit(newItem) {
-  //   setRows([...rows, newItem]); // Add the new item to the rows
-  //   setShowNewForm(false); // Hide the AdminNew form after submission
-  // }
+    const updatedRows = rows.filter((_, index) => index !== rowIndex); //remove row from rows
+    setRows(updatedRows); // update the table with new rows
+    fireDeleteDoc(dataName, row.id); // Save updated rows to Firestore
+  }
 
   // Create table titles
   const titles_html = titles.map((title, index) => (
@@ -74,7 +74,6 @@ export default function AdminTable({ dataname }) {
           <Checkbox
             checked={!!row[title]} // Ensure the value is always a boolean
             disabled={true}
-
             onChange={(e) => {
               const updatedRows = [...rows];
               updatedRows[rowIndex][title] = e.target.checked; // Update the value in the rows state
@@ -89,60 +88,50 @@ export default function AdminTable({ dataname }) {
   }
 
   const rows_html = rows.map((row, rowIndex) => (
-<TableRow key={rowIndex}>
-  {createRow(row, rowIndex)}
+    <TableRow key={rowIndex}>
+      {createRow(row, rowIndex)}
 
-  <TableCell align="center">
-    <Stack direction="row" spacing={1} justifyContent="center">
-      <Tooltip title="עריכה">
-        <IconButton
-          color="primary"
-          component={Link}
-          to={`/adminNew/${dataname}/${row.id}`}
-          size="small"
-        >
-          <BorderColorIcon fontSize="small" />
-        </IconButton>
-      </Tooltip>
+      <TableCell align="center">
+        <Stack direction="row" spacing={1} justifyContent="center">
+          <Tooltip title="עריכה">
+            <IconButton
+              color="primary"
+              component={Link}
+              to={`/adminNew/${dataName}/${row.id}`}
+              size="small"
+            >
+              <BorderColorIcon fontSize="small" />
+            </IconButton>
+          </Tooltip>
 
-      <Tooltip title="מחיקה">
-        <IconButton
-          color="error"
-          onClick={() => handleDelete(rowIndex, row)}
-          size="small"
-        >
-          <DeleteIcon fontSize="small" />
-        </IconButton>
-      </Tooltip>
-    </Stack>
-  </TableCell>
-</TableRow>
+          <Tooltip title="מחיקה">
+            <IconButton
+              color="error"
+              onClick={() => handleDelete(rowIndex, row)}
+              size="small"
+            >
+              <DeleteIcon fontSize="small" />
+            </IconButton>
+          </Tooltip>
+        </Stack>
+      </TableCell>
+    </TableRow>
   ));
 
   return (
     <div>
-      <>
-        <TableContainer
+      <TableContainer
+        component={Paper}
+        className={`table-container fade-in ${fadeIn ? 'visible' : ''}`}
+      >
 
-          component={Paper}
-          className={`table-container fade-in ${fadeIn ? 'visible' : ''}`}
-        >
-
-          <Table sx={{ minWidth: 700 }} aria-label="simple table">
-            <TableHead>
-              <TableRow>{titles_html}</TableRow>
-            </TableHead>
-
-            <TableBody>{rows_html}</TableBody>
-          </Table>
-
-        </TableContainer>
-
-
-
-
-      </>
-
+        <Table sx={{ minWidth: 700 }} aria-label="simple table">
+          <TableHead>
+            <TableRow>{titles_html}</TableRow>
+          </TableHead>
+          <TableBody>{rows_html}</TableBody>
+        </Table>
+      </TableContainer>
     </div>
   );
 

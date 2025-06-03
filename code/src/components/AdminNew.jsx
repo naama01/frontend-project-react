@@ -1,26 +1,23 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import { fireReadDoc, fireReadTitles, fireWriteDoc } from '../firebase'; // Import Firestore function
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Checkbox from '@mui/material/Checkbox'; // Import Checkbox component
-import '../css/AdminNew.css'; // Import the new CSS file
-import { useNavigate } from 'react-router-dom';
-import { useParams } from 'react-router-dom';
+import '../css/AdminNew.css';
 
 export default function AdminNew({ }) {
-    const [titles, setTitles] = useState([]); // Store the titles
-    const [formData, setFormData] = useState({}); // Store form data
-   // const [updateMode, setUpdateMode] = useState(useParams().id != null); // Track form mode (true for update, false for new)
-    const params = useParams(); // Get URL parameters
+    const [titles, setTitles] = useState([]);
+    const [formData, setFormData] = useState({});
+    const params = useParams();
     const navigate = useNavigate();
-    const dataname = params.dataname; // Get the dataname from URL parameters
+    const dataName = params.dataName; // Get the dataName from URL parameters
     const updateMode = !!params.id; // Determine if in update mode based on presence of id
 
 
     // Fetch titles from Firestore
     useEffect(() => {
-
-        fireReadTitles(dataname)
+        fireReadTitles(dataName)
             .then((titlesData) => {
                 if (titlesData) {
                     const titlesArray = Object.values(titlesData); // Convert titles object to array
@@ -41,11 +38,11 @@ export default function AdminNew({ }) {
                 console.error('Error fetching titles:', error);
             });
 
-    }, [dataname]);
+    }, [dataName]);
 
     useEffect(() => {
-        if (dataname && params.id) {
-            fireReadDoc(dataname, params.id).then((docData) => {
+        if (dataName && params.id) {
+            fireReadDoc(dataName, params.id).then((docData) => {
                 if (docData) {
                     setFormData(docData); // Populate form fields with retrieved data
                 } else {
@@ -59,11 +56,6 @@ export default function AdminNew({ }) {
 
     // Handle input changes
     const handleInputChange = (title, value) => {
-        if (title === "טלפון") {
-            let a = 0;
-
-        }
-
         setFormData((prevFormData) => ({
             ...prevFormData,
             [title]: value, // Update the value for the specific title
@@ -80,12 +72,12 @@ export default function AdminNew({ }) {
 
 
     const saveItem = (docData) => {
-        fireWriteDoc(dataname, docData, params.id)
+        fireWriteDoc(dataName, docData, params.id)
             .then(() => {
 
                 console.log('Document successfully written!');
 
-                navigate(`/Admin${dataname}`); // Redirect to the Admin page after saving
+                navigate(`/Admin${dataName}`); // Redirect to the Admin page after saving
             })
             .catch((error) => {
                 console.error('Error writing document:', error);
@@ -139,23 +131,14 @@ export default function AdminNew({ }) {
                     </div>
                 ))}
                 <div className="admin-new-buttons">
-                    <Button
-                        type="submit"
-                        variant="contained"
-                        color="primary"
-                        className="admin-new-submit-button"
-                    >
+                    <Button type="submit" variant="contained" color="primary" className="admin-new-submit-button" >
                         שמור
                     </Button>
-                    <Button
-                        type="button"
-                        variant="outlined"
-                        color="secondary"
-                        onClick={() => navigate(`/Admin${dataname}`)}
-                        className="admin-new-cancel-button"
-                    >
-                        בטל
+                    <Button type="button" variant="outlined" color="secondary" className="admin-new-cancel-button"
+                        onClick={() => navigate(`/Admin${dataName}`)}>
+                        ביטול
                     </Button>
+
                 </div>
             </form>
         </div>

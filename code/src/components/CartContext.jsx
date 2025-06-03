@@ -1,6 +1,5 @@
 import React, { createContext, useContext, useState } from 'react';
 
-// Create the Cart Context
 const CartContext = createContext();
 
 // Custom hook to use the Cart Context

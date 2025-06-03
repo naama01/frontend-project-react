@@ -1,13 +1,15 @@
 import { useState } from 'react';
-import '../css/Dish.css'; // Import the CSS file
+import { useCart } from '../components/CartContext';
+
 import ButtonGroup from '@mui/material/ButtonGroup';
 import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography'; // Import Typography for read-only display
-import { useCart } from '../components/CartContext';
+import Typography from '@mui/material/Typography'; 
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import DishRate from './DishRate';
-import Fade from '@mui/material/Fade'; // Import Fade for animation
+import Fade from '@mui/material/Fade'; 
+import '../css/Dish.css';
+
 export default function Dish({ dishId, dishName, desc, price, prepTime, AllowBuy , rate}) {
     const { addToCart } = useCart(); // Access the addToCart function from the context
     const [total, setTotal] = useState(1);

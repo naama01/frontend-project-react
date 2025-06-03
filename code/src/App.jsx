@@ -30,13 +30,13 @@ export default function App() {
               <Route path='/' element={<UserNewOrder />} />
               <Route path='/help' element={<HelpPage />} />
               <Route path='/UpdateStudentSelf' element={<UpdateStudentSelf />} />
-              <Route path="/AdminClasses" element={<AdminPage dataname="classes" />} />
-              <Route path="/AdminDishes" element={<AdminPage dataname="dishes" />} />
-              <Route path="/AdminOrders" element={<AdminPage dataname="orders" />} />
-              <Route path="/AdminStudents" element={<AdminPage dataname="students" />} />
+              <Route path="/AdminClasses" element={<AdminPage dataName="classes" />} />
+              <Route path="/AdminDishes" element={<AdminPage dataName="dishes" />} />
+              <Route path="/AdminOrders" element={<AdminPage dataName="orders" />} />
+              <Route path="/AdminStudents" element={<AdminPage dataName="students" />} />
               <Route path="/AdminNew" element={<AdminNew />} />
-              <Route path="/AdminNew/:dataname" element={<AdminNew />} />
-              <Route path="/AdminNew/:dataname/:id" element={<AdminNew />} />
+              <Route path="/AdminNew/:dataName" element={<AdminNew />} />
+              <Route path="/AdminNew/:dataName/:id" element={<AdminNew />} />
               <Route path="/UserOrderHistory" element={<UserOrderHistory />} />
               <Route path="/UserOrderStatus" element={<UserOrderStatus />} />
               <Route path="/ConfirmOrder" element={<ConfirmOrder />} />

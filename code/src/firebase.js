@@ -112,10 +112,10 @@ export async function fireWriteCollection(coll, docs) {
 }
 
 
-export async function fireReadTitles(dataname) {
+export async function fireReadTitles(dataName) {
     try {
         // Reference the document with ID "titles" in the specified collection
-        const docRef = doc(firestore, "titles", dataname);
+        const docRef = doc(firestore, "titles", dataName);
         const docSnap = await getDoc(docRef);
 
         if (docSnap.exists()) {

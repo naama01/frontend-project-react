@@ -4,7 +4,7 @@ import { useCart } from './CartContext'; // Import the useCart hook
 
 export default function UserOrderHistory() {
   const { currentStudentId } = useCart(); // Access currentStudentId from context
-  const dataname = "orders";
+  const dataName = "orders";
 
   if (!currentStudentId) {
     return <div>לא נמצאו נתונים עבור סטודנט זה.</div>; // Display a message if currentStudentId is not set
@@ -12,7 +12,7 @@ export default function UserOrderHistory() {
 
   return (
     <div>
-      <UserTable dataname={dataname} query={['תז סטודנט מזמין', "==", currentStudentId]} />
+      <UserTable dataName={dataName} query={['תז סטודנט מזמין', "==", currentStudentId]} />
     </div>
   );
 }

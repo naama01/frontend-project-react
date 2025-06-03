@@ -14,7 +14,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
 export default function UserNewOrder() {
-  const dataname = "dishes"; // Firestore collection name
+  const dataName = "dishes"; // Firestore collection name
   const [rows, setRows] = useState([]);
   const [dataEnabled, setDataEnabled] = useState([]); // State for filtered items
   const { cart, currentStudentId, setCurrentStudentId } = useCart(); // Access student ID from context
@@ -25,7 +25,7 @@ export default function UserNewOrder() {
 
   // Fetch rows from Firestore on component mount
   useEffect(() => {
-    fireReadCollection(dataname)
+    fireReadCollection(dataName)
       .then((data) => {
         setRows(data); // Set rows from Firestore
         const enabledItems = data.filter((item) => item["פעיל"]); // Filter items where "פעיל" is true

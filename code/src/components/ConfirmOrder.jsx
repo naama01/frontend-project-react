@@ -1,28 +1,27 @@
 import React, { useState, useEffect, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useCart } from '../components/CartContext';
+import { FireWaitContext } from './FireWaitProvider';
+import { fireReadEnabledOnly, fireReadDoc, FireWriteDoc } from '../firebase';
 import { Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, TextField, MenuItem } from '@mui/material';
-import { fireReadEnabledOnly, fireReadDoc, FireWriteDoc } from '../firebase'; // Ensure FireWriteDoc is imported
-import { FireWaitContext } from './FireWaitProvider'; // Import FireWait context
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import IconButton from '@mui/material/IconButton';
-import DeleteIcon from '@mui/icons-material/Delete'; // Import Delete icon
-import Checkbox from '@mui/material/Checkbox'; // Import Checkbox component
-import {  FormControlLabel, Typography, Box } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
+import Checkbox from '@mui/material/Checkbox';
+import { FormControlLabel, Typography, Box } from '@mui/material';
 import TwoWheelerIcon from '@mui/icons-material/TwoWheeler';
 
 
 export default function ConfirmOrder() {
-  const navigate = useNavigate(); // Initialize navigate
+  const navigate = useNavigate();
   const { cart, currentStudentId, clearCart, removeFromCart } = useCart(); // Destructure removeFromCart directly
   const [classes, setClasses] = useState([]);
   const [studentDetails, setStudentDetails] = useState(null);
   const [selectedClass, setSelectedClass] = useState('');
-  const { setShowFireWait } = useContext(FireWaitContext); // Access setShowFireWait from context
-  const [shipment, setShipment] = useState(true); // Assuming shipment is always true; adjust as needed
+  const { setShowFireWait } = useContext(FireWaitContext);
+  const [shipment, setShipment] = useState(true);
 
   // Fetch students from Firestore
   useEffect(() => {
-    //   fireReadEnabledOnly("students")
     fireReadDoc("students", currentStudentId)
       .then((data) => {
         setStudentDetails(data); // Set the students retrieved from Firestore
@@ -51,7 +50,7 @@ export default function ConfirmOrder() {
     }
 
     if (!selectedClass && shipment) {
-      alert('אנא בחר כיתה ותלמיד להשלמת או בטל סימון לטייקאווי.');
+      alert('אנא בחר כיתה להשלמת ההזמנה או בטל סימון לטייקאווי.');
       return;
     }
     if (cart.length === 0) {
@@ -81,14 +80,14 @@ export default function ConfirmOrder() {
       "תאריך": new Date().toLocaleString(), // Human-readable date
     };
     setShipment(orderDetails["משלוח"]); // Set shipment status
-    if (!shipment) {setSelectedClass('');} // If shipment is false, clear selected class
+    if (!shipment) { setSelectedClass(''); } // If shipment is false, clear selected class
 
     // Write the order to the Firestore "orders" collection
     setShowFireWait(true)
     FireWriteDoc("orders", orderDetails)
       .then(() => {
         setShowFireWait(false)
-        clearCart(); // Clear the cart after successful order submission
+        clearCart(); 
         setShowFireWait(false)
         navigate('/UserOrderStatus')
 
@@ -141,7 +140,6 @@ export default function ConfirmOrder() {
         </Table>
       </TableContainer>
 
-      {/* Shipment Information */}
       <Box sx={{ mt: 3 }}>
         <Typography variant="h6" gutterBottom>
           פרטי משלוח
@@ -178,7 +176,6 @@ export default function ConfirmOrder() {
           ))}
         </TextField>)}
 
-      {/* Display Selected Student Details */}
       {studentDetails && (
         <div style={{ marginTop: '10px' }}>
           <p><strong>שם:</strong> {studentDetails["שם סטודנט"]}</p>
@@ -187,15 +184,14 @@ export default function ConfirmOrder() {
         </div>
       )}
 
-      {/* Submit Order Button */ }
-  <Button
-    variant="contained"
-    color="primary"
-    onClick={handleSubmitOrder}
-    style={{ marginTop: '20px' }}
-  >
-    סיים הזמנה
-  </Button>
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={handleSubmitOrder}
+        style={{ marginTop: '20px' }}
+      >
+        סיים הזמנה
+      </Button>
     </div >
   );
 }

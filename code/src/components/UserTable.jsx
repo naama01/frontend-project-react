@@ -7,13 +7,13 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Checkbox from '@mui/material/Checkbox';
-import { fireReadTitles, fireReadQuery } from '../firebase'; // Import Firestore functions
-import { FireWaitContext } from './FireWaitProvider'; // Import FireWait context
+import { fireReadTitles, fireReadQuery } from '../firebase'; 
+import { FireWaitContext } from './FireWaitProvider';
 
-export default function UserTable({ dataname, query }) {
+export default function UserTable({ dataName, query }) {
     const [rows, setRows] = useState([]);
     const [titles, setTitles] = useState([]); // Dynamically generated titles
-    const { setShowFireWait } = useContext(FireWaitContext); // Access setShowFireWait from context
+    const { setShowFireWait } = useContext(FireWaitContext);
 
 
     // Ensure query is valid
@@ -27,7 +27,7 @@ export default function UserTable({ dataname, query }) {
         }
 
         setShowFireWait(true);
-        fireReadTitles(dataname)
+        fireReadTitles(dataName)
             .then((titlesData) => {
                 if (titlesData) {
                     setTitles(Object.values(titlesData));
@@ -35,7 +35,7 @@ export default function UserTable({ dataname, query }) {
                     console.error("No titles document found!");
                 }
 
-                return fireReadQuery(dataname, validQuery);
+                return fireReadQuery(dataName, validQuery);
             })
             .then((data) => {
                 setRows(data);
@@ -46,7 +46,7 @@ export default function UserTable({ dataname, query }) {
             .finally(() => {
                 setShowFireWait(false);
             });
-    }, [dataname, validQuery]);
+    }, [dataName, validQuery]);
 
     // Create table titles
     const titles_html = titles.map((title, index) => (
