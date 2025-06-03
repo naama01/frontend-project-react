@@ -1,6 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react';
 import '../css/SupportChat.css';
 
+/* 
+This is a dummy mockup screen as part of the design phase.
+Can achieve real chat without backend by using firestore collectoins as chat history.
+not in scope for the project
+*/
+
 export default function SupportChat() {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');

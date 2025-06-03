@@ -11,8 +11,8 @@ export function FireWaitProvider({ children }) {
     <FireWaitContext.Provider value={{ showFireWait, setShowFireWait }}>
       {children}
       {showFireWait && (
-        <Box 
-        className="fireWait" 
+        <Box
+          className="fireWait"
           display="flex"
           flexDirection="column"
           justifyContent="center"
@@ -23,7 +23,7 @@ export function FireWaitProvider({ children }) {
           top={0}
           left={0}
           width="100%"
-          zIndex={1300}
+          zIndex={1300} // keep top header (at z=1500) above loading screen
         >
           <CircularProgress color="primary" />
           <Typography variant="h6" mt={2}>

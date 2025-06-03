@@ -43,9 +43,6 @@ export default function PopulateData() {
         { id: "298745213", name: "אלינור דיין", class: "129", enabled: true, email: "elinor.dayan@example.com", phone: "0504433221" },
         { id: "286198472", name: "גל טביב", class: "130", enabled: false, email: "gal.tabib@example.com", phone: "0543332221" }
     ];
-
-
-    // Map the students to match the new schema
     const mappedStudents = students.map((student) => ({
         "מספר סטודנט": student.id,
         "שם סטודנט": student.name,
@@ -54,39 +51,49 @@ export default function PopulateData() {
         "טלפון": student.phone,
         "פעיל": student.enabled,
     }));
-    // Sample data for dishes
+
     const dishes = [
-        { id: "1", name: "סלט", desc: "סלט ירקות טרי, קצוץ דק ומרענן – פשוט מושלם ליד כל מנה", rate: "4" , price: "25", time: "10", enabled: true },
-        { id: "2", name: "לחם המכללה", desc: "לחם חם מהתנור עם מטבלים עשירים – מושלם לנשנוש או התחלה", rate: "4.5" , price: "13", time: "10", enabled: true },
-        { id: "3", name: "לחמניה ללא גלוטן", desc: "לחמנייה טרייה ורכה – ללא גלוטן וללא פשרות בטעם", rate: "2" , price: "13", time: "2", enabled: true },
-        { id: "4", name: "צ׳יפס", desc: "צ'יפס פריך, זהוב ומלוח בדיוק במידה – פינוק קלאסי", rate: "4" , price: "17", time: "10", enabled: true },
-        { id: "5", name: "המבורגר", desc: "המבורגר בקר עסיסי 200 גרם – עשוי במידת העשייה המושלמת", rate: "4.5" , price: "55", time: "12", enabled: true },
-        { id: "6", name: "המבורגר טלה", desc: "המבורגר בקר איכותי 200 גרם – עסיסי ומשביע בכל ביס", rate: "5" , price: "55", time: "15", enabled: true },
-        { id: "7", name: "פיצה אישית", desc: "פיצה טרייה עם עגבניות, גבינת מוצרלה ונגיעת זיתים – מושלמת בכל ביס", rate: "4" , price: "25", time: "10", enabled: true },
-        { id: "8", name: "צהריים של אמא", desc: "אורז, שעועית ובקר בבישול ביתי – ממש כמו של אמא", rate: "5" , price: "45", time: "7", enabled: true },
-        { id: "9", name: "אדממה", desc: "מנת אדממה חמה עם מלח גס – קלילה ומושלמת ליד כל ארוחה", rate: "3" , price: "22", time: "10", enabled: true },
-        { id: "10", name: "שקשוקה", desc: "שקשוקה לוהטת עם ביצה רכה ברוטב עגבניות ביתי", rate: "3.5" , price: "28", time: "8", enabled: true },
-        { id: "11", name: "מרק עדשים", desc: "מרק עשיר, חמים ומזין עם עדשים וירקות טריים", rate: "2" , price: "32", time: "10", enabled: true },
-        { id: "12", name: "קציצות ירק", desc: "קציצות אפויות מירקות טריים – פריכות מבחוץ ורכות מבפנים", rate: "2" , price: "35", time: "12", enabled: true },
-        { id: "13", name: "פיתה עם חומוס", desc: "פיתה טרייה עם ממרח חומוס חלק, מושלם לנשנוש קל", rate: "3" , price: "18", time: "5", enabled: true },
-        { id: "14", name: "פסטה פומודורו", desc: "פסטה איטלקית ברוטב עגבניות קלאסי – חמימה ומנחמת", rate: "4.5" , price: "45", time: "7", enabled: true },
-        { id: "15", name: "שווארמה צמחונית", desc: "שווארמה טבעונית מסייטן, מתובלת ומוגשת בפיתה חמה", rate: "0.5" , price: "42", time: "9", enabled: true },
-        { id: "16", name: "חביתה ירוקה", desc: "חביתה אוורירית עם עלי תרד טריים – טעימה ובריאה", rate: "4" , price: "22", time: "6", enabled: true },
-        { id: "17", name: "טוסט גבינה", desc: "טוסט חם ופריך עם גבינה נמסה בלחם טרי", rate: "3" , price: "20", time: "4", enabled: true },
-        { id: "18", name: "מג'דרה", desc: "תבשיל מג'דרה מסורתי עם אורז ועדשים – טעם של בית", rate: "3" , price: "30", time: "11", enabled: true },
-        { id: "19", name: "פסטה שמנת", desc: "פסטה חמה ברוטב שמנת עשיר וקטיפתי – תענוג אמיתי", rate: "4" , price: "47", time: "13", enabled: true },
-        { id: "20", name: "בורקס גבינה", desc: "בורקס גבינה פריך וזהוב – מושלם ליד סלט או כקינוח מלוח", rate: "3.5" , price: "17", time: "7", enabled: true },
-        { id: "21", name: "קוסקוס", desc: "קוסקוס מסורתי עם ירקות מבושלים היטב – מנה מנחמת ומשביעה", rate: "3" , price: "38", time: "10", enabled: true },
-        { id: "22", name: "מאפה תפוחי אדמה", desc: "מאפה תפוחי אדמה חם מהתנור – טעם ביתי בכל ביס", rate: "3" , price: "27", time: "9", enabled: true },
-        { id: "23", name: "כריך טונה", desc: "כריך בלחם מלא עם סלט טונה טרי ומרענן", rate: "4" , price: "29", time: "6", enabled: true },
-        { id: "24", name: "חצילים בטחינה", desc: "חצילים קלויים עם טחינה עשירה – קלאסיקה ים תיכונית שתמיד כיף לאכול", rate: "4" , price: "25", time: "8", enabled: true },
-        { id: "25", name: "עוגת שוקולד", desc: "עוגת שוקולד עשירה ונימוחה – הסיום המתוק המושלם לארוחה", rate: "3" , price: "23", time: "4", enabled: true },
-        { id: "26", name: "באגט אבוקדו", desc: "באגט טרי עם ממרח אבוקדו מתובל – בריא, טעים ומרענן", rate: "1" , price: "31", time: "7", enabled: true },
-        { id: "27", name: "טאקו ירקות", desc: "טאקו מקסיקני פריך במילוי ירקות טריים ורוטב פיקנטי", rate: "1" , price: "40", time: "10", enabled: true },
-        { id: "28", name: "פסטה פסטו", desc: "פסטה איטלקית עם רוטב פסטו מבזיליקום טרי – קלילה וטעימה", rate: "0.5" , price: "44", time: "11", enabled: true },
-        { id: "29", name: "לביבות תפוחי אדמה", desc: "לביבות קריספיות מבחוץ ורכות מבפנים – טעם של בית", rate: "2.5" , price: "36", time: "10", enabled: true },
-        { id: "30", name: "סושי", desc: "שני רולים לבחירה – טריים, צבעוניים ומוכנים במקום", rate: "4.5" , price: "46", time: "15", enabled: true }
-          ];
+        { id: "1", name: "סלט", desc: "סלט ירקות טרי, קצוץ דק ומרענן – פשוט מושלם ליד כל מנה", rate: "4", price: "25", time: "10", enabled: true },
+        { id: "2", name: "לחם המכללה", desc: "לחם חם מהתנור עם מטבלים עשירים – מושלם לנשנוש או התחלה", rate: "4.5", price: "13", time: "10", enabled: true },
+        { id: "3", name: "לחמניה ללא גלוטן", desc: "לחמנייה טרייה ורכה – ללא גלוטן וללא פשרות בטעם", rate: "2", price: "13", time: "2", enabled: true },
+        { id: "4", name: "צ׳יפס", desc: "צ'יפס פריך, זהוב ומלוח בדיוק במידה – פינוק קלאסי", rate: "4", price: "17", time: "10", enabled: true },
+        { id: "5", name: "המבורגר", desc: "המבורגר בקר עסיסי 200 גרם – עשוי במידת העשייה המושלמת", rate: "4.5", price: "55", time: "12", enabled: true },
+        { id: "6", name: "המבורגר טלה", desc: "המבורגר בקר איכותי 200 גרם – עסיסי ומשביע בכל ביס", rate: "5", price: "55", time: "15", enabled: true },
+        { id: "7", name: "פיצה אישית", desc: "פיצה טרייה עם עגבניות, גבינת מוצרלה ונגיעת זיתים – מושלמת בכל ביס", rate: "4", price: "25", time: "10", enabled: true },
+        { id: "8", name: "צהריים של אמא", desc: "אורז, שעועית ובקר בבישול ביתי – ממש כמו של אמא", rate: "5", price: "45", time: "7", enabled: true },
+        { id: "9", name: "אדממה", desc: "מנת אדממה חמה עם מלח גס – קלילה ומושלמת ליד כל ארוחה", rate: "3", price: "22", time: "10", enabled: true },
+        { id: "10", name: "שקשוקה", desc: "שקשוקה לוהטת עם ביצה רכה ברוטב עגבניות ביתי", rate: "3.5", price: "28", time: "8", enabled: true },
+        { id: "11", name: "מרק עדשים", desc: "מרק עשיר, חמים ומזין עם עדשים וירקות טריים", rate: "2", price: "32", time: "10", enabled: true },
+        { id: "12", name: "קציצות ירק", desc: "קציצות אפויות מירקות טריים – פריכות מבחוץ ורכות מבפנים", rate: "2", price: "35", time: "12", enabled: true },
+        { id: "13", name: "פיתה עם חומוס", desc: "פיתה טרייה עם ממרח חומוס חלק, מושלם לנשנוש קל", rate: "3", price: "18", time: "5", enabled: true },
+        { id: "14", name: "פסטה פומודורו", desc: "פסטה איטלקית ברוטב עגבניות קלאסי – חמימה ומנחמת", rate: "4.5", price: "45", time: "7", enabled: true },
+        { id: "15", name: "שווארמה צמחונית", desc: "שווארמה טבעונית מסייטן, מתובלת ומוגשת בפיתה חמה", rate: "0.5", price: "42", time: "9", enabled: true },
+        { id: "16", name: "חביתה ירוקה", desc: "חביתה אוורירית עם עלי תרד טריים – טעימה ובריאה", rate: "4", price: "22", time: "6", enabled: true },
+        { id: "17", name: "טוסט גבינה", desc: "טוסט חם ופריך עם גבינה נמסה בלחם טרי", rate: "3", price: "20", time: "4", enabled: true },
+        { id: "18", name: "מג'דרה", desc: "תבשיל מג'דרה מסורתי עם אורז ועדשים – טעם של בית", rate: "3", price: "30", time: "11", enabled: true },
+        { id: "19", name: "פסטה שמנת", desc: "פסטה חמה ברוטב שמנת עשיר וקטיפתי – תענוג אמיתי", rate: "4", price: "47", time: "13", enabled: true },
+        { id: "20", name: "בורקס גבינה", desc: "בורקס גבינה פריך וזהוב – מושלם ליד סלט או כקינוח מלוח", rate: "3.5", price: "17", time: "7", enabled: true },
+        { id: "21", name: "קוסקוס", desc: "קוסקוס מסורתי עם ירקות מבושלים היטב – מנה מנחמת ומשביעה", rate: "3", price: "38", time: "10", enabled: true },
+        { id: "22", name: "מאפה תפוחי אדמה", desc: "מאפה תפוחי אדמה חם מהתנור – טעם ביתי בכל ביס", rate: "3", price: "27", time: "9", enabled: true },
+        { id: "23", name: "כריך טונה", desc: "כריך בלחם מלא עם סלט טונה טרי ומרענן", rate: "4", price: "29", time: "6", enabled: true },
+        { id: "24", name: "חצילים בטחינה", desc: "חצילים קלויים עם טחינה עשירה – קלאסיקה ים תיכונית שתמיד כיף לאכול", rate: "4", price: "25", time: "8", enabled: true },
+        { id: "25", name: "עוגת שוקולד", desc: "עוגת שוקולד עשירה ונימוחה – הסיום המתוק המושלם לארוחה", rate: "3", price: "23", time: "4", enabled: true },
+        { id: "26", name: "באגט אבוקדו", desc: "באגט טרי עם ממרח אבוקדו מתובל – בריא, טעים ומרענן", rate: "1", price: "31", time: "7", enabled: true },
+        { id: "27", name: "טאקו ירקות", desc: "טאקו מקסיקני פריך במילוי ירקות טריים ורוטב פיקנטי", rate: "1", price: "40", time: "10", enabled: true },
+        { id: "28", name: "פסטה פסטו", desc: "פסטה איטלקית עם רוטב פסטו מבזיליקום טרי – קלילה וטעימה", rate: "0.5", price: "44", time: "11", enabled: true },
+        { id: "29", name: "לביבות תפוחי אדמה", desc: "לביבות קריספיות מבחוץ ורכות מבפנים – טעם של בית", rate: "2.5", price: "36", time: "10", enabled: true },
+        { id: "30", name: "סושי", desc: "שני רולים לבחירה – טריים, צבעוניים ומוכנים במקום", rate: "4.5", price: "46", time: "15", enabled: true }
+    ];
+    const mappedDishes = dishes.map((dish) => ({
+        "מספר מנה": dish.id,
+        "שם המנה": dish.name,
+        "תיאור המנה": dish.desc,
+        "מחיר": dish.price,
+        "זמן הכנה": dish.time,
+        "דירוג": dish.rate,
+        "פעיל": dish.enabled,
+
+    }));
 
 
     const classes = [
@@ -121,6 +128,12 @@ export default function PopulateData() {
         { id: '129', Name: 'מרכז למידה', Description: 'שיתופי כללי', Enabled: true },
         { id: '130', Name: 'חדר הקרנה', Description: 'שיתופי', Enabled: false },
     ];
+    const mappedClasses = classes.map((cls) => ({
+        "מספר כיתה": cls.id,
+        "שם כיתה": cls.Name,
+        "תיאור": cls.Description,
+        "פעיל": cls.Enabled,
+    }));
 
     const orders = [
         { id: "10000", studentId: "286198472", delivery: true, class: "113", totalPrice: "44", quantity: "3", orderNumber: "1800", date: getRandomDate() },
@@ -155,11 +168,6 @@ export default function PopulateData() {
         { id: "10029", studentId: "312984657", delivery: false, class: "109", totalPrice: "84", quantity: "1", orderNumber: "1829", date: getRandomDate() },
         { id: "10030", studentId: "298176453", delivery: true, class: "116", totalPrice: "90", quantity: "5", orderNumber: "1830", date: getRandomDate() },
     ];
-
-
-
-
-    // Map the orders to match the new schema
     const mappedOrders = orders.map((order) => ({
         "id": order.id,
         "תז סטודנט מזמין": order.studentId,
@@ -171,25 +179,7 @@ export default function PopulateData() {
         "תאריך": order.date, // Map the date field
     }));
 
-    // Map the dishes to match the new schema
-    const mappedDishes = dishes.map((dish) => ({
-        "מספר מנה": dish.id,
-        "שם המנה": dish.name,
-        "תיאור המנה": dish.desc,
-        "מחיר": dish.price,
-        "זמן הכנה": dish.time,
-        "דירוג": dish.rate,
-        "פעיל": dish.enabled,
 
-    }));
-
-    // Map the classes to match the new schema
-    const mappedClasses = classes.map((cls) => ({
-        "מספר כיתה": cls.id,
-        "שם כיתה": cls.Name,
-        "תיאור": cls.Description,
-        "פעיל": cls.Enabled,
-    }));
 
     const dataTables = ["dishes", "classes", "students", "orders"];
     const mappedData = {
@@ -199,15 +189,15 @@ export default function PopulateData() {
         orders: mappedOrders,
     };
 
-        const promises = dataTables.map((table) => {
-            return fireWriteCollection(table, mappedData[table]) // Dynamically reference the correct mapped data
-                .then(() => {
-                    console.log(`${table} have been populated successfully!`);
-                })
-                .catch((error) => {
-                    console.error(`Error populating ${table}:`, error);
-                });
-        });
+    const promises = dataTables.map((table) => {
+        return fireWriteCollection(table, mappedData[table]) // Dynamically reference the correct mapped data
+            .then(() => {
+                console.log(`${table} have been populated successfully!`);
+            })
+            .catch((error) => {
+                console.error(`Error populating ${table}:`, error);
+            });
+    });
 
     return Promise.all(promises).then(() => (
         <div>

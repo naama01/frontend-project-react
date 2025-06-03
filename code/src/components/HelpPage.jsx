@@ -1,8 +1,8 @@
 import React, { useContext } from 'react'; // Ensure React and useContext are imported together
-import '../css/HelpPage.css'
 import Button from '@mui/material/Button'
 import { FireWaitContext } from './FireWaitProvider'; // Import FireWait context
 import PopulateData from './PopulateData'; // Import the PopulateData function
+import '../css/HelpPage.css'
 
 
 export default function HelpPage() {
@@ -45,8 +45,8 @@ export default function HelpPage() {
         1. התחברו לשירות "מזנונו" באזור האישי באתר.
         <br />2. בחרו מנה מהתפריט היומי או השבועי.
         <br />3. סמנו את אפשרות <strong>"משלוח לכיתה"</strong>.
-        <br />4. בחרו את הבניין והכיתה (לדוגמה: בניין ג', חדר 104).
-        <br />5. אשרו את ההזמנה ובצעו תשלום מקוון.
+        <br />4. בחרו את הכיתה (לדוגמה: בניין ג', חדר 104).
+        <br />5. אשרו את ההזמנה .
         <br />6. ההזמנה תגיע אליכם תוך כ-20–30 דקות (בהתאם לעומס).
       </p>
       <p><strong>💡 ניתן לראות את סטטוס ההזמנה באזור "ההזמנות שלי".</strong></p>
@@ -55,7 +55,7 @@ export default function HelpPage() {
       <p>
         1. בחרו את המנה הרצויה מתוך התפריט באתר.
         <br />2. סמנו <strong>"איסוף עצמי"</strong>.
-        <br />3. אשרו ובצעו תשלום.
+        <br />3. אשרו הזמנה.
         <br />4. תקבלו זמן מוערך לאיסוף דרך הודעה באתר.
         <br />5. הגיעו לעמדת "מזנונו" במתחם הקפיטריה והציגו את מספר ההזמנה.
       </p>
